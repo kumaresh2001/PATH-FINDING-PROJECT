@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>THE ONE WITH THE MAP</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <div>
+            <button onclick="source()">SELECT SOURCE</button>
+            <button onclick="destination()">SELECT DESTINATION</button>
+            <button onclick="findPath()">FIND PATH</button>    
+        </div>   
+        <table>
+            <tr>
+                <td class="border" onclick="mark(0,0)" id="0-0"></td>
+                <td class="border" onclick="mark(0,1)" id="0-1"></td>
+                <td class="border" onclick="mark(0,2)" id="0-2"></td>
+                <td class="border" onclick="mark(0,3)" id="0-3"></td>
+                <td class="border" onclick="mark(0,4)" id="0-4"></td>
+                <td class="border" onclick="mark(0,5)" id="0-5"></td>
+                <td class="border" onclick="mark(0,6)" id="0-6"></td>
+                <td class="border" onclick="mark(0,7)" id="0-7"></td>
+                <td class="border" onclick="mark(0,8)" id="0-8"></td>
+                <td class="border" onclick="mark(0,9)" id="0-9"></td>
+                <td class="border" onclick="mark(0,10)" id="0-10"></td>
+                <td class="border" onclick="mark(0,11)" id="0-11"></td>     
+                <td class="border" onclick="mark(0,12)" id="0-12"></td>
+                <td class="border" onclick="mark(0,13)" id="0-13"></td>
+                <td class="border" onclick="mark(0,14)" id="0-14"></td>
+                <td class="border" onclick="mark(0,15)" id="0-15"></td>
+                <td class="border" onclick="mark(0,16)" id="0-16"></td>
+                <td class="border" onclick="mark(0,17)" id="0-17"></td>
+                <td class="border" onclick="mark(0,18)" id="0-18"></td>
+                <td class="border" onclick="mark(0,19)" id="0-19"></td>
+                <td class="border" onclick="mark(0,20)" id="0-20"></td>
+                <td class="border" onclick="mark(0,21)" id="0-21"></td>
+                <td class="border" onclick="mark(0,22)" id="0-22"></td>
+                <td class="border" onclick="mark(0,23)" id="0-23"></td>     
+                <td class="border" onclick="mark(0,24)" id="0-24"></td>
+                <td class="border" onclick="mark(0,25)" id="0-25"></td>
+                <td class="border" onclick="mark(0,26)" id="0-26"></td>
+                <td class="border" onclick="mark(0,27)" id="0-27"></td>
+                <td class="border" onclick="mark(0,28)" id="0-28"></td>
+                <td class="border" onclick="mark(0,29)" id="0-29"></td>
+                <td class="border" onclick="mark(0,30)" id="0-30"></td>
+                <td class="border" onclick="mark(0,31)" id="0-31"></td>
+                <td class="border" onclick="mark(0,32)" id="0-32"></td>
+                <td class="border" onclick="mark(0,33)" id="0-33"></td>
+                <td class="border" onclick="mark(0,34)" id="0-34"></td>
+                <td class="border" onclick="mark(0,35)" id="0-35"></td>
+                <td class="border" onclick="mark(0,36)" id="0-36"></td>
+                <td class="border" onclick="mark(0,37)" id="0-37"></td>
+                <td class="border" onclick="mark(0,38)" id="0-38"></td>
+                <td class="border" onclick="mark(0,39)" id="0-39"></td>
+                <td class="border" onclick="mark(0,40)" id="0-40"></td>
+                <td class="border" onclick="mark(0,41)" id="0-41"></td>
+                <td class="border" onclick="mark(0,42)" id="0-42"></td>
+                <td class="border" onclick="mark(0,43)" id="0-43"></td>
+                <td class="border" onclick="mark(0,44)" id="0-44"></td>
+                <td class="border" onclick="mark(0,45)" id="0-45"></td>
+                <td class="border" onclick="mark(0,46)" id="0-46"></td>
+                <td class="border" onclick="mark(0,47)" id="0-47"></td>
+                <td class="border" onclick="mark(0,48)" id="0-48"></td>
+                <td class="border" onclick="mark(0,49)" id="0-49"></td>
+                <td class="border" onclick="mark(0,50)" id="0-50"></td>
+                <td class="border" onclick="mark(0,51)" id="0-51"></td>
+                <td class="border" onclick="mark(0,52)" id="0-52"></td>
+                <td class="border" onclick="mark(0,53)" id="0-53"></td>
+                <td class="border" onclick="mark(0,54)" id="0-54"></td>
+                <td class="border" onclick="mark(0,55)" id="0-55"></td>
+                <td class="border" onclick="mark(0,56)" id="0-56"></td>
+                <td class="border" onclick="mark(0,57)" id="0-57"></td>
+                <td class="border" onclick="mark(0,58)" id="0-58"></td>
+                <td class="border" onclick="mark(0,59)" id="0-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(1,0)" id="1-0"></td>
+                <td onclick="mark(1,1)" id="1-1"></td>
+                <td onclick="mark(1,2)" id="1-2"></td>
+                <td onclick="mark(1,3)" id="1-3"></td>
+                <td onclick="mark(1,4)" id="1-4"></td>
+                <td onclick="mark(1,5)" id="1-5"></td>
+                <td onclick="mark(1,6)" id="1-6"></td>
+                <td onclick="mark(1,7)" id="1-7"></td>
+                <td onclick="mark(1,8)" id="1-8"></td>
+                <td onclick="mark(1,9)" id="1-9"></td>
+                <td onclick="mark(1,10)" id="1-10"></td>
+                <td onclick="mark(1,11)" id="1-11"></td>     
+                <td onclick="mark(1,12)" id="1-12"></td>
+                <td onclick="mark(1,13)" id="1-13"></td>
+                <td onclick="mark(1,14)" id="1-14"></td>
+                <td onclick="mark(1,15)" id="1-15"></td>
+                <td onclick="mark(1,16)" id="1-16"></td>
+                <td onclick="mark(1,17)" id="1-17"></td>
+                <td onclick="mark(1,18)" id="1-18"></td>
+                <td onclick="mark(1,19)" id="1-19"></td>
+                <td onclick="mark(1,20)" id="1-20"></td>
+                <td onclick="mark(1,21)" id="1-21"></td>
+                <td onclick="mark(1,22)" id="1-22"></td>
+                <td onclick="mark(1,23)" id="1-23"></td>     
+                <td onclick="mark(1,24)" id="1-24"></td>
+                <td onclick="mark(1,25)" id="1-25"></td>
+                <td onclick="mark(1,26)" id="1-26"></td>
+                <td onclick="mark(1,27)" id="1-27"></td>
+                <td onclick="mark(1,28)" id="1-28"></td>
+                <td onclick="mark(1,29)" id="1-29"></td>
+                <td onclick="mark(1,30)" id="1-30"></td>
+                <td onclick="mark(1,31)" id="1-31"></td>
+                <td onclick="mark(1,32)" id="1-32"></td>
+                <td onclick="mark(1,33)" id="1-33"></td>
+                <td onclick="mark(1,34)" id="1-34"></td>
+                <td onclick="mark(1,35)" id="1-35"></td>
+                <td onclick="mark(1,36)" id="1-36"></td>
+                <td onclick="mark(1,37)" id="1-37"></td>
+                <td onclick="mark(1,38)" id="1-38"></td>
+                <td onclick="mark(1,39)" id="1-39"></td>
+                <td onclick="mark(1,40)" id="1-40"></td>
+                <td onclick="mark(1,41)" id="1-41"></td>
+                <td onclick="mark(1,42)" id="1-42"></td>
+                <td onclick="mark(1,43)" id="1-43"></td>
+                <td onclick="mark(1,44)" id="1-44"></td>
+                <td onclick="mark(1,45)" id="1-45"></td>
+                <td onclick="mark(1,46)" id="1-46"></td>
+                <td onclick="mark(1,47)" id="1-47"></td>
+                <td onclick="mark(1,48)" id="1-48"></td>
+                <td onclick="mark(1,49)" id="1-49"></td>
+                <td onclick="mark(1,50)" id="1-50"></td>
+                <td onclick="mark(1,51)" id="1-51"></td>
+                <td onclick="mark(1,52)" id="1-52"></td>
+                <td onclick="mark(1,53)" id="1-53"></td>
+                <td onclick="mark(1,54)" id="1-54"></td>
+                <td onclick="mark(1,55)" id="1-55"></td>
+                <td onclick="mark(1,56)" id="1-56"></td>
+                <td onclick="mark(1,57)" id="1-57"></td>
+                <td onclick="mark(1,58)" id="1-58"></td>
+                <td class="border" onclick="mark(1,59)" id="1-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(2,0)" id="2-0"></td>
+                <td onclick="mark(2,1)" id="2-1"></td>
+                <td onclick="mark(2,2)" id="2-2"></td>
+                <td onclick="mark(2,3)" id="2-3"></td>
+                <td onclick="mark(2,4)" id="2-4"></td>
+                <td onclick="mark(2,5)" id="2-5"></td>
+                <td onclick="mark(2,6)" id="2-6"></td>
+                <td onclick="mark(2,7)" id="2-7"></td>
+                <td onclick="mark(2,8)" id="2-8"></td>
+                <td onclick="mark(2,9)" id="2-9"></td>
+                <td onclick="mark(2,10)" id="2-10"></td>
+                <td onclick="mark(2,11)" id="2-11"></td>     
+                <td onclick="mark(2,12)" id="2-12"></td>
+                <td onclick="mark(2,13)" id="2-13"></td>
+                <td onclick="mark(2,14)" id="2-14"></td>
+                <td onclick="mark(2,15)" id="2-15"></td>
+                <td onclick="mark(2,16)" id="2-16"></td>
+                <td onclick="mark(2,17)" id="2-17"></td>
+                <td onclick="mark(2,18)" id="2-18"></td>
+                <td onclick="mark(2,19)" id="2-19"></td>
+                <td onclick="mark(2,20)" id="2-20"></td>
+                <td onclick="mark(2,21)" id="2-21"></td>
+                <td onclick="mark(2,22)" id="2-22"></td>
+                <td onclick="mark(2,23)" id="2-23"></td>     
+                <td onclick="mark(2,24)" id="2-24"></td>
+                <td onclick="mark(2,25)" id="2-25"></td>
+                <td onclick="mark(2,26)" id="2-26"></td>
+                <td onclick="mark(2,27)" id="2-27"></td>
+                <td onclick="mark(2,28)" id="2-28"></td>
+                <td onclick="mark(2,29)" id="2-29"></td>
+                <td onclick="mark(2,30)" id="2-30"></td>
+                <td onclick="mark(2,31)" id="2-31"></td>
+                <td onclick="mark(2,32)" id="2-32"></td>
+                <td onclick="mark(2,33)" id="2-33"></td>
+                <td onclick="mark(2,34)" id="2-34"></td>
+                <td onclick="mark(2,35)" id="2-35"></td>
+                <td onclick="mark(2,36)" id="2-36"></td>
+                <td onclick="mark(2,37)" id="2-37"></td>
+                <td onclick="mark(2,38)" id="2-38"></td>
+                <td onclick="mark(2,39)" id="2-39"></td>
+                <td onclick="mark(2,40)" id="2-40"></td>
+                <td onclick="mark(2,41)" id="2-41"></td>
+                <td onclick="mark(2,42)" id="2-42"></td>
+                <td onclick="mark(2,43)" id="2-43"></td>
+                <td onclick="mark(2,44)" id="2-44"></td>
+                <td onclick="mark(2,45)" id="2-45"></td>
+                <td onclick="mark(2,46)" id="2-46"></td>
+                <td onclick="mark(2,47)" id="2-47"></td>
+                <td onclick="mark(2,48)" id="2-48"></td>
+                <td onclick="mark(2,49)" id="2-49"></td>
+                <td onclick="mark(2,50)" id="2-50"></td>
+                <td onclick="mark(2,51)" id="2-51"></td>
+                <td onclick="mark(2,52)" id="2-52"></td>
+                <td onclick="mark(2,53)" id="2-53"></td>
+                <td onclick="mark(2,54)" id="2-54"></td>
+                <td onclick="mark(2,55)" id="2-55"></td>
+                <td onclick="mark(2,56)" id="2-56"></td>
+                <td onclick="mark(2,57)" id="2-57"></td>
+                <td onclick="mark(2,58)" id="2-58"></td>
+                <td class="border" onclick="mark(2,59)" id="2-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(3,0)" id="3-0"></td>
+                <td onclick="mark(3,1)" id="3-1"></td>
+                <td onclick="mark(3,2)" id="3-2"></td>
+                <td onclick="mark(3,3)" id="3-3"></td>
+                <td onclick="mark(3,4)" id="3-4"></td>
+                <td onclick="mark(3,5)" id="3-5"></td>
+                <td onclick="mark(3,6)" id="3-6"></td>
+                <td onclick="mark(3,7)" id="3-7"></td>
+                <td onclick="mark(3,8)" id="3-8"></td>
+                <td onclick="mark(3,9)" id="3-9"></td>
+                <td onclick="mark(3,10)" id="3-10"></td>
+                <td onclick="mark(3,11)" id="3-11"></td>     
+                <td onclick="mark(3,12)" id="3-12"></td>
+                <td onclick="mark(3,13)" id="3-13"></td>
+                <td onclick="mark(3,14)" id="3-14"></td>
+                <td onclick="mark(3,15)" id="3-15"></td>
+                <td onclick="mark(3,16)" id="3-16"></td>
+                <td onclick="mark(3,17)" id="3-17"></td>
+                <td onclick="mark(3,18)" id="3-18"></td>
+                <td onclick="mark(3,19)" id="3-19"></td>
+                <td onclick="mark(3,20)" id="3-20"></td>
+                <td onclick="mark(3,21)" id="3-21"></td>
+                <td onclick="mark(3,22)" id="3-22"></td>
+                <td onclick="mark(3,23)" id="3-23"></td>     
+                <td onclick="mark(3,24)" id="3-24"></td>
+                <td onclick="mark(3,25)" id="3-25"></td>
+                <td onclick="mark(3,26)" id="3-26"></td>
+                <td onclick="mark(3,27)" id="3-27"></td>
+                <td onclick="mark(3,28)" id="3-28"></td>
+                <td onclick="mark(3,29)" id="3-29"></td>
+                <td onclick="mark(3,30)" id="3-30"></td>
+                <td onclick="mark(3,31)" id="3-31"></td>
+                <td onclick="mark(3,32)" id="3-32"></td>
+                <td onclick="mark(3,33)" id="3-33"></td>
+                <td onclick="mark(3,34)" id="3-34"></td>
+                <td onclick="mark(3,35)" id="3-35"></td>
+                <td onclick="mark(3,36)" id="3-36"></td>
+                <td onclick="mark(3,37)" id="3-37"></td>
+                <td onclick="mark(3,38)" id="3-38"></td>
+                <td onclick="mark(3,39)" id="3-39"></td>
+                <td onclick="mark(3,40)" id="3-40"></td>
+                <td onclick="mark(3,41)" id="3-41"></td>
+                <td onclick="mark(3,42)" id="3-42"></td>
+                <td onclick="mark(3,43)" id="3-43"></td>
+                <td onclick="mark(3,44)" id="3-44"></td>
+                <td onclick="mark(3,45)" id="3-45"></td>
+                <td onclick="mark(3,46)" id="3-46"></td>
+                <td onclick="mark(3,47)" id="3-47"></td>
+                <td onclick="mark(3,48)" id="3-48"></td>
+                <td onclick="mark(3,49)" id="3-49"></td>
+                <td onclick="mark(3,50)" id="3-50"></td>
+                <td onclick="mark(3,51)" id="3-51"></td>
+                <td onclick="mark(3,52)" id="3-52"></td>
+                <td onclick="mark(3,53)" id="3-53"></td>
+                <td onclick="mark(3,54)" id="3-54"></td>
+                <td onclick="mark(3,55)" id="3-55"></td>
+                <td onclick="mark(3,56)" id="3-56"></td>
+                <td onclick="mark(3,57)" id="3-57"></td>
+                <td onclick="mark(3,58)" id="3-58"></td>
+                <td class="border" onclick="mark(3,59)" id="3-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(4,0)" id="4-0"></td>
+                <td onclick="mark(4,1)" id="4-1"></td>
+                <td onclick="mark(4,2)" id="4-2"></td>
+                <td onclick="mark(4,3)" id="4-3"></td>
+                <td onclick="mark(4,4)" id="4-4"></td>
+                <td onclick="mark(4,5)" id="4-5"></td>
+                <td onclick="mark(4,6)" id="4-6"></td>
+                <td onclick="mark(4,7)" id="4-7"></td>
+                <td onclick="mark(4,8)" id="4-8"></td>
+                <td onclick="mark(4,9)" id="4-9"></td>
+                <td onclick="mark(4,10)" id="4-10"></td>
+                <td onclick="mark(4,11)" id="4-11"></td>     
+                <td onclick="mark(4,12)" id="4-12"></td>
+                <td onclick="mark(4,13)" id="4-13"></td>
+                <td onclick="mark(4,14)" id="4-14"></td>
+                <td onclick="mark(4,15)" id="4-15"></td>
+                <td onclick="mark(4,16)" id="4-16"></td>
+                <td onclick="mark(4,17)" id="4-17"></td>
+                <td onclick="mark(4,18)" id="4-18"></td>
+                <td onclick="mark(4,19)" id="4-19"></td>
+                <td onclick="mark(4,20)" id="4-20"></td>
+                <td onclick="mark(4,21)" id="4-21"></td>
+                <td onclick="mark(4,22)" id="4-22"></td>
+                <td onclick="mark(4,23)" id="4-23"></td>     
+                <td onclick="mark(4,24)" id="4-24"></td>
+                <td onclick="mark(4,25)" id="4-25"></td>
+                <td onclick="mark(4,26)" id="4-26"></td>
+                <td onclick="mark(4,27)" id="4-27"></td>
+                <td onclick="mark(4,28)" id="4-28"></td>
+                <td onclick="mark(4,29)" id="4-29"></td>
+                <td onclick="mark(4,30)" id="4-30"></td>
+                <td onclick="mark(4,31)" id="4-31"></td>
+                <td onclick="mark(4,32)" id="4-32"></td>
+                <td onclick="mark(4,33)" id="4-33"></td>
+                <td onclick="mark(4,34)" id="4-34"></td>
+                <td onclick="mark(4,35)" id="4-35"></td>
+                <td onclick="mark(4,36)" id="4-36"></td>
+                <td onclick="mark(4,37)" id="4-37"></td>
+                <td onclick="mark(4,38)" id="4-38"></td>
+                <td onclick="mark(4,39)" id="4-39"></td>
+                <td onclick="mark(4,40)" id="4-40"></td>
+                <td onclick="mark(4,41)" id="4-41"></td>
+                <td onclick="mark(4,42)" id="4-42"></td>
+                <td onclick="mark(4,43)" id="4-43"></td>
+                <td onclick="mark(4,44)" id="4-44"></td>
+                <td onclick="mark(4,45)" id="4-45"></td>
+                <td onclick="mark(4,46)" id="4-46"></td>
+                <td onclick="mark(4,47)" id="4-47"></td>
+                <td onclick="mark(4,48)" id="4-48"></td>
+                <td onclick="mark(4,49)" id="4-49"></td>
+                <td onclick="mark(4,50)" id="4-50"></td>
+                <td onclick="mark(4,51)" id="4-51"></td>
+                <td onclick="mark(4,52)" id="4-52"></td>
+                <td onclick="mark(4,53)" id="4-53"></td>
+                <td onclick="mark(4,54)" id="4-54"></td>
+                <td onclick="mark(4,55)" id="4-55"></td>
+                <td onclick="mark(4,56)" id="4-56"></td>
+                <td onclick="mark(4,57)" id="4-57"></td>
+                <td onclick="mark(4,58)" id="4-58"></td>
+                <td class="border" onclick="mark(4,59)" id="4-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(5,0)" id="5-0"></td>
+                <td onclick="mark(5,1)" id="5-1"></td>
+                <td onclick="mark(5,2)" id="5-2"></td>
+                <td onclick="mark(5,3)" id="5-3"></td>
+                <td onclick="mark(5,4)" id="5-4"></td>
+                <td onclick="mark(5,5)" id="5-5"></td>
+                <td onclick="mark(5,6)" id="5-6"></td>
+                <td onclick="mark(5,7)" id="5-7"></td>
+                <td onclick="mark(5,8)" id="5-8"></td>
+                <td onclick="mark(5,9)" id="5-9"></td>
+                <td onclick="mark(5,10)" id="5-10"></td>
+                <td onclick="mark(5,11)" id="5-11"></td>     
+                <td onclick="mark(5,12)" id="5-12"></td>
+                <td onclick="mark(5,13)" id="5-13"></td>
+                <td onclick="mark(5,14)" id="5-14"></td>
+                <td onclick="mark(5,15)" id="5-15"></td>
+                <td onclick="mark(5,16)" id="5-16"></td>
+                <td onclick="mark(5,17)" id="5-17"></td>
+                <td onclick="mark(5,18)" id="5-18"></td>
+                <td onclick="mark(5,19)" id="5-19"></td>
+                <td onclick="mark(5,20)" id="5-20"></td>
+                <td onclick="mark(5,21)" id="5-21"></td>
+                <td onclick="mark(5,22)" id="5-22"></td>
+                <td onclick="mark(5,23)" id="5-23"></td>     
+                <td onclick="mark(5,24)" id="5-24"></td>
+                <td onclick="mark(5,25)" id="5-25"></td>
+                <td onclick="mark(5,26)" id="5-26"></td>
+                <td onclick="mark(5,27)" id="5-27"></td>
+                <td onclick="mark(5,28)" id="5-28"></td>
+                <td onclick="mark(5,29)" id="5-29"></td>
+                <td onclick="mark(5,30)" id="5-30"></td>
+                <td onclick="mark(5,31)" id="5-31"></td>
+                <td onclick="mark(5,32)" id="5-32"></td>
+                <td onclick="mark(5,33)" id="5-33"></td>
+                <td onclick="mark(5,34)" id="5-34"></td>
+                <td onclick="mark(5,35)" id="5-35"></td>
+                <td onclick="mark(5,36)" id="5-36"></td>
+                <td onclick="mark(5,37)" id="5-37"></td>
+                <td onclick="mark(5,38)" id="5-38"></td>
+                <td onclick="mark(5,39)" id="5-39"></td>
+                <td onclick="mark(5,40)" id="5-40"></td>
+                <td onclick="mark(5,41)" id="5-41"></td>
+                <td onclick="mark(5,42)" id="5-42"></td>
+                <td onclick="mark(5,43)" id="5-43"></td>
+                <td onclick="mark(5,44)" id="5-44"></td>
+                <td onclick="mark(5,45)" id="5-45"></td>
+                <td onclick="mark(5,46)" id="5-46"></td>
+                <td onclick="mark(5,47)" id="5-47"></td>
+                <td onclick="mark(5,48)" id="5-48"></td>
+                <td onclick="mark(5,49)" id="5-49"></td>
+                <td onclick="mark(5,50)" id="5-50"></td>
+                <td onclick="mark(5,51)" id="5-51"></td>
+                <td onclick="mark(5,52)" id="5-52"></td>
+                <td onclick="mark(5,53)" id="5-53"></td>
+                <td onclick="mark(5,54)" id="5-54"></td>
+                <td onclick="mark(5,55)" id="5-55"></td>
+                <td onclick="mark(5,56)" id="5-56"></td>
+                <td onclick="mark(5,57)" id="5-57"></td>
+                <td onclick="mark(5,58)" id="5-58"></td>
+                <td class="border" onclick="mark(5,59)" id="5-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(6,0)" id="6-0"></td>
+                <td onclick="mark(6,1)" id="6-1"></td>
+                <td onclick="mark(6,2)" id="6-2"></td>
+                <td onclick="mark(6,3)" id="6-3"></td>
+                <td onclick="mark(6,4)" id="6-4"></td>
+                <td onclick="mark(6,5)" id="6-5"></td>
+                <td onclick="mark(6,6)" id="6-6"></td>
+                <td onclick="mark(6,7)" id="6-7"></td>
+                <td onclick="mark(6,8)" id="6-8"></td>
+                <td onclick="mark(6,9)" id="6-9"></td>
+                <td onclick="mark(6,10)" id="6-10"></td>
+                <td onclick="mark(6,11)" id="6-11"></td>     
+                <td onclick="mark(6,12)" id="6-12"></td>
+                <td onclick="mark(6,13)" id="6-13"></td>
+                <td onclick="mark(6,14)" id="6-14"></td>
+                <td onclick="mark(6,15)" id="6-15"></td>
+                <td onclick="mark(6,16)" id="6-16"></td>
+                <td onclick="mark(6,17)" id="6-17"></td>
+                <td onclick="mark(6,18)" id="6-18"></td>
+                <td onclick="mark(6,19)" id="6-19"></td>
+                <td onclick="mark(6,20)" id="6-20"></td>
+                <td onclick="mark(6,21)" id="6-21"></td>
+                <td onclick="mark(6,22)" id="6-22"></td>
+                <td onclick="mark(6,23)" id="6-23"></td>     
+                <td onclick="mark(6,24)" id="6-24"></td>
+                <td onclick="mark(6,25)" id="6-25"></td>
+                <td onclick="mark(6,26)" id="6-26"></td>
+                <td onclick="mark(6,27)" id="6-27"></td>
+                <td onclick="mark(6,28)" id="6-28"></td>
+                <td onclick="mark(6,29)" id="6-29"></td>
+                <td onclick="mark(6,30)" id="6-30"></td>
+                <td onclick="mark(6,31)" id="6-31"></td>
+                <td onclick="mark(6,32)" id="6-32"></td>
+                <td onclick="mark(6,33)" id="6-33"></td>
+                <td onclick="mark(6,34)" id="6-34"></td>
+                <td onclick="mark(6,35)" id="6-35"></td>
+                <td onclick="mark(6,36)" id="6-36"></td>
+                <td onclick="mark(6,37)" id="6-37"></td>
+                <td onclick="mark(6,38)" id="6-38"></td>
+                <td onclick="mark(6,39)" id="6-39"></td>
+                <td onclick="mark(6,40)" id="6-40"></td>
+                <td onclick="mark(6,41)" id="6-41"></td>
+                <td onclick="mark(6,42)" id="6-42"></td>
+                <td onclick="mark(6,43)" id="6-43"></td>
+                <td onclick="mark(6,44)" id="6-44"></td>
+                <td onclick="mark(6,45)" id="6-45"></td>
+                <td onclick="mark(6,46)" id="6-46"></td>
+                <td onclick="mark(6,47)" id="6-47"></td>
+                <td onclick="mark(6,48)" id="6-48"></td>
+                <td onclick="mark(6,49)" id="6-49"></td>
+                <td onclick="mark(6,50)" id="6-50"></td>
+                <td onclick="mark(6,51)" id="6-51"></td>
+                <td onclick="mark(6,52)" id="6-52"></td>
+                <td onclick="mark(6,53)" id="6-53"></td>
+                <td onclick="mark(6,54)" id="6-54"></td>
+                <td onclick="mark(6,55)" id="6-55"></td>
+                <td onclick="mark(6,56)" id="6-56"></td>
+                <td onclick="mark(6,57)" id="6-57"></td>
+                <td onclick="mark(6,58)" id="6-58"></td>
+                <td class="border" onclick="mark(6,59)" id="6-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(7,0)" id="7-0"></td>
+                <td onclick="mark(7,1)" id="7-1"></td>
+                <td onclick="mark(7,2)" id="7-2"></td>
+                <td onclick="mark(7,3)" id="7-3"></td>
+                <td onclick="mark(7,4)" id="7-4"></td>
+                <td onclick="mark(7,5)" id="7-5"></td>
+                <td onclick="mark(7,6)" id="7-6"></td>
+                <td onclick="mark(7,7)" id="7-7"></td>
+                <td onclick="mark(7,8)" id="7-8"></td>
+                <td onclick="mark(7,9)" id="7-9"></td>
+                <td onclick="mark(7,10)" id="7-10"></td>
+                <td onclick="mark(7,11)" id="7-11"></td>     
+                <td onclick="mark(7,12)" id="7-12"></td>
+                <td onclick="mark(7,13)" id="7-13"></td>
+                <td onclick="mark(7,14)" id="7-14"></td>
+                <td onclick="mark(7,15)" id="7-15"></td>
+                <td onclick="mark(7,16)" id="7-16"></td>
+                <td onclick="mark(7,17)" id="7-17"></td>
+                <td onclick="mark(7,18)" id="7-18"></td>
+                <td onclick="mark(7,19)" id="7-19"></td>
+                <td onclick="mark(7,20)" id="7-20"></td>
+                <td onclick="mark(7,21)" id="7-21"></td>
+                <td onclick="mark(7,22)" id="7-22"></td>
+                <td onclick="mark(7,23)" id="7-23"></td>     
+                <td onclick="mark(7,24)" id="7-24"></td>
+                <td onclick="mark(7,25)" id="7-25"></td>
+                <td onclick="mark(7,26)" id="7-26"></td>
+                <td onclick="mark(7,27)" id="7-27"></td>
+                <td onclick="mark(7,28)" id="7-28"></td>
+                <td onclick="mark(7,29)" id="7-29"></td>
+                <td onclick="mark(7,30)" id="7-30"></td>
+                <td onclick="mark(7,31)" id="7-31"></td>
+                <td onclick="mark(7,32)" id="7-32"></td>
+                <td onclick="mark(7,33)" id="7-33"></td>
+                <td onclick="mark(7,34)" id="7-34"></td>
+                <td onclick="mark(7,35)" id="7-35"></td>
+                <td onclick="mark(7,36)" id="7-36"></td>
+                <td onclick="mark(7,37)" id="7-37"></td>
+                <td onclick="mark(7,38)" id="7-38"></td>
+                <td onclick="mark(7,39)" id="7-39"></td>
+                <td onclick="mark(7,40)" id="7-40"></td>
+                <td onclick="mark(7,41)" id="7-41"></td>
+                <td onclick="mark(7,42)" id="7-42"></td>
+                <td onclick="mark(7,43)" id="7-43"></td>
+                <td onclick="mark(7,44)" id="7-44"></td>
+                <td onclick="mark(7,45)" id="7-45"></td>
+                <td onclick="mark(7,46)" id="7-46"></td>
+                <td onclick="mark(7,47)" id="7-47"></td>
+                <td onclick="mark(7,48)" id="7-48"></td>
+                <td onclick="mark(7,49)" id="7-49"></td>
+                <td onclick="mark(7,50)" id="7-50"></td>
+                <td onclick="mark(7,51)" id="7-51"></td>
+                <td onclick="mark(7,52)" id="7-52"></td>
+                <td onclick="mark(7,53)" id="7-53"></td>
+                <td onclick="mark(7,54)" id="7-54"></td>
+                <td onclick="mark(7,55)" id="7-55"></td>
+                <td onclick="mark(7,56)" id="7-56"></td>
+                <td onclick="mark(7,57)" id="7-57"></td>
+                <td onclick="mark(7,58)" id="7-58"></td>
+                <td class="border" onclick="mark(7,59)" id="7-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(8,0)" id="8-0"></td>
+                <td onclick="mark(8,1)" id="8-1"></td>
+                <td onclick="mark(8,2)" id="8-2"></td>
+                <td onclick="mark(8,3)" id="8-3"></td>
+                <td onclick="mark(8,4)" id="8-4"></td>
+                <td onclick="mark(8,5)" id="8-5"></td>
+                <td onclick="mark(8,6)" id="8-6"></td>
+                <td onclick="mark(8,7)" id="8-7"></td>
+                <td onclick="mark(8,8)" id="8-8"></td>
+                <td onclick="mark(8,9)" id="8-9"></td>
+                <td onclick="mark(8,10)" id="8-10"></td>
+                <td onclick="mark(8,11)" id="8-11"></td>     
+                <td onclick="mark(8,12)" id="8-12"></td>
+                <td onclick="mark(8,13)" id="8-13"></td>
+                <td onclick="mark(8,14)" id="8-14"></td>
+                <td onclick="mark(8,15)" id="8-15"></td>
+                <td onclick="mark(8,16)" id="8-16"></td>
+                <td onclick="mark(8,17)" id="8-17"></td>
+                <td onclick="mark(8,18)" id="8-18"></td>
+                <td onclick="mark(8,19)" id="8-19"></td>
+                <td onclick="mark(8,20)" id="8-20"></td>
+                <td onclick="mark(8,21)" id="8-21"></td>
+                <td onclick="mark(8,22)" id="8-22"></td>
+                <td onclick="mark(8,23)" id="8-23"></td>     
+                <td onclick="mark(8,24)" id="8-24"></td>
+                <td onclick="mark(8,25)" id="8-25"></td>
+                <td onclick="mark(8,26)" id="8-26"></td>
+                <td onclick="mark(8,27)" id="8-27"></td>
+                <td onclick="mark(8,28)" id="8-28"></td>
+                <td onclick="mark(8,29)" id="8-29"></td>
+                <td onclick="mark(8,30)" id="8-30"></td>
+                <td onclick="mark(8,31)" id="8-31"></td>
+                <td onclick="mark(8,32)" id="8-32"></td>
+                <td onclick="mark(8,33)" id="8-33"></td>
+                <td onclick="mark(8,34)" id="8-34"></td>
+                <td onclick="mark(8,35)" id="8-35"></td>
+                <td onclick="mark(8,36)" id="8-36"></td>
+                <td onclick="mark(8,37)" id="8-37"></td>
+                <td onclick="mark(8,38)" id="8-38"></td>
+                <td onclick="mark(8,39)" id="8-39"></td>
+                <td onclick="mark(8,40)" id="8-40"></td>
+                <td onclick="mark(8,41)" id="8-41"></td>
+                <td onclick="mark(8,42)" id="8-42"></td>
+                <td onclick="mark(8,43)" id="8-43"></td>
+                <td onclick="mark(8,44)" id="8-44"></td>
+                <td onclick="mark(8,45)" id="8-45"></td>
+                <td onclick="mark(8,46)" id="8-46"></td>
+                <td onclick="mark(8,47)" id="8-47"></td>
+                <td onclick="mark(8,48)" id="8-48"></td>
+                <td onclick="mark(8,49)" id="8-49"></td>
+                <td onclick="mark(8,50)" id="8-50"></td>
+                <td onclick="mark(8,51)" id="8-51"></td>
+                <td onclick="mark(8,52)" id="8-52"></td>
+                <td onclick="mark(8,53)" id="8-53"></td>
+                <td onclick="mark(8,54)" id="8-54"></td>
+                <td onclick="mark(8,55)" id="8-55"></td>
+                <td onclick="mark(8,56)" id="8-56"></td>
+                <td onclick="mark(8,57)" id="8-57"></td>
+                <td onclick="mark(8,58)" id="8-58"></td>
+                <td class="border" onclick="mark(8,59)" id="8-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(9,0)" id="9-0"></td>
+                <td onclick="mark(9,1)" id="9-1"></td>
+                <td onclick="mark(9,2)" id="9-2"></td>
+                <td onclick="mark(9,3)" id="9-3"></td>
+                <td onclick="mark(9,4)" id="9-4"></td>
+                <td onclick="mark(9,5)" id="9-5"></td>
+                <td onclick="mark(9,6)" id="9-6"></td>
+                <td onclick="mark(9,7)" id="9-7"></td>
+                <td onclick="mark(9,8)" id="9-8"></td>
+                <td onclick="mark(9,9)" id="9-9"></td>
+                <td onclick="mark(9,10)" id="9-10"></td>
+                <td onclick="mark(9,11)" id="9-11"></td>     
+                <td onclick="mark(9,12)" id="9-12"></td>
+                <td onclick="mark(9,13)" id="9-13"></td>
+                <td onclick="mark(9,14)" id="9-14"></td>
+                <td onclick="mark(9,15)" id="9-15"></td>
+                <td onclick="mark(9,16)" id="9-16"></td>
+                <td onclick="mark(9,17)" id="9-17"></td>
+                <td onclick="mark(9,18)" id="9-18"></td>
+                <td onclick="mark(9,19)" id="9-19"></td>
+                <td onclick="mark(9,20)" id="9-20"></td>
+                <td onclick="mark(9,21)" id="9-21"></td>
+                <td onclick="mark(9,22)" id="9-22"></td>
+                <td onclick="mark(9,23)" id="9-23"></td>     
+                <td onclick="mark(9,24)" id="9-24"></td>
+                <td onclick="mark(9,25)" id="9-25"></td>
+                <td onclick="mark(9,26)" id="9-26"></td>
+                <td onclick="mark(9,27)" id="9-27"></td>
+                <td onclick="mark(9,28)" id="9-28"></td>
+                <td onclick="mark(9,29)" id="9-29"></td>
+                <td onclick="mark(9,30)" id="9-30"></td>
+                <td onclick="mark(9,31)" id="9-31"></td>
+                <td onclick="mark(9,32)" id="9-32"></td>
+                <td onclick="mark(9,33)" id="9-33"></td>
+                <td onclick="mark(9,34)" id="9-34"></td>
+                <td onclick="mark(9,35)" id="9-35"></td>
+                <td onclick="mark(9,36)" id="9-36"></td>
+                <td onclick="mark(9,37)" id="9-37"></td>
+                <td onclick="mark(9,38)" id="9-38"></td>
+                <td onclick="mark(9,39)" id="9-39"></td>
+                <td onclick="mark(9,40)" id="9-40"></td>
+                <td onclick="mark(9,41)" id="9-41"></td>
+                <td onclick="mark(9,42)" id="9-42"></td>
+                <td onclick="mark(9,43)" id="9-43"></td>
+                <td onclick="mark(9,44)" id="9-44"></td>
+                <td onclick="mark(9,45)" id="9-45"></td>
+                <td onclick="mark(9,46)" id="9-46"></td>
+                <td onclick="mark(9,47)" id="9-47"></td>
+                <td onclick="mark(9,48)" id="9-48"></td>
+                <td onclick="mark(9,49)" id="9-49"></td>
+                <td onclick="mark(9,50)" id="9-50"></td>
+                <td onclick="mark(9,51)" id="9-51"></td>
+                <td onclick="mark(9,52)" id="9-52"></td>
+                <td onclick="mark(9,53)" id="9-53"></td>
+                <td onclick="mark(9,54)" id="9-54"></td>
+                <td onclick="mark(9,55)" id="9-55"></td>
+                <td onclick="mark(9,56)" id="9-56"></td>
+                <td onclick="mark(9,57)" id="9-57"></td>
+                <td onclick="mark(9,58)" id="9-58"></td>
+                <td class="border" onclick="mark(9,59)" id="9-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(10,0)" id="10-0"></td>
+                <td onclick="mark(10,1)" id="10-1"></td>
+                <td onclick="mark(10,2)" id="10-2"></td>
+                <td onclick="mark(10,3)" id="10-3"></td>
+                <td onclick="mark(10,4)" id="10-4"></td>
+                <td onclick="mark(10,5)" id="10-5"></td>
+                <td onclick="mark(10,6)" id="10-6"></td>
+                <td onclick="mark(10,7)" id="10-7"></td>
+                <td onclick="mark(10,8)" id="10-8"></td>
+                <td onclick="mark(10,9)" id="10-9"></td>
+                <td onclick="mark(10,10)" id="10-10"></td>
+                <td onclick="mark(10,11)" id="10-11"></td>     
+                <td onclick="mark(10,12)" id="10-12"></td>
+                <td onclick="mark(10,13)" id="10-13"></td>
+                <td onclick="mark(10,14)" id="10-14"></td>
+                <td onclick="mark(10,15)" id="10-15"></td>
+                <td onclick="mark(10,16)" id="10-16"></td>
+                <td onclick="mark(10,17)" id="10-17"></td>
+                <td onclick="mark(10,18)" id="10-18"></td>
+                <td onclick="mark(10,19)" id="10-19"></td>
+                <td onclick="mark(10,20)" id="10-20"></td>
+                <td onclick="mark(10,21)" id="10-21"></td>
+                <td onclick="mark(10,22)" id="10-22"></td>
+                <td onclick="mark(10,23)" id="10-23"></td>     
+                <td onclick="mark(10,24)" id="10-24"></td>
+                <td onclick="mark(10,25)" id="10-25"></td>
+                <td onclick="mark(10,26)" id="10-26"></td>
+                <td onclick="mark(10,27)" id="10-27"></td>
+                <td onclick="mark(10,28)" id="10-28"></td>
+                <td onclick="mark(10,29)" id="10-29"></td>
+                <td onclick="mark(10,30)" id="10-30"></td>
+                <td onclick="mark(10,31)" id="10-31"></td>
+                <td onclick="mark(10,32)" id="10-32"></td>
+                <td onclick="mark(10,33)" id="10-33"></td>
+                <td onclick="mark(10,34)" id="10-34"></td>
+                <td onclick="mark(10,35)" id="10-35"></td>
+                <td onclick="mark(10,36)" id="10-36"></td>
+                <td onclick="mark(10,37)" id="10-37"></td>
+                <td onclick="mark(10,38)" id="10-38"></td>
+                <td onclick="mark(10,39)" id="10-39"></td>
+                <td onclick="mark(10,40)" id="10-40"></td>
+                <td onclick="mark(10,41)" id="10-41"></td>
+                <td onclick="mark(10,42)" id="10-42"></td>
+                <td onclick="mark(10,43)" id="10-43"></td>
+                <td onclick="mark(10,44)" id="10-44"></td>
+                <td onclick="mark(10,45)" id="10-45"></td>
+                <td onclick="mark(10,46)" id="10-46"></td>
+                <td onclick="mark(10,47)" id="10-47"></td>
+                <td onclick="mark(10,48)" id="10-48"></td>
+                <td onclick="mark(10,49)" id="10-49"></td>
+                <td onclick="mark(10,50)" id="10-50"></td>
+                <td onclick="mark(10,51)" id="10-51"></td>
+                <td onclick="mark(10,52)" id="10-52"></td>
+                <td onclick="mark(10,53)" id="10-53"></td>
+                <td onclick="mark(10,54)" id="10-54"></td>
+                <td onclick="mark(10,55)" id="10-55"></td>
+                <td onclick="mark(10,56)" id="10-56"></td>
+                <td onclick="mark(10,57)" id="10-57"></td>
+                <td onclick="mark(10,58)" id="10-58"></td>
+                <td class="border" onclick="mark(10,59)" id="10-59"></td>
+            </tr>
+
+            <tr>
+                <td class="border" onclick="mark(11,0)" id="11-0"></td>
+                <td onclick="mark(11,1)" id="11-1"></td>
+                <td onclick="mark(11,2)" id="11-2"></td>
+                <td onclick="mark(11,3)" id="11-3"></td>
+                <td onclick="mark(11,4)" id="11-4"></td>
+                <td onclick="mark(11,5)" id="11-5"></td>
+                <td onclick="mark(11,6)" id="11-6"></td>
+                <td onclick="mark(11,7)" id="11-7"></td>
+                <td onclick="mark(11,8)" id="11-8"></td>
+                <td onclick="mark(11,9)" id="11-9"></td>
+                <td onclick="mark(11,10)" id="11-10"></td>
+                <td onclick="mark(11,11)" id="11-11"></td>     
+                <td onclick="mark(11,12)" id="11-12"></td>
+                <td onclick="mark(11,13)" id="11-13"></td>
+                <td onclick="mark(11,14)" id="11-14"></td>
+                <td onclick="mark(11,15)" id="11-15"></td>
+                <td onclick="mark(11,16)" id="11-16"></td>
+                <td onclick="mark(11,17)" id="11-17"></td>
+                <td onclick="mark(11,18)" id="11-18"></td>
+                <td onclick="mark(11,19)" id="11-19"></td>
+                <td onclick="mark(11,20)" id="11-20"></td>
+                <td onclick="mark(11,21)" id="11-21"></td>
+                <td onclick="mark(11,22)" id="11-22"></td>
+                <td onclick="mark(11,23)" id="11-23"></td>     
+                <td onclick="mark(11,24)" id="11-24"></td>
+                <td onclick="mark(11,25)" id="11-25"></td>
+                <td onclick="mark(11,26)" id="11-26"></td>
+                <td onclick="mark(11,27)" id="11-27"></td>
+                <td onclick="mark(11,28)" id="11-28"></td>
+                <td onclick="mark(11,29)" id="11-29"></td>
+                <td onclick="mark(11,30)" id="11-30"></td>
+                <td onclick="mark(11,31)" id="11-31"></td>
+                <td onclick="mark(11,32)" id="11-32"></td>
+                <td onclick="mark(11,33)" id="11-33"></td>
+                <td onclick="mark(11,34)" id="11-34"></td>
+                <td onclick="mark(11,35)" id="11-35"></td>
+                <td onclick="mark(11,36)" id="11-36"></td>
+                <td onclick="mark(11,37)" id="11-37"></td>
+                <td onclick="mark(11,38)" id="11-38"></td>
+                <td onclick="mark(11,39)" id="11-39"></td>
+                <td onclick="mark(11,40)" id="11-40"></td>
+                <td onclick="mark(11,41)" id="11-41"></td>
+                <td onclick="mark(11,42)" id="11-42"></td>
+                <td onclick="mark(11,43)" id="11-43"></td>
+                <td onclick="mark(11,44)" id="11-44"></td>
+                <td onclick="mark(11,45)" id="11-45"></td>
+                <td onclick="mark(11,46)" id="11-46"></td>
+                <td onclick="mark(11,47)" id="11-47"></td>
+                <td onclick="mark(11,48)" id="11-48"></td>
+                <td onclick="mark(11,49)" id="11-49"></td>
+                <td onclick="mark(11,50)" id="11-50"></td>
+                <td onclick="mark(11,51)" id="11-51"></td>
+                <td onclick="mark(11,52)" id="11-52"></td>
+                <td onclick="mark(11,53)" id="11-53"></td>
+                <td onclick="mark(11,54)" id="11-54"></td>
+                <td onclick="mark(11,55)" id="11-55"></td>
+                <td onclick="mark(11,56)" id="11-56"></td>
+                <td onclick="mark(11,57)" id="11-57"></td>
+                <td onclick="mark(11,58)" id="11-58"></td>
+                <td class="border" onclick="mark(11,59)" id="11-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(12,0)" id="12-0"></td>
+                <td onclick="mark(12,1)" id="12-1"></td>
+                <td onclick="mark(12,2)" id="12-2"></td>
+                <td onclick="mark(12,3)" id="12-3"></td>
+                <td onclick="mark(12,4)" id="12-4"></td>
+                <td onclick="mark(12,5)" id="12-5"></td>
+                <td onclick="mark(12,6)" id="12-6"></td>
+                <td onclick="mark(12,7)" id="12-7"></td>
+                <td onclick="mark(12,8)" id="12-8"></td>
+                <td onclick="mark(12,9)" id="12-9"></td>
+                <td onclick="mark(12,10)" id="12-10"></td>
+                <td onclick="mark(12,11)" id="12-11"></td>     
+                <td onclick="mark(12,12)" id="12-12"></td>
+                <td onclick="mark(12,13)" id="12-13"></td>
+                <td onclick="mark(12,14)" id="12-14"></td>
+                <td onclick="mark(12,15)" id="12-15"></td>
+                <td onclick="mark(12,16)" id="12-16"></td>
+                <td onclick="mark(12,17)" id="12-17"></td>
+                <td onclick="mark(12,18)" id="12-18"></td>
+                <td onclick="mark(12,19)" id="12-19"></td>
+                <td onclick="mark(12,20)" id="12-20"></td>
+                <td onclick="mark(12,21)" id="12-21"></td>
+                <td onclick="mark(12,22)" id="12-22"></td>
+                <td onclick="mark(12,23)" id="12-23"></td>     
+                <td onclick="mark(12,24)" id="12-24"></td>
+                <td onclick="mark(12,25)" id="12-25"></td>
+                <td onclick="mark(12,26)" id="12-26"></td>
+                <td onclick="mark(12,27)" id="12-27"></td>
+                <td onclick="mark(12,28)" id="12-28"></td>
+                <td onclick="mark(12,29)" id="12-29"></td>
+                <td onclick="mark(12,30)" id="12-30"></td>
+                <td onclick="mark(12,31)" id="12-31"></td>
+                <td onclick="mark(12,32)" id="12-32"></td>
+                <td onclick="mark(12,33)" id="12-33"></td>
+                <td onclick="mark(12,34)" id="12-34"></td>
+                <td onclick="mark(12,35)" id="12-35"></td>
+                <td onclick="mark(12,36)" id="12-36"></td>
+                <td onclick="mark(12,37)" id="12-37"></td>
+                <td onclick="mark(12,38)" id="12-38"></td>
+                <td onclick="mark(12,39)" id="12-39"></td>
+                <td onclick="mark(12,40)" id="12-40"></td>
+                <td onclick="mark(12,41)" id="12-41"></td>
+                <td onclick="mark(12,42)" id="12-42"></td>
+                <td onclick="mark(12,43)" id="12-43"></td>
+                <td onclick="mark(12,44)" id="12-44"></td>
+                <td onclick="mark(12,45)" id="12-45"></td>
+                <td onclick="mark(12,46)" id="12-46"></td>
+                <td onclick="mark(12,47)" id="12-47"></td>
+                <td onclick="mark(12,48)" id="12-48"></td>
+                <td onclick="mark(12,49)" id="12-49"></td>
+                <td onclick="mark(12,50)" id="12-50"></td>
+                <td onclick="mark(12,51)" id="12-51"></td>
+                <td onclick="mark(12,52)" id="12-52"></td>
+                <td onclick="mark(12,53)" id="12-53"></td>
+                <td onclick="mark(12,54)" id="12-54"></td>
+                <td onclick="mark(12,55)" id="12-55"></td>
+                <td onclick="mark(12,56)" id="12-56"></td>
+                <td onclick="mark(12,57)" id="12-57"></td>
+                <td onclick="mark(12,58)" id="12-58"></td>
+                <td class="border" onclick="mark(12,59)" id="12-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(13,0)" id="13-0"></td>
+                <td onclick="mark(13,1)" id="13-1"></td>
+                <td onclick="mark(13,2)" id="13-2"></td>
+                <td onclick="mark(13,3)" id="13-3"></td>
+                <td onclick="mark(13,4)" id="13-4"></td>
+                <td onclick="mark(13,5)" id="13-5"></td>
+                <td onclick="mark(13,6)" id="13-6"></td>
+                <td onclick="mark(13,7)" id="13-7"></td>
+                <td onclick="mark(13,8)" id="13-8"></td>
+                <td onclick="mark(13,9)" id="13-9"></td>
+                <td onclick="mark(13,10)" id="13-10"></td>
+                <td onclick="mark(13,11)" id="13-11"></td>     
+                <td onclick="mark(13,12)" id="13-12"></td>
+                <td onclick="mark(13,13)" id="13-13"></td>
+                <td onclick="mark(13,14)" id="13-14"></td>
+                <td onclick="mark(13,15)" id="13-15"></td>
+                <td onclick="mark(13,16)" id="13-16"></td>
+                <td onclick="mark(13,17)" id="13-17"></td>
+                <td onclick="mark(13,18)" id="13-18"></td>
+                <td onclick="mark(13,19)" id="13-19"></td>
+                <td onclick="mark(13,20)" id="13-20"></td>
+                <td onclick="mark(13,21)" id="13-21"></td>
+                <td onclick="mark(13,22)" id="13-22"></td>
+                <td onclick="mark(13,23)" id="13-23"></td>     
+                <td onclick="mark(13,24)" id="13-24"></td>
+                <td onclick="mark(13,25)" id="13-25"></td>
+                <td onclick="mark(13,26)" id="13-26"></td>
+                <td onclick="mark(13,27)" id="13-27"></td>
+                <td onclick="mark(13,28)" id="13-28"></td>
+                <td onclick="mark(13,29)" id="13-29"></td>
+                <td onclick="mark(13,30)" id="13-30"></td>
+                <td onclick="mark(13,31)" id="13-31"></td>
+                <td onclick="mark(13,32)" id="13-32"></td>
+                <td onclick="mark(13,33)" id="13-33"></td>
+                <td onclick="mark(13,34)" id="13-34"></td>
+                <td onclick="mark(13,35)" id="13-35"></td>
+                <td onclick="mark(13,36)" id="13-36"></td>
+                <td onclick="mark(13,37)" id="13-37"></td>
+                <td onclick="mark(13,38)" id="13-38"></td>
+                <td onclick="mark(13,39)" id="13-39"></td>
+                <td onclick="mark(13,40)" id="13-40"></td>
+                <td onclick="mark(13,41)" id="13-41"></td>
+                <td onclick="mark(13,42)" id="13-42"></td>
+                <td onclick="mark(13,43)" id="13-43"></td>
+                <td onclick="mark(13,44)" id="13-44"></td>
+                <td onclick="mark(13,45)" id="13-45"></td>
+                <td onclick="mark(13,46)" id="13-46"></td>
+                <td onclick="mark(13,47)" id="13-47"></td>
+                <td onclick="mark(13,48)" id="13-48"></td>
+                <td onclick="mark(13,49)" id="13-49"></td>
+                <td onclick="mark(13,50)" id="13-50"></td>
+                <td onclick="mark(13,51)" id="13-51"></td>
+                <td onclick="mark(13,52)" id="13-52"></td>
+                <td onclick="mark(13,53)" id="13-53"></td>
+                <td onclick="mark(13,54)" id="13-54"></td>
+                <td onclick="mark(13,55)" id="13-55"></td>
+                <td onclick="mark(13,56)" id="13-56"></td>
+                <td onclick="mark(13,57)" id="13-57"></td>
+                <td onclick="mark(13,58)" id="13-58"></td>
+                <td class="border" onclick="mark(13,59)" id="13-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(14,0)" id="14-0"></td>
+                <td onclick="mark(14,1)" id="14-1"></td>
+                <td onclick="mark(14,2)" id="14-2"></td>
+                <td onclick="mark(14,3)" id="14-3"></td>
+                <td onclick="mark(14,4)" id="14-4"></td>
+                <td onclick="mark(14,5)" id="14-5"></td>
+                <td onclick="mark(14,6)" id="14-6"></td>
+                <td onclick="mark(14,7)" id="14-7"></td>
+                <td onclick="mark(14,8)" id="14-8"></td>
+                <td onclick="mark(14,9)" id="14-9"></td>
+                <td onclick="mark(14,10)" id="14-10"></td>
+                <td onclick="mark(14,11)" id="14-11"></td>     
+                <td onclick="mark(14,12)" id="14-12"></td>
+                <td onclick="mark(14,13)" id="14-13"></td>
+                <td onclick="mark(14,14)" id="14-14"></td>
+                <td onclick="mark(14,15)" id="14-15"></td>
+                <td onclick="mark(14,16)" id="14-16"></td>
+                <td onclick="mark(14,17)" id="14-17"></td>
+                <td onclick="mark(14,18)" id="14-18"></td>
+                <td onclick="mark(14,19)" id="14-19"></td>
+                <td onclick="mark(14,20)" id="14-20"></td>
+                <td onclick="mark(14,21)" id="14-21"></td>
+                <td onclick="mark(14,22)" id="14-22"></td>
+                <td onclick="mark(14,23)" id="14-23"></td>     
+                <td onclick="mark(14,24)" id="14-24"></td>
+                <td onclick="mark(14,25)" id="14-25"></td>
+                <td onclick="mark(14,26)" id="14-26"></td>
+                <td onclick="mark(14,27)" id="14-27"></td>
+                <td onclick="mark(14,28)" id="14-28"></td>
+                <td onclick="mark(14,29)" id="14-29"></td>
+                <td onclick="mark(14,30)" id="14-30"></td>
+                <td onclick="mark(14,31)" id="14-31"></td>
+                <td onclick="mark(14,32)" id="14-32"></td>
+                <td onclick="mark(14,33)" id="14-33"></td>
+                <td onclick="mark(14,34)" id="14-34"></td>
+                <td onclick="mark(14,35)" id="14-35"></td>
+                <td onclick="mark(14,36)" id="14-36"></td>
+                <td onclick="mark(14,37)" id="14-37"></td>
+                <td onclick="mark(14,38)" id="14-38"></td>
+                <td onclick="mark(14,39)" id="14-39"></td>
+                <td onclick="mark(14,40)" id="14-40"></td>
+                <td onclick="mark(14,41)" id="14-41"></td>
+                <td onclick="mark(14,42)" id="14-42"></td>
+                <td onclick="mark(14,43)" id="14-43"></td>
+                <td onclick="mark(14,44)" id="14-44"></td>
+                <td onclick="mark(14,45)" id="14-45"></td>
+                <td onclick="mark(14,46)" id="14-46"></td>
+                <td onclick="mark(14,47)" id="14-47"></td>
+                <td onclick="mark(14,48)" id="14-48"></td>
+                <td onclick="mark(14,49)" id="14-49"></td>
+                <td onclick="mark(14,50)" id="14-50"></td>
+                <td onclick="mark(14,51)" id="14-51"></td>
+                <td onclick="mark(14,52)" id="14-52"></td>
+                <td onclick="mark(14,53)" id="14-53"></td>
+                <td onclick="mark(14,54)" id="14-54"></td>
+                <td onclick="mark(14,55)" id="14-55"></td>
+                <td onclick="mark(14,56)" id="14-56"></td>
+                <td onclick="mark(14,57)" id="14-57"></td>
+                <td onclick="mark(14,58)" id="14-58"></td>
+                <td class="border" onclick="mark(14,59)" id="14-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(15,0)" id="15-0"></td>
+                <td onclick="mark(15,1)" id="15-1"></td>
+                <td onclick="mark(15,2)" id="15-2"></td>
+                <td onclick="mark(15,3)" id="15-3"></td>
+                <td onclick="mark(15,4)" id="15-4"></td>
+                <td onclick="mark(15,5)" id="15-5"></td>
+                <td onclick="mark(15,6)" id="15-6"></td>
+                <td onclick="mark(15,7)" id="15-7"></td>
+                <td onclick="mark(15,8)" id="15-8"></td>
+                <td onclick="mark(15,9)" id="15-9"></td>
+                <td onclick="mark(15,10)" id="15-10"></td>
+                <td onclick="mark(15,11)" id="15-11"></td>     
+                <td onclick="mark(15,12)" id="15-12"></td>
+                <td onclick="mark(15,13)" id="15-13"></td>
+                <td onclick="mark(15,14)" id="15-14"></td>
+                <td onclick="mark(15,15)" id="15-15"></td>
+                <td onclick="mark(15,16)" id="15-16"></td>
+                <td onclick="mark(15,17)" id="15-17"></td>
+                <td onclick="mark(15,18)" id="15-18"></td>
+                <td onclick="mark(15,19)" id="15-19"></td>
+                <td onclick="mark(15,20)" id="15-20"></td>
+                <td onclick="mark(15,21)" id="15-21"></td>
+                <td onclick="mark(15,22)" id="15-22"></td>
+                <td onclick="mark(15,23)" id="15-23"></td>     
+                <td onclick="mark(15,24)" id="15-24"></td>
+                <td onclick="mark(15,25)" id="15-25"></td>
+                <td onclick="mark(15,26)" id="15-26"></td>
+                <td onclick="mark(15,27)" id="15-27"></td>
+                <td onclick="mark(15,28)" id="15-28"></td>
+                <td onclick="mark(15,29)" id="15-29"></td>
+                <td onclick="mark(15,30)" id="15-30"></td>
+                <td onclick="mark(15,31)" id="15-31"></td>
+                <td onclick="mark(15,32)" id="15-32"></td>
+                <td onclick="mark(15,33)" id="15-33"></td>
+                <td onclick="mark(15,34)" id="15-34"></td>
+                <td onclick="mark(15,35)" id="15-35"></td>
+                <td onclick="mark(15,36)" id="15-36"></td>
+                <td onclick="mark(15,37)" id="15-37"></td>
+                <td onclick="mark(15,38)" id="15-38"></td>
+                <td onclick="mark(15,39)" id="15-39"></td>
+                <td onclick="mark(15,40)" id="15-40"></td>
+                <td onclick="mark(15,41)" id="15-41"></td>
+                <td onclick="mark(15,42)" id="15-42"></td>
+                <td onclick="mark(15,43)" id="15-43"></td>
+                <td onclick="mark(15,44)" id="15-44"></td>
+                <td onclick="mark(15,45)" id="15-45"></td>
+                <td onclick="mark(15,46)" id="15-46"></td>
+                <td onclick="mark(15,47)" id="15-47"></td>
+                <td onclick="mark(15,48)" id="15-48"></td>
+                <td onclick="mark(15,49)" id="15-49"></td>
+                <td onclick="mark(15,50)" id="15-50"></td>
+                <td onclick="mark(15,51)" id="15-51"></td>
+                <td onclick="mark(15,52)" id="15-52"></td>
+                <td onclick="mark(15,53)" id="15-53"></td>
+                <td onclick="mark(15,54)" id="15-54"></td>
+                <td onclick="mark(15,55)" id="15-55"></td>
+                <td onclick="mark(15,56)" id="15-56"></td>
+                <td onclick="mark(15,57)" id="15-57"></td>
+                <td onclick="mark(15,58)" id="15-58"></td>
+                <td class="border" onclick="mark(15,59)" id="15-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(16,0)" id="16-0"></td>
+                <td onclick="mark(16,1)" id="16-1"></td>
+                <td onclick="mark(16,2)" id="16-2"></td>
+                <td onclick="mark(16,3)" id="16-3"></td>
+                <td onclick="mark(16,4)" id="16-4"></td>
+                <td onclick="mark(16,5)" id="16-5"></td>
+                <td onclick="mark(16,6)" id="16-6"></td>
+                <td onclick="mark(16,7)" id="16-7"></td>
+                <td onclick="mark(16,8)" id="16-8"></td>
+                <td onclick="mark(16,9)" id="16-9"></td>
+                <td onclick="mark(16,10)" id="16-10"></td>
+                <td onclick="mark(16,11)" id="16-11"></td>     
+                <td onclick="mark(16,12)" id="16-12"></td>
+                <td onclick="mark(16,13)" id="16-13"></td>
+                <td onclick="mark(16,14)" id="16-14"></td>
+                <td onclick="mark(16,15)" id="16-15"></td>
+                <td onclick="mark(16,16)" id="16-16"></td>
+                <td onclick="mark(16,17)" id="16-17"></td>
+                <td onclick="mark(16,18)" id="16-18"></td>
+                <td onclick="mark(16,19)" id="16-19"></td>
+                <td onclick="mark(16,20)" id="16-20"></td>
+                <td onclick="mark(16,21)" id="16-21"></td>
+                <td onclick="mark(16,22)" id="16-22"></td>
+                <td onclick="mark(16,23)" id="16-23"></td>     
+                <td onclick="mark(16,24)" id="16-24"></td>
+                <td onclick="mark(16,25)" id="16-25"></td>
+                <td onclick="mark(16,26)" id="16-26"></td>
+                <td onclick="mark(16,27)" id="16-27"></td>
+                <td onclick="mark(16,28)" id="16-28"></td>
+                <td onclick="mark(16,29)" id="16-29"></td>
+                <td onclick="mark(16,30)" id="16-30"></td>
+                <td onclick="mark(16,31)" id="16-31"></td>
+                <td onclick="mark(16,32)" id="16-32"></td>
+                <td onclick="mark(16,33)" id="16-33"></td>
+                <td onclick="mark(16,34)" id="16-34"></td>
+                <td onclick="mark(16,35)" id="16-35"></td>
+                <td onclick="mark(16,36)" id="16-36"></td>
+                <td onclick="mark(16,37)" id="16-37"></td>
+                <td onclick="mark(16,38)" id="16-38"></td>
+                <td onclick="mark(16,39)" id="16-39"></td>
+                <td onclick="mark(16,40)" id="16-40"></td>
+                <td onclick="mark(16,41)" id="16-41"></td>
+                <td onclick="mark(16,42)" id="16-42"></td>
+                <td onclick="mark(16,43)" id="16-43"></td>
+                <td onclick="mark(16,44)" id="16-44"></td>
+                <td onclick="mark(16,45)" id="16-45"></td>
+                <td onclick="mark(16,46)" id="16-46"></td>
+                <td onclick="mark(16,47)" id="16-47"></td>
+                <td onclick="mark(16,48)" id="16-48"></td>
+                <td onclick="mark(16,49)" id="16-49"></td>
+                <td onclick="mark(16,50)" id="16-50"></td>
+                <td onclick="mark(16,51)" id="16-51"></td>
+                <td onclick="mark(16,52)" id="16-52"></td>
+                <td onclick="mark(16,53)" id="16-53"></td>
+                <td onclick="mark(16,54)" id="16-54"></td>
+                <td onclick="mark(16,55)" id="16-55"></td>
+                <td onclick="mark(16,56)" id="16-56"></td>
+                <td onclick="mark(16,57)" id="16-57"></td>
+                <td onclick="mark(16,58)" id="16-58"></td>
+                <td class="border" onclick="mark(16,59)" id="16-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(17,0)" id="17-0"></td>
+                <td onclick="mark(17,1)" id="17-1"></td>
+                <td onclick="mark(17,2)" id="17-2"></td>
+                <td onclick="mark(17,3)" id="17-3"></td>
+                <td onclick="mark(17,4)" id="17-4"></td>
+                <td onclick="mark(17,5)" id="17-5"></td>
+                <td onclick="mark(17,6)" id="17-6"></td>
+                <td onclick="mark(17,7)" id="17-7"></td>
+                <td onclick="mark(17,8)" id="17-8"></td>
+                <td onclick="mark(17,9)" id="17-9"></td>
+                <td onclick="mark(17,10)" id="17-10"></td>
+                <td onclick="mark(17,11)" id="17-11"></td>     
+                <td onclick="mark(17,12)" id="17-12"></td>
+                <td onclick="mark(17,13)" id="17-13"></td>
+                <td onclick="mark(17,14)" id="17-14"></td>
+                <td onclick="mark(17,15)" id="17-15"></td>
+                <td onclick="mark(17,16)" id="17-16"></td>
+                <td onclick="mark(17,17)" id="17-17"></td>
+                <td onclick="mark(17,18)" id="17-18"></td>
+                <td onclick="mark(17,19)" id="17-19"></td>
+                <td onclick="mark(17,20)" id="17-20"></td>
+                <td onclick="mark(17,21)" id="17-21"></td>
+                <td onclick="mark(17,22)" id="17-22"></td>
+                <td onclick="mark(17,23)" id="17-23"></td>     
+                <td onclick="mark(17,24)" id="17-24"></td>
+                <td onclick="mark(17,25)" id="17-25"></td>
+                <td onclick="mark(17,26)" id="17-26"></td>
+                <td onclick="mark(17,27)" id="17-27"></td>
+                <td onclick="mark(17,28)" id="17-28"></td>
+                <td onclick="mark(17,29)" id="17-29"></td>
+                <td onclick="mark(17,30)" id="17-30"></td>
+                <td onclick="mark(17,31)" id="17-31"></td>
+                <td onclick="mark(17,32)" id="17-32"></td>
+                <td onclick="mark(17,33)" id="17-33"></td>
+                <td onclick="mark(17,34)" id="17-34"></td>
+                <td onclick="mark(17,35)" id="17-35"></td>
+                <td onclick="mark(17,36)" id="17-36"></td>
+                <td onclick="mark(17,37)" id="17-37"></td>
+                <td onclick="mark(17,38)" id="17-38"></td>
+                <td onclick="mark(17,39)" id="17-39"></td>
+                <td onclick="mark(17,40)" id="17-40"></td>
+                <td onclick="mark(17,41)" id="17-41"></td>
+                <td onclick="mark(17,42)" id="17-42"></td>
+                <td onclick="mark(17,43)" id="17-43"></td>
+                <td onclick="mark(17,44)" id="17-44"></td>
+                <td onclick="mark(17,45)" id="17-45"></td>
+                <td onclick="mark(17,46)" id="17-46"></td>
+                <td onclick="mark(17,47)" id="17-47"></td>
+                <td onclick="mark(17,48)" id="17-48"></td>
+                <td onclick="mark(17,49)" id="17-49"></td>
+                <td onclick="mark(17,50)" id="17-50"></td>
+                <td onclick="mark(17,51)" id="17-51"></td>
+                <td onclick="mark(17,52)" id="17-52"></td>
+                <td onclick="mark(17,53)" id="17-53"></td>
+                <td onclick="mark(17,54)" id="17-54"></td>
+                <td onclick="mark(17,55)" id="17-55"></td>
+                <td onclick="mark(17,56)" id="17-56"></td>
+                <td onclick="mark(17,57)" id="17-57"></td>
+                <td onclick="mark(17,58)" id="17-58"></td>
+                <td class="border" onclick="mark(17,59)" id="17-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(18,0)" id="18-0"></td>
+                <td onclick="mark(18,1)" id="18-1"></td>
+                <td onclick="mark(18,2)" id="18-2"></td>
+                <td onclick="mark(18,3)" id="18-3"></td>
+                <td onclick="mark(18,4)" id="18-4"></td>
+                <td onclick="mark(18,5)" id="18-5"></td>
+                <td onclick="mark(18,6)" id="18-6"></td>
+                <td onclick="mark(18,7)" id="18-7"></td>
+                <td onclick="mark(18,8)" id="18-8"></td>
+                <td onclick="mark(18,9)" id="18-9"></td>
+                <td onclick="mark(18,10)" id="18-10"></td>
+                <td onclick="mark(18,11)" id="18-11"></td>     
+                <td onclick="mark(18,12)" id="18-12"></td>
+                <td onclick="mark(18,13)" id="18-13"></td>
+                <td onclick="mark(18,14)" id="18-14"></td>
+                <td onclick="mark(18,15)" id="18-15"></td>
+                <td onclick="mark(18,16)" id="18-16"></td>
+                <td onclick="mark(18,17)" id="18-17"></td>
+                <td onclick="mark(18,18)" id="18-18"></td>
+                <td onclick="mark(18,19)" id="18-19"></td>
+                <td onclick="mark(18,20)" id="18-20"></td>
+                <td onclick="mark(18,21)" id="18-21"></td>
+                <td onclick="mark(18,22)" id="18-22"></td>
+                <td onclick="mark(18,23)" id="18-23"></td>     
+                <td onclick="mark(18,24)" id="18-24"></td>
+                <td onclick="mark(18,25)" id="18-25"></td>
+                <td onclick="mark(18,26)" id="18-26"></td>
+                <td onclick="mark(18,27)" id="18-27"></td>
+                <td onclick="mark(18,28)" id="18-28"></td>
+                <td onclick="mark(18,29)" id="18-29"></td>
+                <td onclick="mark(18,30)" id="18-30"></td>
+                <td onclick="mark(18,31)" id="18-31"></td>
+                <td onclick="mark(18,32)" id="18-32"></td>
+                <td onclick="mark(18,33)" id="18-33"></td>
+                <td onclick="mark(18,34)" id="18-34"></td>
+                <td onclick="mark(18,35)" id="18-35"></td>
+                <td onclick="mark(18,36)" id="18-36"></td>
+                <td onclick="mark(18,37)" id="18-37"></td>
+                <td onclick="mark(18,38)" id="18-38"></td>
+                <td onclick="mark(18,39)" id="18-39"></td>
+                <td onclick="mark(18,40)" id="18-40"></td>
+                <td onclick="mark(18,41)" id="18-41"></td>
+                <td onclick="mark(18,42)" id="18-42"></td>
+                <td onclick="mark(18,43)" id="18-43"></td>
+                <td onclick="mark(18,44)" id="18-44"></td>
+                <td onclick="mark(18,45)" id="18-45"></td>
+                <td onclick="mark(18,46)" id="18-46"></td>
+                <td onclick="mark(18,47)" id="18-47"></td>
+                <td onclick="mark(18,48)" id="18-48"></td>
+                <td onclick="mark(18,49)" id="18-49"></td>
+                <td onclick="mark(18,50)" id="18-50"></td>
+                <td onclick="mark(18,51)" id="18-51"></td>
+                <td onclick="mark(18,52)" id="18-52"></td>
+                <td onclick="mark(18,53)" id="18-53"></td>
+                <td onclick="mark(18,54)" id="18-54"></td>
+                <td onclick="mark(18,55)" id="18-55"></td>
+                <td onclick="mark(18,56)" id="18-56"></td>
+                <td onclick="mark(18,57)" id="18-57"></td>
+                <td onclick="mark(18,58)" id="18-58"></td>
+                <td class="border" onclick="mark(18,59)" id="18-59"></td>
+            </tr>
+            <tr>
+                <td class="border" onclick="mark(19,0)" id="19-0"></td>
+                <td class="border" onclick="mark(19,1)" id="19-1"></td>
+                <td class="border" onclick="mark(19,2)" id="19-2"></td>
+                <td class="border" onclick="mark(19,3)" id="19-3"></td>
+                <td class="border" onclick="mark(19,4)" id="19-4"></td>
+                <td class="border" onclick="mark(19,5)" id="19-5"></td>
+                <td class="border" onclick="mark(19,6)" id="19-6"></td>
+                <td class="border" onclick="mark(19,7)" id="19-7"></td>
+                <td class="border" onclick="mark(19,8)" id="19-8"></td>
+                <td class="border" onclick="mark(19,9)" id="19-9"></td>
+                <td class="border" onclick="mark(19,10)" id="19-10"></td>
+                <td class="border" onclick="mark(19,11)" id="19-11"></td>     
+                <td class="border" onclick="mark(19,12)" id="19-12"></td>
+                <td class="border" onclick="mark(19,13)" id="19-13"></td>
+                <td class="border" onclick="mark(19,14)" id="19-14"></td>
+                <td class="border" onclick="mark(19,15)" id="19-15"></td>
+                <td class="border" onclick="mark(19,16)" id="19-16"></td>
+                <td class="border" onclick="mark(19,17)" id="19-17"></td>
+                <td class="border" onclick="mark(19,18)" id="19-18"></td>
+                <td class="border" onclick="mark(19,19)" id="19-19"></td>
+                <td class="border" onclick="mark(19,20)" id="19-20"></td>
+                <td class="border" onclick="mark(19,21)" id="19-21"></td>
+                <td class="border" onclick="mark(19,22)" id="19-22"></td>
+                <td class="border" onclick="mark(19,23)" id="19-23"></td>     
+                <td class="border" onclick="mark(19,24)" id="19-24"></td>
+                <td class="border" onclick="mark(19,25)" id="19-25"></td>
+                <td class="border" onclick="mark(19,26)" id="19-26"></td>
+                <td class="border" onclick="mark(19,27)" id="19-27"></td>
+                <td class="border" onclick="mark(19,28)" id="19-28"></td>
+                <td class="border" onclick="mark(19,29)" id="19-29"></td>
+                <td class="border" onclick="mark(19,30)" id="19-30"></td>
+                <td class="border" onclick="mark(19,31)" id="19-31"></td>
+                <td class="border" onclick="mark(19,32)" id="19-32"></td>
+                <td class="border" onclick="mark(19,33)" id="19-33"></td>
+                <td class="border" onclick="mark(19,34)" id="19-34"></td>
+                <td class="border" onclick="mark(19,35)" id="19-35"></td>
+                <td class="border" onclick="mark(19,36)" id="19-36"></td>
+                <td class="border" onclick="mark(19,37)" id="19-37"></td>
+                <td class="border" onclick="mark(19,38)" id="19-38"></td>
+                <td class="border" onclick="mark(19,39)" id="19-39"></td>
+                <td class="border" onclick="mark(19,40)" id="19-40"></td>
+                <td class="border" onclick="mark(19,41)" id="19-41"></td>
+                <td class="border" onclick="mark(19,42)" id="19-42"></td>
+                <td class="border" onclick="mark(19,43)" id="19-43"></td>
+                <td class="border" onclick="mark(19,44)" id="19-44"></td>
+                <td class="border" onclick="mark(19,45)" id="19-45"></td>
+                <td class="border" onclick="mark(19,46)" id="19-46"></td>
+                <td class="border" onclick="mark(19,47)" id="19-47"></td>
+                <td class="border" onclick="mark(19,48)" id="19-48"></td>
+                <td class="border" onclick="mark(19,49)" id="19-49"></td>
+                <td class="border" onclick="mark(19,50)" id="19-50"></td>
+                <td class="border" onclick="mark(19,51)" id="19-51"></td>
+                <td class="border" onclick="mark(19,52)" id="19-52"></td>
+                <td class="border" onclick="mark(19,53)" id="19-53"></td>
+                <td class="border" onclick="mark(19,54)" id="19-54"></td>
+                <td class="border" onclick="mark(19,55)" id="19-55"></td>
+                <td class="border" onclick="mark(19,56)" id="19-56"></td>
+                <td class="border" onclick="mark(19,57)" id="19-57"></td>
+                <td class="border" onclick="mark(19,58)" id="19-58"></td>
+                <td class="border" onclick="mark(19,59)" id="19-59"></td>
+            </tr>
+
+        </table>
+    </body>
+</html>
