@@ -6,17 +6,18 @@ body{
 table{
     height:auto;
     width:auto;
-    border:1px solid black;
-    border-collapse: collapse;
+
+    border-collapse:collapse;
 }
 td{
     height:25px;
     width:25px;
-    border:1px solid black;
+    border:0.5px solid aqua;
 
 }
+
 .border{
-    background-color:black;
+    background-color:white;
 }
 .button-container{
     width:100%;
@@ -40,10 +41,38 @@ button{
     text-align:center;
 }
 .discover{
-    background-color: aqua;
     height:25px;
     width:25px;
-    border:1px solid black;
+    animation-name: fillDiscover;
+    animation-duration: 0.75s;
+    animation-timing-function: ease-out;
+    animation-delay: 0s;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+
+}
+@keyframes fillDiscover{
+    0% {
+        transform: scale(.3);
+        background-color: rgba(0, 0, 66, 0.75);
+        border-radius: 100%;
+      }
+    
+      50% {
+        background-color: rgba(17, 104, 217, 0.75);
+      }
+    
+      75% {
+        transform: scale(0.75);
+        background-color: rgba(0, 217, 159, 0.75)
+      }
+    
+      100% {
+        transform: scale(1.0);
+        background-color: rgba(0, 190, 218, 0.75);
+      }
 
 }
 .destinationFound{

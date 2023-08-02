@@ -1,4 +1,4 @@
-var sourcevar=0,destinationvar=0,sourceclassname="",destinationclassname="",tempdest,tempsource,discoverqueue=[],discoverParentMap = {},foundEren=false;
+var sourcevar=0,destinationvar=0,sourceclassname="",destinationclassname="",tempdest,tempsource,discoverqueue=[],discoverParentMap = {},foundEren=false,tracedPath=[];
 //to let mark function know we have to mark source
 function source()
 {
@@ -58,25 +58,35 @@ function mark(i,j)
 }
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
- }
-async function retracePath(currentVertexString)
+}
+function storeTracedPath(currentVertexString)
 {
-    console.log(discoverParentMap);
     if(currentVertexString === "0")
     {
-        console.log(discoverParentMap);
         return;
     }
-    await sleep(100);
-    getParentElement = discoverParentMap[currentVertexString];
-    retracePath(getParentElement);
-    document.getElementById(currentVertexString).style.backgroundColor = "green";
+    getParent = discoverParentMap[currentVertexString];
+    storeTracedPath(getParent);
+    tracedPath.push(currentVertexString);
 }
+
+async function retracePath(currentVertexString)
+{
+    storeTracedPath(currentVertexString);
+    for(let i=0;i<tracedPath.length;i++)
+    {
+        currentElement = tracedPath[i];
+        document.getElementById(currentElement).style.backgroundColor = "green";
+        await sleep(100);
+    }
+    return;
+}
+
 function declareDestinationfound(destinationVertexString)
 {
     foundEren = true;
     document.getElementById(destinationVertexString).className += "  destinationFound";
-    retracePath(destinationVertexString);
+    retracePath(destinationVertexString);   
     return;
 }
 function discoveradj(temp_x,temp_y,discoverindex)
@@ -153,7 +163,7 @@ async function discover()
     let dummy=0;
     while(1)
     {
-        await sleep(25);
+        await sleep(75);
         let temp_pointx = discoverqueue[discoverindex][0];
         let temp_pointy = discoverqueue[discoverindex][1];
         if(foundEren)
