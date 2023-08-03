@@ -31,7 +31,6 @@ function mark(i,j)
         var x = document.getElementById(i+"-"+j);
         sourceclassname = x.className;
         x.className += " source";
-        x.innerHTML = "S";
         return;
     }
     else if(destinationvar==1)
@@ -51,7 +50,6 @@ function mark(i,j)
         var x = document.getElementById(i+"-"+j);
         destinationclassname = x.className;
         x.className += " destination";
-        x.innerHTML = "D";
         return;
     }
 
@@ -76,7 +74,7 @@ async function retracePath(currentVertexString)
     for(let i=0;i<tracedPath.length;i++)
     {
         currentElement = tracedPath[i];
-        document.getElementById(currentElement).style.backgroundColor = "green";
+        document.getElementById(currentElement).className = document.getElementById(currentElement).className.replace("discover","") + " discovered";
         await sleep(100);
     }
     return;
@@ -85,7 +83,6 @@ async function retracePath(currentVertexString)
 function declareDestinationfound(destinationVertexString)
 {
     foundEren = true;
-    document.getElementById(destinationVertexString).className += "  destinationFound";
     retracePath(destinationVertexString);   
     return;
 }
@@ -163,7 +160,7 @@ async function discover()
     let dummy=0;
     while(1)
     {
-        await sleep(75);
+        await sleep(40);
         let temp_pointx = discoverqueue[discoverindex][0];
         let temp_pointy = discoverqueue[discoverindex][1];
         if(foundEren)
