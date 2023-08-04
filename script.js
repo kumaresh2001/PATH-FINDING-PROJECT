@@ -110,6 +110,7 @@ function discover(x,y)
         {
             return 0;
         }
+
         let discoverClassName  =  document.getElementById(x+"-"+y).className;
     
         if(discoverClassName.includes("discover")||discoverClassName.includes("source"))

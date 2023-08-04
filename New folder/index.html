@@ -10,9 +10,13 @@
     <body>
         <div>
             <div class="button-container">
+                <select id = "algoSelector" class="algoSelector">
+                    <option value="DFS" selected>DEPTH FIRST SEARCH</option>
+                    <option value="BFS">BREADTH FIRST SEARCH</option>
+                </select>
                 <button onclick="source()">SELECT SOURCE</button>
                 <button onclick="destination()">SELECT DESTINATION</button>
-                <button onclick="findPath()">FIND PATH</button>    
+                <button onclick="visualise()">FIND PATH</button>    
             </div>    
         </div>
 

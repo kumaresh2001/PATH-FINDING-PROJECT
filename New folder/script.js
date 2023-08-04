@@ -1,4 +1,28 @@
 var sourcevar=0,destinationvar=0,sourceclassname="",destinationclassname="",tempdest,tempsource,discoverqueue=[],discoverParentMap = {},foundEren=false,tracedPath=[];
+//source var and destinationvar used to activate selecting source and destination
+var directionArray = [[0,-1],[0,1],[-1,0],[1,0]],directionPointer=0;
+var discoveredCo_ordinates = new Array();
+var ij=0;
+//declaration and initialisation of board
+var board = new Array(20);
+for(var i=0;i<20;i++)
+{
+    board[i] = new Array(60);
+}
+for(var i=0;i<20;i++)
+{
+    for(var j=0;j<60;j++)
+    {
+        if(i==0||i==19||j==0||j==59)
+        {
+            board[i][j] = -1;
+        }
+        else{
+            board[i][j] = 0;
+        }
+    }
+}
+
 //to let mark function know we have to mark source
 function source()
 {
@@ -57,6 +81,114 @@ function mark(i,j)
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+
+/* DFS Methods Starts here - to be encapsulated soon */
+function DFSDiscover(x,y)
+{
+        
+        if(x<=0||x>=19||y<=0||y>=59)
+        {
+            return 0;
+        }
+        console.log(x+"-"+y);
+        let discoverClassName  =  document.getElementById(x+"-"+y).className;
+    
+        if(discoverClassName.includes("discover")||discoverClassName.includes("source"))
+        {
+            return 0;
+        }
+    
+        if(discoverClassName.includes("destination"))
+        {
+            return 1;
+        }
+
+        document.getElementById(x+"-"+y).className += " discover";
+        if(DFSDiscover(x-1,y))
+        {
+            discoveredCo_ordinates.push([x,y]);
+            return 1;
+        }
+        if(DFSDiscover(x,y+1))
+        {
+            discoveredCo_ordinates.push([x,y]);
+            return 1;
+        }
+        if(DFSDiscover(x+1,y))
+        {
+            discoveredCo_ordinates.push([x,y]);
+            return 1;
+        }
+        if(DFSDiscover(x,y-1))
+        {
+            discoveredCo_ordinates.push([x,y]);
+            return 1;
+        }
+        return 0;
+}
+
+async function DFSDiscovered(discoveredCo_ordinates)
+{
+    for(var ij=0;ij<discoveredCo_ordinates.length;ij++)
+    {
+        await sleep(50);
+        document.getElementById(discoveredCo_ordinates[ij][0]+"-"+discoveredCo_ordinates[ij][1]).className+=" discovered";
+    }
+}
+ function findDFSPath()
+{
+    //check if source exists
+    var x = document.getElementsByClassName("source");
+    if(typeof(x[0])=="undefined")
+    {
+        alert("SELECT SOURCE");
+        return;
+    }
+    //check if destination exists
+    var y = document.getElementsByClassName("destination");
+    if(typeof(y[0])=="undefined")
+    {
+        alert("SELECT DESTINATION");
+        return;
+    }
+    let sourceIndex = x[0].id.split("-");    
+    if(DFSDiscover(parseInt(sourceIndex[0])-1,parseInt(sourceIndex[1])))
+    {
+
+    }
+    else if(DFSDiscover(parseInt(sourceIndex[0]),parseInt(sourceIndex[1])+1))
+    {
+
+    } 
+    else if(DFSDiscover(parseInt(sourceIndex[0])+1,parseInt(sourceIndex[1])))
+    {
+
+    }
+    else if(DFSDiscover(parseInt(sourceIndex[0]),parseInt(sourceIndex[1])-1))
+    {
+
+    }
+    else
+    {
+
+    }
+    discoveredCo_ordinates.reverse();
+    DFSDiscovered(discoveredCo_ordinates);
+}
+
+
+
+
+
+
+
+
+
+/* BFS Methods Starts here - to be encapsulated soon */
+
+
+
 function storeTracedPath(currentVertexString)
 {
     if(currentVertexString === "0")
@@ -208,4 +340,17 @@ function findPath()
     discover();   
 
 }
-    
+
+function visualise()
+{
+    getPathFindingAlgo = document.getElementById("algoSelector").value;
+    console.log(getPathFindingAlgo);
+    if(getPathFindingAlgo === "DFS")
+    {
+        findDFSPath();
+    }
+    else if(getPathFindingAlgo === "BFS")
+    {
+        findPath();
+    }
+}
