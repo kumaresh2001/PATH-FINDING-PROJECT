@@ -1,6 +1,7 @@
 //source var and destinationvar used to activate selecting source and destination
 var sourcevar=0,destinationvar=0,sourceclass="",destinationclass="";
 var directionArray = [[0,-1],[0,1],[-1,0],[1,0]],directionPointer=0;
+var isVisualizationActive = false;
 var discoveredCo_ordinates = new Array();
 var ij=0;
 //declaration and initialisation of board
@@ -38,64 +39,76 @@ board looks like this
 
 function source()
 {
-    sourcevar=1;
-    destinationvar =0;
+    if(!isVisualizationActive)
+    {
+        sourcevar=1;
+        destinationvar =0;    
+    }
 }
 function destination()
 {
-    sourcevar = 0;
-    destinationvar=1;
+    if(!isVisualizationActive)
+    {
+        sourcevar = 0;
+        destinationvar=1;    
+    }
 }
 function mark(i,j)
 {
-    if(i==0||i==19||j==0||j==59)
+    if(!isVisualizationActive)
     {
-        alert("CHOOSE EMPTY SPACE");
-        return;
-    }
-    if(sourcevar==1)
-    {
-        var x = document.getElementsByClassName("source");
-        //resetting previously set source
-        if(typeof(x[0])!="undefined")
+        if(i==0||i==19||j==0||j==59)
         {
-            var oldSourceId= x[0].id;
-            var i1 = oldSourceId.split("-");
-            console.log(i1[0]+"--"+i1[1])
-            x[0].innerHTML = "";
-            x[0].className = sourceclass;
-            board[i1[0]][i1[1]] = 0;
+            alert("CHOOSE EMPTY SPACE");
+            return;
         }
-        //setting new source
-        sourceclass=document.getElementById(i+"-"+j).className;
-        document.getElementById(i+"-"+j).className +=" source";
-        document.getElementById(i+"-"+j).innerHTML = "S";
-        board[i][j] = 1;
-        sourcevar=0;//indicating that source marking is complete
-    }
-    else if(destinationvar==1)
-    {
-        var y = document.getElementsByClassName("destination");
-        //resetting previously set destination
-        if(typeof(y[0])!="undefined")
+        if(sourcevar==1)
         {
-            var oldDestinationId = y[0].id;
-            var j1 = oldDestinationId.split("-");
-            console.log(j1[0]+"---"+j1[1]);
-            console.log("entered if");
-            y[0].innerHTML = "";
-            y[0].className = destinationclass;
-            board[j1[0]][j1[1]] = 0;
+            var x = document.getElementsByClassName("source");
+            //resetting previously set source
+            if(typeof(x[0])!="undefined")
+            {
+                var oldSourceId= x[0].id;
+                var i1 = oldSourceId.split("-");
+                console.log(i1[0]+"--"+i1[1])
+                x[0].innerHTML = "";
+                x[0].className = sourceclass;
+                board[i1[0]][i1[1]] = 0;
+            }
+            //setting new source
+            sourceclass=document.getElementById(i+"-"+j).className;
+            document.getElementById(i+"-"+j).className +=" source";
+            document.getElementById(i+"-"+j).innerHTML = "S";
+            board[i][j] = 1;
+            sourcevar=0;
+            //indicating that source marking is complete
         }
-        //setting new destination
-        destinationclass=document.getElementById(i+"-"+j).className;
-        document.getElementById(i+"-"+j).className +=" destination";
-        document.getElementById(i+"-"+j).innerHTML = "D";
-        board[i][j] = 2;
-        destinationvar=0;//indicating that destination making is complete
-    }
-    else{
-        alert("PLEASE SELECT AN OPTION");
+        else if(destinationvar==1)
+        {
+            var y = document.getElementsByClassName("destination");
+            //resetting previously set destination
+            if(typeof(y[0])!="undefined")
+            {
+                var oldDestinationId = y[0].id;
+                var j1 = oldDestinationId.split("-");
+                console.log(j1[0]+"---"+j1[1]);
+                console.log("entered if");
+                y[0].innerHTML = "";
+                y[0].className = destinationclass;
+                board[j1[0]][j1[1]] = 0;
+            }
+            //setting new destination
+            destinationclass=document.getElementById(i+"-"+j).className;
+            document.getElementById(i+"-"+j).className +=" destination";
+            document.getElementById(i+"-"+j).innerHTML = "D";
+            board[i][j] = 2;
+            destinationvar=0;
+            //indicating that destination making is complete
+        }
+        else{
+            alert("PLEASE SELECT AN OPTION");
+        }
+    
     }
 
 }
@@ -161,6 +174,7 @@ async function discovered(discoveredCo_ordinates)
 }
  function findPath()
 {
+    isVisualizationActive = true;
     //check if source exists
     var x = document.getElementsByClassName("source");
     if(typeof(x[0])=="undefined")
@@ -176,27 +190,9 @@ async function discovered(discoveredCo_ordinates)
         return;
     }
     let sourceIndex = x[0].id.split("-");
-    if(discover(parseInt(sourceIndex[0])-1,parseInt(sourceIndex[1])))
-    {
-
-    }
-    else if(discover(parseInt(sourceIndex[0]),parseInt(sourceIndex[1])+1))
-    {
-
-    } 
-    else if(discover(parseInt(sourceIndex[0])+1,parseInt(sourceIndex[1])))
-    {
-
-    }
-    else if(discover(parseInt(sourceIndex[0]),parseInt(sourceIndex[1])-1))
-    {
-
-    }
-    else
-    {
-
-    }
+    discover(parseInt(sourceIndex[0])-1,parseInt(sourceIndex[1])) ? "": (discover(parseInt(sourceIndex[0]),parseInt(sourceIndex[1])+1) ? "" : (discover(parseInt(sourceIndex[0])+1,parseInt(sourceIndex[1])) ? "" : discover(parseInt(sourceIndex[0]),parseInt(sourceIndex[1])-1) ));
     discoveredCo_ordinates.reverse();
     console.log(discoveredCo_ordinates);
     discovered(discoveredCo_ordinates);
+    isVisualizationActive = false;
 }

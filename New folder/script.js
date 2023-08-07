@@ -3,6 +3,7 @@ var sourcevar=0,destinationvar=0,sourceclassname="",destinationclassname="",temp
 var directionArray = [[0,-1],[0,1],[-1,0],[1,0]],directionPointer=0;
 var discoveredCo_ordinates = new Array();
 var ij=0;
+var isVisualizationActive = false;
 //declaration and initialisation of board
 var board = new Array(20);
 for(var i=0;i<20;i++)
@@ -26,55 +27,65 @@ for(var i=0;i<20;i++)
 //to let mark function know we have to mark source
 function source()
 {
-    sourcevar=1;
-    destinationvar=0;
+    if(!isVisualizationActive)
+    {
+        sourcevar=1;
+        destinationvar=0;    
+    }
 }
 function destination()
 {
-    destinationvar=1;
-    sourcevar=0;
+    if(!isVisualizationActive)
+    {
+        destinationvar=1;
+        sourcevar=0;    
+    }
 }
 
 function mark(i,j)
 {
-    //to see if we have to mark source
-    if(sourcevar==1)
+    if(!isVisualizationActive)
     {
-        var prevSource = document.getElementsByClassName("source");
-        //if there are no elements with className source the variable becomes undefined
-        if(typeof(prevSource[0])!="undefined")
+        //to see if we have to mark source
+        if(sourcevar==1)
         {
-            prevSource[0].innerHTML = "";
-            prevSource[0].className = sourceclassname;
-        }
-        if(i==0||i==19||j==0||j==59)
-        {
-            alert("DO NOT SELECT BORDER");
+            var prevSource = document.getElementsByClassName("source");
+            //if there are no elements with className source the variable becomes undefined
+            if(typeof(prevSource[0])!="undefined")
+            {
+                prevSource[0].innerHTML = "";
+                prevSource[0].className = sourceclassname;
+            }
+            if(i==0||i==19||j==0||j==59)
+            {
+                alert("DO NOT SELECT BORDER");
+                return;
+            }
+            var x = document.getElementById(i+"-"+j);
+            sourceclassname = x.className;
+            x.className += " source";
             return;
         }
-        var x = document.getElementById(i+"-"+j);
-        sourceclassname = x.className;
-        x.className += " source";
-        return;
-    }
-    else if(destinationvar==1)
-    {
-        var prevdestination = document.getElementsByClassName("destination");
-        //if there are no elements with className source the variable becomes undefined
-        if(typeof(prevdestination[0])!="undefined")
+        else if(destinationvar==1)
         {
-            prevdestination[0].innerHTML = "";
-            prevdestination[0].className = destinationclassname;
-        }
-        if(i==0||i==19||j==0||j==59)
-        {
-            alert("DO NOT SELECT BORDER");
+            var prevdestination = document.getElementsByClassName("destination");
+            //if there are no elements with className source the variable becomes undefined
+            if(typeof(prevdestination[0])!="undefined")
+            {
+                prevdestination[0].innerHTML = "";
+                prevdestination[0].className = destinationclassname;
+            }
+            if(i==0||i==19||j==0||j==59)
+            {
+                alert("DO NOT SELECT BORDER");
+                return;
+            }
+            var x = document.getElementById(i+"-"+j);
+            destinationclassname = x.className;
+            x.className += " destination";
             return;
         }
-        var x = document.getElementById(i+"-"+j);
-        destinationclassname = x.className;
-        x.className += " destination";
-        return;
+
     }
 
 }
@@ -135,6 +146,7 @@ async function DFSDiscovered(discoveredCo_ordinates)
         await sleep(50);
         document.getElementById(discoveredCo_ordinates[ij][0]+"-"+discoveredCo_ordinates[ij][1]).className+=" discovered";
     }
+    isVisualizationActive = false;
 }
  function findDFSPath()
 {
@@ -153,26 +165,17 @@ async function DFSDiscovered(discoveredCo_ordinates)
         return;
     }
     let sourceIndex = x[0].id.split("-");    
-    if(DFSDiscover(parseInt(sourceIndex[0])-1,parseInt(sourceIndex[1])))
-    {
+    DFSDiscover(parseInt(sourceIndex[0])-1,parseInt(sourceIndex[1])) ? "" : 
+    (
+        DFSDiscover(parseInt(sourceIndex[0]),parseInt(sourceIndex[1])+1) ? "" : 
+        (
+            DFSDiscover(parseInt(sourceIndex[0])+1,parseInt(sourceIndex[1])) ? "" :
+            (
+                DFSDiscover(parseInt(sourceIndex[0]),parseInt(sourceIndex[1])-1)
+            )
+        )
+    ) 
 
-    }
-    else if(DFSDiscover(parseInt(sourceIndex[0]),parseInt(sourceIndex[1])+1))
-    {
-
-    } 
-    else if(DFSDiscover(parseInt(sourceIndex[0])+1,parseInt(sourceIndex[1])))
-    {
-
-    }
-    else if(DFSDiscover(parseInt(sourceIndex[0]),parseInt(sourceIndex[1])-1))
-    {
-
-    }
-    else
-    {
-
-    }
     discoveredCo_ordinates.reverse();
     DFSDiscovered(discoveredCo_ordinates);
 }
@@ -209,6 +212,7 @@ async function retracePath(currentVertexString)
         document.getElementById(currentElement).className = document.getElementById(currentElement).className.replace("discover","") + " discovered";
         await sleep(100);
     }
+    isVisualizationActive = false;
     return;
 }
 
@@ -343,14 +347,17 @@ function findPath()
 
 function visualise()
 {
-    getPathFindingAlgo = document.getElementById("algoSelector").value;
-    console.log(getPathFindingAlgo);
-    if(getPathFindingAlgo === "DFS")
+    if(!isVisualizationActive)
     {
-        findDFSPath();
-    }
-    else if(getPathFindingAlgo === "BFS")
-    {
-        findPath();
+        isVisualizationActive = true;
+        getPathFindingAlgo = document.getElementById("algoSelector").value;
+        if(getPathFindingAlgo === "DFS")
+        {
+            findDFSPath();
+        }
+        else if(getPathFindingAlgo === "BFS")
+        {
+            findPath();
+        } 
     }
 }
