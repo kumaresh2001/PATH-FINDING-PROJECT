@@ -1,7 +1,25 @@
+*{
+    margin:0px;
+    padding:0px;
+}
+:root{
+    --primaryColor:#7a48f4;
+}
 body{
-
-
     background-size: cover;
+    font-family: 'Roboto', sans-serif;
+}
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--primaryColor);
+}
+.headingContainer{
+    color:white;
+    margin-left:10px;
+    font-size: 1.3rem;
+    font-weight: 400;
 }
 .tableContainer{
     width:100%;
@@ -18,13 +36,13 @@ table{
 td{
     height:28px;
     width:28px;
-    border:0.5px solid #AB9C54;
+    border:0.5px solid var(--primaryColor);
 
 
 }
 
 .border{
-    background-color:#36D7F1;
+    background-color:var(--primaryColor);
     border: none;
 }
 .button-container{
@@ -36,22 +54,23 @@ td{
     justify-content: space-around;
 }
 button{
-    background-color:black;
+    background-color:var(--primaryColor);
     color: white;
     width:250px;
     height:50px;
-    font-weight:bold;
-    font-size:15px;
+    font-size:1.2rem;
     text-align:center;
+    border:none;
 }
 .algoSelector{
     padding:5px 10px;
     height: 50px;
-    background-color:black;
+    background-color:var(--primaryColor);
     color:white;
     font-weight:bold;
     font-size:15px;
     text-align:center;
+    border:none;
 }
  .destination
 {

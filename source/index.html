@@ -2,22 +2,33 @@
 
 <html>
     <head>
-        <title>Look Where You're Going</title>
+        <title>Reisender</title>
         <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="script.js"></script>
     </head>
     <body>
         <div>
-            <div class="button-container">
-                <select id = "algoSelector" class="algoSelector">
-                    <option value="DFS" selected>DEPTH FIRST SEARCH</option>
-                    <option value="BFS">BREADTH FIRST SEARCH</option>
-                </select>
-                <button onclick="source()">SELECT SOURCE</button>
-                <button onclick="destination()">SELECT DESTINATION</button>
-                <button onclick="visualise()">FIND PATH</button>    
-            </div>    
+            <div class="navbar">
+                
+                <div class="headingContainer">
+                    <span>Reisender</span>
+                </div>
+
+                <div class="button-container">
+                    <select id = "algoSelector" class="algoSelector">
+                        <option value="DFS" selected>DEPTH FIRST SEARCH</option>
+                        <option value="BFS">BREADTH FIRST SEARCH</option>
+                    </select>
+                    <button onclick="source()">Select Source</button>
+                    <button onclick="destination()">Select Destination</button>
+                    <button onclick="visualise()">Visualise</button>    
+                </div>        
+
+            </div>
         </div>
 
         <div class="tableContainer">
