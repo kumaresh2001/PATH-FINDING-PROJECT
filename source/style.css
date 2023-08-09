@@ -9,7 +9,14 @@ body{
     background-size: cover;
     font-family: 'Roboto', sans-serif;
 }
+.navbarParent{
+    position:sticky;
+    top:0px;
+    z-index:10;
+}
 .navbar{
+    position:sticky;
+    top:0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -85,6 +92,8 @@ button{
     background-size: cover;
 }
 .discover{
+    position:relative;
+    z-index: 0;
     animation-name: fillDiscover;
     animation-duration: 0.75s;
     animation-timing-function: ease-out;
@@ -117,6 +126,8 @@ button{
 
 }
 .discovered{
+    position:relative;
+    z-index: 0;
     animation-name: fillDiscovered;
     animation-duration: 0.75s;
     animation-timing-function: ease-out;
