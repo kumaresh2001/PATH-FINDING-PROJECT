@@ -45,6 +45,10 @@ function resetMap()
     {
         clearBoard();
         clearMap();    
+        foundEren = false;
+        tracedPath = [];
+        discoverqueue = [];
+        discoverParentMap = {};
     }
 }
 
@@ -361,8 +365,6 @@ function findPath()
     tempdest[0] = parseInt(tempdest[0]);
     tempdest[1] = parseInt(tempdest[1]);
     //to store source co-ordinates as string
-    discoverqueue = [];
-    discoverParentMap ={};    
     //push source vertex into queue
     discoverqueue.push([tempsource[0],tempsource[1],0]);
     //store parent of source as zero
