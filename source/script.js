@@ -6,21 +6,45 @@ var ij=0;
 var isVisualizationActive = false;
 //declaration and initialisation of board
 var board = new Array(20);
-for(var i=0;i<20;i++)
+function clearBoard()
 {
-    board[i] = new Array(60);
-}
-for(var i=0;i<20;i++)
-{
-    for(var j=0;j<60;j++)
+    for(var i=0;i<20;i++)
     {
-        if(i==0||i==19||j==0||j==59)
+        board[i] = new Array(60);
+    }
+    for(var i=0;i<20;i++)
+    {
+        for(var j=0;j<60;j++)
         {
-            board[i][j] = -1;
+            if(i==0||i==19||j==0||j==59)
+            {
+                board[i][j] = -1;
+            }
+            else{
+                board[i][j] = 0;
+            }
         }
-        else{
-            board[i][j] = 0;
+    }
+
+}
+
+function clearMap()
+{
+    for(let i=1;i<19;i++)
+    {
+        for(let j = 1;j<59;j++)
+        {
+            document.getElementById(i+"-"+j).className = "";
         }
+    }
+}
+
+function resetMap()
+{
+    if(!isVisualizationActive)
+    {
+        clearBoard();
+        clearMap();    
     }
 }
 
@@ -218,6 +242,7 @@ async function retracePath(currentVertexString)
 
 function declareDestinationfound(destinationVertexString)
 {
+    tracedPath = [];
     foundEren = true;
     retracePath(destinationVertexString);   
     return;
@@ -293,14 +318,16 @@ function discoveradj(temp_x,temp_y,discoverindex)
 async function discover()
 {
     let discoverindex=0;
-    let dummy=0;
     while(1)
     {
+        console.log(discoverindex);
         await sleep(40);
         let temp_pointx = discoverqueue[discoverindex][0];
         let temp_pointy = discoverqueue[discoverindex][1];
+        console.log(temp_pointx + " - " + temp_pointy);
         if(foundEren)
         {
+            foundEren = false;
             break;
         }
         discoveradj(temp_pointx,temp_pointy,discoverindex)
@@ -314,13 +341,13 @@ function findPath()
     var x = document.getElementsByClassName("source");
     if(typeof(x[0])==="undefined")
     {
-        alert("PLEASE SELECT SOURCE");
+        alert("Select a Source");
         return;
     }
     var y = document.getElementsByClassName("destination");
     if(typeof(y[0])==="undefined")
     {
-        alert("PLEASE SELECT DESTINATION");
+        alert("Select a Destination");
         return;
     }
     //to obtain co-ordinate of source from id 
@@ -334,14 +361,15 @@ function findPath()
     tempdest[0] = parseInt(tempdest[0]);
     tempdest[1] = parseInt(tempdest[1]);
     //to store source co-ordinates as string
-    let destinationCoOrdinateString = tempdest[0]+"-"+ tempdest[1];
-    
+    discoverqueue = [];
+    discoverParentMap ={};    
     //push source vertex into queue
     discoverqueue.push([tempsource[0],tempsource[1],0]);
     //store parent of source as zero
     discoverParentMap[sourceCoOrdinateString] = "0";
     //call discover function
     discover();   
+    isVisualizationActive = false;
 
 }
 
@@ -360,4 +388,9 @@ function visualise()
             findPath();
         } 
     }
+}
+
+window.onload = () =>
+{
+    clearBoard();
 }
