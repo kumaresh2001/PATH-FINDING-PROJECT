@@ -121,7 +121,7 @@ button{
     
       100% {
         transform: scale(1.0);
-        background-color: #261AB3
+        background-color: var(--primaryColor)
       }
 
 }
