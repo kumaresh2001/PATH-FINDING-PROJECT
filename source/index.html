@@ -17,20 +17,25 @@
                 <div class="headingContainer">
                     <span>Reisender</span>
                 </div>
+                <div class="headingContainer">
+                    <span> Instructions </span>
+                </div>
 
-                <div class="button-container">
-                    <select id = "algoSelector" class="algoSelector">
-                        <option value="DFS" selected>Depth First Search</option>
-                        <option value="BFS">Breadth First Search</option>
-                    </select>
-                    <button onclick="source()">Select Source</button>
-                    <button onclick="destination()">Select Destination</button>
-                    <button onclick="visualise()">Visualise</button>    
-                    <button onclick="resetMap()">Reset</button>    
-                </div>        
 
             </div>
         </div>
+
+            <div class="button-container">
+                <select id = "algoSelector" class="algoSelector">
+                    <option value="DFS" selected>Depth First Search</option>
+                    <option value="BFS">Breadth First Search</option>
+                </select>
+                <button onclick="source()">Select Source</button>
+                <button onclick="destination()">Select Destination</button>
+                <button onclick="visualise()">Visualise</button>    
+                <button onclick="resetMap()">Reset</button>    
+            </div>        
+
 
         <div class="tableContainer">
             <table>
