@@ -57,3 +57,5 @@ class minHeap{
         }
     }
 }
+
+console.log("hehe")
