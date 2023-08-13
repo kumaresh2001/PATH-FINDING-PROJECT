@@ -375,6 +375,16 @@ function findBFSPath()
 
 }
 
+function findDjikstraPath()
+{
+    //set weight of source as 0
+    //set weight of other nodes as infinite
+    //mark all other nodes as unvisited
+    //insert all unvisited nodes in heap
+    //assign weights of neighbour based on weight of parent and weight between parent and child
+    //
+}
+
 function visualise()
 {
     if(!isVisualizationActive)
@@ -389,7 +399,7 @@ function visualise()
         {
             findBFSPath();
         } 
-        else if(getPathFindingAlgo === "Djikstra")
+        else if(getPathFindingAlgo === "Dijkstra")
         {
             alert("poru kumaru");
             isVisualizationActive = false;
