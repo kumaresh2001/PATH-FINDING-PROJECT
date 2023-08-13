@@ -30,6 +30,7 @@ body{
     margin-right:20px;
     font-size: 1.3rem;
     font-weight: 400;
+    cursor:pointer;
 }
 .tableContainer{
     width:100%;
