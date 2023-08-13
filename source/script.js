@@ -340,7 +340,7 @@ async function discover()
     }
 
 }
-function findPath()
+function findBFSPath()
 {
     var x = document.getElementsByClassName("source");
     if(typeof(x[0])==="undefined")
@@ -387,8 +387,13 @@ function visualise()
         }
         else if(getPathFindingAlgo === "BFS")
         {
-            findPath();
+            findBFSPath();
         } 
+        else if(getPathFindingAlgo === "Djikstra")
+        {
+            alert("poru kumaru");
+            isVisualizationActive = false;
+        }
     }
 }
 
