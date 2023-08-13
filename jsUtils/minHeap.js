@@ -58,4 +58,4 @@ class minHeap{
     }
 }
 
-console.log("hehe")
+console.log("hehes")
