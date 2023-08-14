@@ -6,6 +6,9 @@ var ij=0;
 var isVisualizationActive = false;
 //declaration and initialisation of board
 var board = new Array(20);
+//variables for sijkstra
+var visitedNodes = [],nodeHeapPositions = {};
+//function declarations
 function clearBoard()
 {
     for(var i=0;i<20;i++)
@@ -375,8 +378,50 @@ function findBFSPath()
 
 }
 
+function createDijkstaNode (coordniateString,weight,parent)
+{
+    let coordinateList = coordniateString.split("-");
+    let xValue = coordinateList[0];
+    let yValue = coordinateList[1];
+    nodeValue = {
+            "coordinateString":coordniateString,
+            "xCoordinate":xValue,
+            "yCoordinate":yValue,
+            "weight":weight,
+            "parentCoordinateString":parent
+        };
+    return nodeValue;
+}
+
 function findDjikstraPath()
 {
+    var sourceElement = document.getElementsByClassName("source");
+    if(typeof(sourceElement[0])==="undefined")
+    {
+        alert("Select a Source");
+        return;
+    }
+    var destinationElement = document.getElementsByClassName("destination");
+    if(typeof(sourceElement[0])==="undefined")
+    {
+        alert("Select a Destination");
+        return;
+    }
+    let mHeap = new minHeap();
+    /*
+        A node consists of 
+         - coOrdinates string
+         - x-coordinate
+         - y-coordinate
+         - estimatedWeight
+         - parent node coOrdinate string
+    */
+    sourceCoordinateString = sourceElement.id;
+    destinationCoordinateString = destinationElement.id;
+    sourceNode = createDijkstaNode(sourceCoordinateString,0,null);
+    mHeap.addNode(sourceNode);
+    nodeHeapPositions[sourceCoordinateString] = 0;
+    visitedNodes.push(sourceCoordinateString);
     //set weight of source as 0
     //set weight of other nodes as infinite
     //mark all other nodes as unvisited
@@ -402,6 +447,7 @@ function visualise()
         else if(getPathFindingAlgo === "Dijkstra")
         {
             alert("poru kumaru");
+            findDjikstraPath();
             isVisualizationActive = false;
         }
     }

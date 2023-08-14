@@ -1,5 +1,6 @@
 class minHeap{
     heap = [];
+    nodePositions = {};
     isEmpty = () =>
     {
         return this.heap.length === 0 ? true :false;
@@ -29,9 +30,17 @@ class minHeap{
             {
                 this.heap[currIndex] = parentNode;
                 this.heap[parentNode] = currNode;  
+                this.nodePositions[this.heap[parentIndex].coordinateString] = currentIndex;
+                this.nodePositions[this.heap[currentIndex].coordinateString] = parentIndex;
+                currentIndex = parentIndex;
             }
-            currentIndex = parentIndex;
+            else
+            {
+                break;
+            }
         }
+        this.nodePositions[value.coordinateString] = currentIndex;
+        return currentIndex;
     }
     removeNode = () =>
     {
@@ -48,15 +57,22 @@ class minHeap{
                 if(this.heap[currentIndex].weight > this.heap[minNodeIndex].weight )
                 {
                     let tempNode = this.heap[currentIndex];
-                    this.heap[currentIndex] = this.heap[parentIndex];
-                    this.heap[parentIndex] = tempNode;
+                    this.heap[currentIndex] = this.heap[minNodeIndex];
+                    this.heap[minNodeIndex] = tempNode;
+                    this.nodePositions[this.heap[minNodeIndex].coordinateString] = currentIndex;
+                    this.nodePositions[this.heap[currentIndex].coordinateString] = minNodeIndex;
+                    currentIndex = minNodeIndex;
                 }
-                currentIndex = minNodeIndex;
+                else
+                {
+                    break;
+                }
             }
+            this.nodePositions[nodeToBeReturned.coordinateString] = null;
             return nodeToBeReturned;
         }
     }
-    removeNode = (nodeIndex) =>
+    reArrangeNode = (nodeIndex) =>
     {
         if(!this.isEmpty && nodeIndex < this.heap.length)
         {
@@ -69,6 +85,8 @@ class minHeap{
                     let tempNode = this.heap[currentIndex];
                     this.heap[currentIndex] = this.heap[parentIndex];
                     this.heap[parentIndex] = tempNode;
+                    this.nodePositions[this.heap[parentIndex].coordinateString] = currentIndex;
+                    this.nodePositions[this.heap[currentIndex].coordinateString] = parentIndex;
                     currentIndex = parentIndex;
                 }
                 else
@@ -78,5 +96,13 @@ class minHeap{
            }
         }
     }
+    updateNewPosition = () =>
+    {
+        for(let i =this.heap.length-1;i>0;i--)
+        {
+            this.reArrangeNode(i);   
+        }
+    }
+
 }
 
