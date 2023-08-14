@@ -8,7 +8,7 @@ class minHeap{
     {
         right < this.heap.length    ?
         (
-            this.heap[left] < this.heap[right]  ?
+            this.heap[left].weight < this.heap[right].weight  ?
             (
                 left
             )
@@ -25,7 +25,7 @@ class minHeap{
             let currNode = heap[currIndex];
             parentIndex = (currIndex -1 )/2;
             let parentNode = heap[parentIndex];
-            if(currNode < parentNode)
+            if(currNode.weight < parentNode.weight)
             {
                 this.heap[currIndex] = parentNode;
                 this.heap[parentNode] = currNode;  
@@ -45,7 +45,7 @@ class minHeap{
             {
                 let leftNodeIndex = ((currentIndex*2)+1), rightNodeIndex = ((currentIndex*2)+2);
                 let minNodeIndex = this.selectMinNodeIndex(leftNodeIndex,rightNodeIndex);
-                if(this.heap[currentIndex] > this.heap[minNodeIndex] )
+                if(this.heap[currentIndex].weight > this.heap[minNodeIndex].weight )
                 {
                     let tempNode = this.heap[currentIndex];
                     this.heap[currentIndex] = this.heap[parentIndex];
@@ -54,6 +54,28 @@ class minHeap{
                 currentIndex = minNodeIndex;
             }
             return nodeToBeReturned;
+        }
+    }
+    removeNode = (nodeIndex) =>
+    {
+        if(!this.isEmpty && nodeIndex < this.heap.length)
+        {
+           let currentIndex = nodeIndex;
+           while(currentIndex > 0)
+           {
+                let parentIndex = (currentIndex-1)/2;
+                if(this.heap[parentIndex].weight > this.heap[currentIndex].weight)
+                {
+                    let tempNode = this.heap[currentIndex];
+                    this.heap[currentIndex] = this.heap[parentIndex];
+                    this.heap[parentIndex] = tempNode;
+                    currentIndex = parentIndex;
+                }
+                else
+                {
+                    break;
+                }
+           }
         }
     }
 }
