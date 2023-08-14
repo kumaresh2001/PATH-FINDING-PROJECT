@@ -7,7 +7,7 @@ var isVisualizationActive = false;
 //declaration and initialisation of board
 var board = new Array(20);
 //variables for sijkstra
-var visitedNodes = [],nodeHeapPositions = {};
+var visitedNodes = [];
 //function declarations
 function clearBoard()
 {
@@ -420,7 +420,6 @@ function findDjikstraPath()
     destinationCoordinateString = destinationElement.id;
     sourceNode = createDijkstaNode(sourceCoordinateString,0,null);
     mHeap.addNode(sourceNode);
-    nodeHeapPositions[sourceCoordinateString] = 0;
     visitedNodes.push(sourceCoordinateString);
     //set weight of source as 0
     //set weight of other nodes as infinite
