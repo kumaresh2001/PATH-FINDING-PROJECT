@@ -7,7 +7,7 @@ var isVisualizationActive = false;
 //declaration and initialisation of board
 var board = new Array(20);
 //variables for sijkstra
-var visitedNodes = [];
+var visitedNodesMap = {};
 //function declarations
 function clearBoard()
 {
@@ -378,7 +378,7 @@ function findBFSPath()
 
 }
 
-function createDijkstaNode (coordniateString,weight,parent)
+function createDijkstraNode (coordniateString,weight,parent)
 {
     let coordinateList = coordniateString.split("-");
     let xValue = coordinateList[0];
@@ -395,14 +395,15 @@ function createDijkstaNode (coordniateString,weight,parent)
 
 function findDjikstraPath()
 {
-    var sourceElement = document.getElementsByClassName("source");
-    if(typeof(sourceElement[0])==="undefined")
+    let destinationFound = false;
+    let sourceElement = document.getElementsByClassName("source")[0];
+    if(typeof(sourceElement)==="undefined")
     {
         alert("Select a Source");
         return;
     }
-    var destinationElement = document.getElementsByClassName("destination");
-    if(typeof(sourceElement[0])==="undefined")
+    var destinationElement = document.getElementsByClassName("destination")[0];
+    if(typeof(sourceElement)==="undefined")
     {
         alert("Select a Destination");
         return;
@@ -418,9 +419,23 @@ function findDjikstraPath()
     */
     sourceCoordinateString = sourceElement.id;
     destinationCoordinateString = destinationElement.id;
-    sourceNode = createDijkstaNode(sourceCoordinateString,0,null);
+    
+    sourceNode = createDijkstraNode(sourceCoordinateString,0,null);
     mHeap.addNode(sourceNode);
-    visitedNodes.push(sourceCoordinateString);
+    visitedNodesMap[sourceCoordinateString] = sourceNode;
+    while(!destinationFound)
+    {
+        currentNode = mHeap.removeNode();
+        currentNodeXValue = currentNode.xValue;
+        currentNodeYValue = currentNode.yValue;
+
+        //visit top node
+        topNodeCoordinateString = currentNodeXValue + "-" + (currentNodeYValue-1);
+        topNode = mHeap.getNodeValue(topNodeCoordinateString);
+        console.log(topNode);
+        return;
+
+    }
     //set weight of source as 0
     //set weight of other nodes as infinite
     //mark all other nodes as unvisited
@@ -445,7 +460,6 @@ function visualise()
         } 
         else if(getPathFindingAlgo === "Dijkstra")
         {
-            alert("poru kumaru");
             findDjikstraPath();
             isVisualizationActive = false;
         }
