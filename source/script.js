@@ -425,6 +425,7 @@ function findDjikstraPath()
     visitedNodesMap[sourceCoordinateString] = sourceNode;
     while(!destinationFound)
     {
+        //get top node
         currentNode = mHeap.removeNode();
         currentNodeXValue = currentNode.xValue;
         currentNodeYValue = currentNode.yValue;
