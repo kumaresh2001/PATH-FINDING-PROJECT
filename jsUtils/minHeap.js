@@ -35,7 +35,6 @@ class MinHeap
                     left : 
                     right 
                 );
-
    }
    insertNode = (nodeString,nodeWeight) =>
    {    

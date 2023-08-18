@@ -420,7 +420,7 @@ function findDjikstraPath()
     sourceCoordinateString = sourceElement.id;
     destinationCoordinateString = destinationElement.id;
     
-    sourceNode = createDijkstraNode(sourceCoordinateString,0,null);
+
     mHeap.addNode(sourceNode);
     visitedNodesMap[sourceCoordinateString] = sourceNode;
     while(!destinationFound)
