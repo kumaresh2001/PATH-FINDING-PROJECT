@@ -61,6 +61,35 @@ class MinHeap
             }
         }
    }
+   updateNode = (nodeString,nodeWeight) =>
+   {
+        if(this.nodePositions[nodeString] == null)
+        {
+            this.updateNode(nodeString,nodeWeight);
+        }
+        else
+        {
+            let nodeIndex = this.nodePositions[nodeString];
+            if(this.heap[nodeIndex].nodeWeight > nodeWeight )
+            {
+                this.heap[nodeIndex],nodeWeight = nodeWeight;
+                let currIndex = nodeIndex;
+                while(currIndex > 0)
+                {
+                    let parentIndex = Math.floor((currIndex-1)*2);
+                    if(this.heap[parentIndex].nodeWeight > this.heap[currIndex].nodeWeight)
+                    {
+                        let tempNode = this.heap[parentIndex];
+                        this.heap[parentIndex] = this.heap[currIndex];
+                        this.heap[currIndex] = tempNode;
+                        this.nodePositions[this.heap[parentIndex].nodeString] = currIndex;
+                        this.nodePositions[this.heap[currIndex].nodeString] = parentIndex;
+                        currIndex = parentIndex;
+                    }
+                }
+            }
+        }
+   }
    removeNode = () =>
    {
         let nodeToBeRemoved = this.heap[0];

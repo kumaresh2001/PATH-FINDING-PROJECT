@@ -420,9 +420,9 @@ function findDjikstraPath()
     sourceCoordinateString = sourceElement.id;
     destinationCoordinateString = destinationElement.id;
     
-
+    let sourceNode = createNodeObject(sourceCoordinateString,0);
     mHeap.addNode(sourceNode);
-    visitedNodesMap[sourceCoordinateString] = sourceNode;
+    visitedNodesMap[sourceCoordinateString] = "1";
     while(!destinationFound)
     {
         //get top node
