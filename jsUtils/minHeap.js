@@ -65,7 +65,7 @@ class MinHeap
    {
         if(this.nodePositions[nodeString] == null)
         {
-            this.updateNode(nodeString,nodeWeight);
+            this.insertNode(nodeString,nodeWeight);
         }
         else
         {
