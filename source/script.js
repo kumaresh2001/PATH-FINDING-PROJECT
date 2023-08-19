@@ -393,6 +393,15 @@ function createDijkstraNode (coordniateString,weight,parent)
     return nodeValue;
 }
 
+function validateBorderCell(nodeString)
+{
+    if(document.getElementById(nodeString).className.includes("border"))
+    {
+        return false;
+    }
+    return true;
+} 
+
 function findDjikstraPath()
 {
     let destinationFound = false;
@@ -408,7 +417,8 @@ function findDjikstraPath()
         alert("Select a Destination");
         return;
     }
-    let mHeap = new minHeap();
+    let djUtil = new DijkstraUtil();
+    let visitedList = [];
     /*
         A node consists of 
          - coOrdinates string
@@ -420,22 +430,23 @@ function findDjikstraPath()
     sourceCoordinateString = sourceElement.id;
     destinationCoordinateString = destinationElement.id;
     
-    let sourceNode = createNodeObject(sourceCoordinateString,0);
-    mHeap.addNode(sourceNode);
-    visitedNodesMap[sourceCoordinateString] = "1";
+    djUtil.processNode(sourceCoordinateString,0,"0");
     while(!destinationFound)
     {
         //get top node
-        currentNode = mHeap.removeNode();
-        currentNodeXValue = currentNode.xValue;
-        currentNodeYValue = currentNode.yValue;
-
-        //visit top node
-        topNodeCoordinateString = currentNodeXValue + "-" + (currentNodeYValue-1);
-        topNode = mHeap.getNodeValue(topNodeCoordinateString);
-        console.log(topNode);
-        return;
-
+        currentNode = djUtil.removeNode();
+        currentNodeCoordinatesList = currentNode.nodeString.split("-")
+        currentXPosition = parseInt(currentNodeCoordinatesList[0]);
+        currentYPosition = parseInt(currentNodeCoordinatesList[1]);
+        //process top,right,bottom,left nodes
+        topNodeString = (currentXPosition-1)+"-"+currentYPosition;
+        if(!(visitedList.includes(topNodeString) || validateBorderCell(topNodeString)) )
+        {
+            djUtil.processNode(topNodeString,currentNode.nodeWeight,currentNode.nodeString);
+        }
+        rightNodeString = currentXPosition + "-" + (currentYPosition+1);
+        bottomNodeString = (currentXPosition+1) + "-" + currentYPosition;
+        leftNodeString = currentXPosition + "-" + (currentYPosition-1);
     }
     //set weight of source as 0
     //set weight of other nodes as infinite
