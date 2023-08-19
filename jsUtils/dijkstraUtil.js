@@ -18,7 +18,7 @@ class DijkstraUtil
     //heap functions
     isHeapEmpty = () =>
     {
-         this.heap.length === 0 ? true : false;
+         this.minHeap.length === 0 ? true : false;
     }
     
     checkHeapNodeExists = (nodeString) =>
@@ -37,11 +37,11 @@ class DijkstraUtil
 
     getMinNode = (left,right) =>
     {
-        return right >= this.heap.length 
+        return right >= this.minHeap.length 
                 ? 
                 left:
                 (
-                    this.heap[left].nodeWeight <= this.heap[right].nodeWeight 
+                    this.minHeap[left].nodeWeight <= this.minHeap[right].nodeWeight 
                     ? 
                     left : 
                     right 
@@ -50,22 +50,22 @@ class DijkstraUtil
 
     insertNode = (nodeString,nodeWeight) =>
     {
-        let nodeObject = this.createNodeObject(nodeString,nodeWeight);
-        let currIndex = this.heap.length;
-        this.heap[currIndex] = nodeObject;
+        let nodeObject = this.createHeapNode(nodeString,nodeWeight);
+        let currIndex = this.minHeap.length;
+        this.minHeap[currIndex] = nodeObject;
         this.nodePositions[this.nodePositions.nodeString] = currIndex; 
         while(currIndex > 0)
         {
             let parentIndex = Math.floor((currIndex-1)/2);
-            if(this.heap[currIndex].nodeWeight < this.heap[parentIndex].nodeWeight)
+            if(this.minHeap[currIndex].nodeWeight < this.minHeap[parentIndex].nodeWeight)
             {
-                let temp = this.heap[parentIndex];
-                this.heap[parentIndex] = this.heap[currIndex];
-                this.heap[currIndex] = temp;
+                let temp = this.minHeap[parentIndex];
+                this.minHeap[parentIndex] = this.minHeap[currIndex];
+                this.minHeap[currIndex] = temp;
                 //set positions of parent and child
-                let parentNodeString = this.heap[currIndex].nodeString;
+                let parentNodeString = this.minHeap[currIndex].nodeString;
                 this.nodePositions[parentNodeString] = currIndex;
-                this.nodePositions[this.heap[currIndex].nodeString] = parentIndex;
+                this.nodePositions[this.minHeap[currIndex].nodeString] = parentIndex;
                 currIndex = parentIndex;
             }
             else{
@@ -77,18 +77,18 @@ class DijkstraUtil
     updateNode = (nodeString,nodeWeight) => 
     {
         let nodeIndex = this.nodePositions[nodeString];
-        this.heap[nodeIndex],nodeWeight = nodeWeight;
+        this.minHeap[nodeIndex],nodeWeight = nodeWeight;
         let currIndex = nodeIndex;
         while(currIndex > 0)
         {
             let parentIndex = Math.floor((currIndex-1)*2);
-            if(this.heap[parentIndex].nodeWeight > this.heap[currIndex].nodeWeight)
+            if(this.minHeap[parentIndex].nodeWeight > this.minHeap[currIndex].nodeWeight)
             {
-                let tempNode = this.heap[parentIndex];
-                this.heap[parentIndex] = this.heap[currIndex];
-                this.heap[currIndex] = tempNode;
-                this.nodePositions[this.heap[parentIndex].nodeString] = currIndex;
-                this.nodePositions[this.heap[currIndex].nodeString] = parentIndex;
+                let tempNode = this.minHeap[parentIndex];
+                this.minHeap[parentIndex] = this.minHeap[currIndex];
+                this.minHeap[currIndex] = tempNode;
+                this.nodePositions[this.minHeap[parentIndex].nodeString] = currIndex;
+                this.nodePositions[this.minHeap[currIndex].nodeString] = parentIndex;
                 currIndex = parentIndex;
             }
         }
@@ -100,7 +100,7 @@ class DijkstraUtil
         if(this.nodePositions[nodeString]!= null)
         {
             let currentNodeIndex = this.nodePositions[nodeString];
-            let currentNode = this.heap[currentNodeIndex];
+            let currentNode = this.minHeap[currentNodeIndex];
             if(currentNode.nodeWeight > nodeWeight)
             {
                 this.updateNode(nodeString,nodeWeight);
@@ -112,26 +112,27 @@ class DijkstraUtil
             this.insertNode(nodeString,nodeWeight);
             this.parentMap[nodeString] = parentString;
         }
+        console.log(this.minHeap);
     }
 
     removeNode = () =>
    {
-        let nodeToBeRemoved = this.heap[0];
-        this.heap[0] = this.heap[this.heap.length-1];
-        this.heap.pop();
+        let nodeToBeRemoved = this.minHeap[0];
+        this.minHeap[0] = this.minHeap[this.minHeap.length-1];
+        this.minHeap.pop();
         let currIndex = 0;
-        while((currIndex*2)+1 < this.heap.length)
+        while((currIndex*2)+1 < this.minHeap.length)
         {
             let minChildNodeIndex = this.getMinNode((currIndex*2)+1,(currIndex*2)+2);
-            if(this.heap[currIndex].nodeWeight > this.heap[minChildNodeIndex].nodeWeight )
+            if(this.minHeap[currIndex].nodeWeight > this.minHeap[minChildNodeIndex].nodeWeight )
             {
-                let tempNode = this.heap[currIndex];
-                this.heap[currIndex] = this.heap[minChildNodeIndex];
-                this.heap[minChildNodeIndex] = tempNode;
+                let tempNode = this.minHeap[currIndex];
+                this.minHeap[currIndex] = this.minHeap[minChildNodeIndex];
+                this.minHeap[minChildNodeIndex] = tempNode;
                 // set positions of parent and child
-                let minNodeString = this.heap[currIndex].nodeString;
+                let minNodeString = this.minHeap[currIndex].nodeString;
                 this.nodePositions[minNodeString] = currIndex;
-                this.nodePositions[this.heap[currIndex].nodeString] = minChildNodeIndex;
+                this.nodePositions[this.minHeap[currIndex].nodeString] = minChildNodeIndex;
                 currIndex = minChildNodeIndex;
             }
             else{

@@ -393,14 +393,26 @@ function createDijkstraNode (coordniateString,weight,parent)
     return nodeValue;
 }
 
-function validateBorderCell(nodeString)
+function isBorderCell(nodeString)
 {
     if(document.getElementById(nodeString).className.includes("border"))
     {
-        return false;
+        return true;
     }
-    return true;
+    return false;
 } 
+
+function isDijkstraDestinationFound(currentNode)
+{
+    let currentNodeString = currentNode.nodeString;
+    let currentNodeElement = document.getElementById(currentNodeString);
+    if(currentNodeElement.className.includes("destination"))
+    {
+        return true;
+    }
+    return false;
+
+}
 
 function findDjikstraPath()
 {
@@ -433,20 +445,35 @@ function findDjikstraPath()
     djUtil.processNode(sourceCoordinateString,0,"0");
     while(!destinationFound)
     {
-        //get top node
-        currentNode = djUtil.removeNode();
-        currentNodeCoordinatesList = currentNode.nodeString.split("-")
-        currentXPosition = parseInt(currentNodeCoordinatesList[0]);
-        currentYPosition = parseInt(currentNodeCoordinatesList[1]);
+        //get node with least weight
+        let currentNode = djUtil.removeNode();
+        //check if destination is obtained
+        destinationFound = isDijkstraDestinationFound(currentNode);
+        let currentNodeCoordinatesList = currentNode.nodeString.split("-")
+        let currentXPosition = parseInt(currentNodeCoordinatesList[0]);
+        let currentYPosition = parseInt(currentNodeCoordinatesList[1]);
         //process top,right,bottom,left nodes
-        topNodeString = (currentXPosition-1)+"-"+currentYPosition;
-        if(!(visitedList.includes(topNodeString) || validateBorderCell(topNodeString)) )
+        let topNodeString = (currentXPosition-1)+"-"+currentYPosition;
+        if(!(visitedList.includes(topNodeString) || isBorderCell(topNodeString)) )
         {
             djUtil.processNode(topNodeString,currentNode.nodeWeight,currentNode.nodeString);
         }
-        rightNodeString = currentXPosition + "-" + (currentYPosition+1);
-        bottomNodeString = (currentXPosition+1) + "-" + currentYPosition;
-        leftNodeString = currentXPosition + "-" + (currentYPosition-1);
+        let rightNodeString = currentXPosition + "-" + (currentYPosition+1);
+        if(!(visitedList.includes(rightNodeString) || isBorderCell(rightNodeString)) )
+        {
+            djUtil.processNode(rightNodeString,currentNode.nodeWeight,currentNode.nodeString);
+        }
+        let bottomNodeString = (currentXPosition+1) + "-" + currentYPosition;
+        if(!(visitedList.includes(bottomNodeString) || isBorderCell(bottomNodeString)) )
+        {
+            djUtil.processNode(bottomNodeString,currentNode.nodeWeight,currentNode.nodeString);
+        }
+        let leftNodeString = currentXPosition + "-" + (currentYPosition-1);
+        if(!(visitedList.includes(leftNodeString) || isBorderCell(leftNodeString)) )
+        {
+            djUtil.processNode(leftNodeString,currentNode.nodeWeight,currentNode.nodeString);
+        }
+        visitedList.push(currentNode.nodeString);
     }
     //set weight of source as 0
     //set weight of other nodes as infinite
