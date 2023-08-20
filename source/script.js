@@ -414,7 +414,7 @@ function isDijkstraDestinationFound(currentNode)
 
 }
 
-function findDjikstraPath()
+async function findDjikstraPath()
 {
     let destinationFound = false;
     let sourceElement = document.getElementsByClassName("source")[0];
@@ -443,10 +443,14 @@ function findDjikstraPath()
     destinationCoordinateString = destinationElement.id;
     
     djUtil.processNode(sourceCoordinateString,0,"0");
+    console.log(Object.keys(djUtil.nodePositions) + " " + Object.values(djUtil.nodePositions));
+    let flag= 0;
     while(!destinationFound)
     {
         //get node with least weight
         let currentNode = djUtil.removeNode();
+        document.getElementById(currentNode.nodeString).className += " discover";
+        await sleep(100);
         //check if destination is obtained
         destinationFound = isDijkstraDestinationFound(currentNode);
         let currentNodeCoordinatesList = currentNode.nodeString.split("-")
@@ -456,31 +460,34 @@ function findDjikstraPath()
         let topNodeString = (currentXPosition-1)+"-"+currentYPosition;
         if(!(visitedList.includes(topNodeString) || isBorderCell(topNodeString)) )
         {
-            djUtil.processNode(topNodeString,currentNode.nodeWeight,currentNode.nodeString);
+            djUtil.processNode(topNodeString,currentNode.nodeWeight+10,currentNode.nodeString);
         }
         let rightNodeString = currentXPosition + "-" + (currentYPosition+1);
         if(!(visitedList.includes(rightNodeString) || isBorderCell(rightNodeString)) )
         {
-            djUtil.processNode(rightNodeString,currentNode.nodeWeight,currentNode.nodeString);
+            djUtil.processNode(rightNodeString,currentNode.nodeWeight+10,currentNode.nodeString);
         }
         let bottomNodeString = (currentXPosition+1) + "-" + currentYPosition;
         if(!(visitedList.includes(bottomNodeString) || isBorderCell(bottomNodeString)) )
         {
-            djUtil.processNode(bottomNodeString,currentNode.nodeWeight,currentNode.nodeString);
+            djUtil.processNode(bottomNodeString,currentNode.nodeWeight+10,currentNode.nodeString);
         }
         let leftNodeString = currentXPosition + "-" + (currentYPosition-1);
         if(!(visitedList.includes(leftNodeString) || isBorderCell(leftNodeString)) )
         {
-            djUtil.processNode(leftNodeString,currentNode.nodeWeight,currentNode.nodeString);
+            djUtil.processNode(leftNodeString,currentNode.nodeWeight+10,currentNode.nodeString);
         }
         visitedList.push(currentNode.nodeString);
+        console.log(...djUtil.minHeap);
+      
     }
-    //set weight of source as 0
-    //set weight of other nodes as infinite
-    //mark all other nodes as unvisited
-    //insert all unvisited nodes in heap
-    //assign weights of neighbour based on weight of parent and weight between parent and child
-    //
+    djUtil.retracePath(destinationCoordinateString);
+    for(let i=0;i<djUtil.solutionPathList.length;i++)
+    {
+        await sleep(200);
+        document.getElementById(djUtil.solutionPathList[i]).className = document.getElementById(djUtil.solutionPathList[i]).className.replace("discover","") + " discovered";
+    }
+   
 }
 
 function visualise()

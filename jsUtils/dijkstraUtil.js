@@ -4,14 +4,14 @@ class DijkstraUtil
     nodePositions = {};
     parentMap = {};
     minHeap = [];
+    solutionPathList = [];
     
     //memberFunctions
     retracePath = (nodeString) => {
-        while(this.parentMap[nodeString]!= null || this.parentMap[nodeString] != "0")
+        if(nodeString!="0")
         {
-            currentElement = document.getElementById(nodeString).id;
-            console.log(currentElement);
-            nodeString = parentmap[nodeString];
+            this.retracePath(this.parentMap[nodeString]);
+            this.solutionPathList.push(nodeString);
         }
     }
 
@@ -53,7 +53,7 @@ class DijkstraUtil
         let nodeObject = this.createHeapNode(nodeString,nodeWeight);
         let currIndex = this.minHeap.length;
         this.minHeap[currIndex] = nodeObject;
-        this.nodePositions[this.nodePositions.nodeString] = currIndex; 
+        this.nodePositions[nodeString] = currIndex; 
         while(currIndex > 0)
         {
             let parentIndex = Math.floor((currIndex-1)/2);
@@ -101,6 +101,8 @@ class DijkstraUtil
         {
             let currentNodeIndex = this.nodePositions[nodeString];
             let currentNode = this.minHeap[currentNodeIndex];
+            console.log(...this.minHeap);
+            console.log(" --> nodeIndex - " + currentNodeIndex + " --> nodeString - " + nodeString);
             if(currentNode.nodeWeight > nodeWeight)
             {
                 this.updateNode(nodeString,nodeWeight);
@@ -112,18 +114,26 @@ class DijkstraUtil
             this.insertNode(nodeString,nodeWeight);
             this.parentMap[nodeString] = parentString;
         }
-        console.log(this.minHeap);
     }
 
     removeNode = () =>
    {
+        console.log("Before Removing");
+        console.log(Object.keys(this.nodePositions) + " " + Object.values(this.nodePositions));
+        console.log(...this.minHeap);
         let nodeToBeRemoved = this.minHeap[0];
-        this.minHeap[0] = this.minHeap[this.minHeap.length-1];
+        let lastindexNode = this.minHeap[this.minHeap.length-1];
+        this.minHeap[0] = lastindexNode;
+        this.nodePositions[lastindexNode.nodeString] = 0;
         this.minHeap.pop();
+        //delete node from nodePositions
+        let nodeString = nodeToBeRemoved.nodeString;
+        delete this.nodePositions[nodeString];
         let currIndex = 0;
         while((currIndex*2)+1 < this.minHeap.length)
         {
             let minChildNodeIndex = this.getMinNode((currIndex*2)+1,(currIndex*2)+2);
+            console.log("minChildnodeIndex - " + minChildNodeIndex );
             if(this.minHeap[currIndex].nodeWeight > this.minHeap[minChildNodeIndex].nodeWeight )
             {
                 let tempNode = this.minHeap[currIndex];
@@ -132,13 +142,16 @@ class DijkstraUtil
                 // set positions of parent and child
                 let minNodeString = this.minHeap[currIndex].nodeString;
                 this.nodePositions[minNodeString] = currIndex;
-                this.nodePositions[this.minHeap[currIndex].nodeString] = minChildNodeIndex;
+                this.nodePositions[this.minHeap[minChildNodeIndex].nodeString] = minChildNodeIndex;
                 currIndex = minChildNodeIndex;
             }
             else{
                 break;
             }
         }
+        console.log("After Removing");
+        console.log(Object.keys(this.nodePositions) + " " + Object.values(this.nodePositions));
+        console.log(...this.minHeap);
         return nodeToBeRemoved;
 
    }
