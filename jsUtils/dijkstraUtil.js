@@ -149,7 +149,7 @@ class DijkstraUtil
                 break;
             }
         }
-        console.log("After Removing");
+
         console.log(Object.keys(this.nodePositions) + " " + Object.values(this.nodePositions));
         console.log(...this.minHeap);
         return nodeToBeRemoved;
