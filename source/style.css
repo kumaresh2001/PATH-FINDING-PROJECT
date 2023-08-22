@@ -157,6 +157,10 @@ button:hover,.algoSelector:hover{
       }
 
 }
+.currentIteratorElement
+{
+    background-color: yellow !important;
+}
 .destinationFound{
     background-color: green;
 }

@@ -259,8 +259,13 @@ function discoveradj(temp_x,temp_y,discoverindex)
     let currentVertexString = temp_x+"-"+temp_y;
     let leftVertexString = temp_x+"-"+(temp_y-1);
     let topVertexString = (temp_x-1)+"-"+temp_y;
-    let rightVertexString = (temp_x+1)+"-"+temp_y;
-    let bottomVertexString = temp_x+"-"+(temp_y+1);  
+    let rightVertexString = temp_x+"-"+(temp_y+1);
+    let bottomVertexString = (temp_x+1)+"-"+temp_y;
+    
+    let leftTopVertexString = (temp_x-1)+"-"+(temp_y-1);
+    let leftBottomVertexString = (temp_x+1)+"-"+(temp_y-1);
+    let rightTopVertexString = (temp_x-1)+"-"+(temp_y+1);
+    let rightBottomVertexString = (temp_x+1)+"-"+(temp_y+1);
 
 
 
@@ -278,6 +283,20 @@ function discoveradj(temp_x,temp_y,discoverindex)
         document.getElementById(leftVertexString).className += "  discover";
 
     }
+    //left top vertex
+    if((temp_x-1)>0 && (temp_y-1)>0&&!document.getElementById(leftTopVertexString).className.includes("discover") && !document.getElementById(leftTopVertexString).className.includes("source") )
+    {
+        discoverParentMap[leftTopVertexString] = currentVertexString;
+        //to check if the node is destination
+        if(document.getElementById(leftTopVertexString).className.includes("destination"))
+        {
+            declareDestinationfound(leftTopVertexString);
+            return;
+        }
+        discoverqueue.push([(temp_x-1),(temp_y-1),discoverindex]);
+        document.getElementById(leftTopVertexString).className += "  discover";
+
+    }
     //top vertex
     if((temp_x-1)>0&&!document.getElementById(topVertexString).className.includes("discover")&& !document.getElementById(topVertexString).className.includes("source"))
     {
@@ -292,23 +311,22 @@ function discoveradj(temp_x,temp_y,discoverindex)
        
         document.getElementById(topVertexString).className += "  discover";
     }
-    //right vertex
-    if((temp_y+1)<59&&!document.getElementById(bottomVertexString).className.includes("discover")&& !document.getElementById(bottomVertexString).className.includes("source"))
+    //right top vertex
+    if((temp_y+1)<59 && (temp_x-1)>0 &&!document.getElementById(rightTopVertexString).className.includes("discover")&& !document.getElementById(rightTopVertexString).className.includes("source"))
     {
-        discoverParentMap[bottomVertexString] = currentVertexString;
-        //to check if the node is destination
-        if(document.getElementById(bottomVertexString).className.includes("destination"))
+        discoverParentMap[rightTopVertexString] = currentVertexString;
+        //to check if the node is destinationtopVertexStringtopVertexString
+        if(document.getElementById(rightTopVertexString).className.includes("destination"))
         {
-            declareDestinationfound(bottomVertexString);
+            declareDestinationfound(rightTopVertexString);
             return;
         }
-        discoverqueue.push([temp_x,(temp_y+1),discoverindex]);
-    
-        document.getElementById(bottomVertexString).className += "  discover";
+        discoverqueue.push([(temp_x-1),(temp_y+1),discoverindex]);
+       
+        document.getElementById(rightTopVertexString).className += "  discover";
     }
-    
-    //bottom vertex
-    if((temp_x+1)<19&&!document.getElementById(rightVertexString).className.includes("discover")&& !document.getElementById(rightVertexString).className.includes("source"))
+    //right vertex
+    if((temp_y+1)<59&&!document.getElementById(rightVertexString).className.includes("discover")&& !document.getElementById(rightVertexString).className.includes("source"))
     {
         discoverParentMap[rightVertexString] = currentVertexString;
         //to check if the node is destination
@@ -317,9 +335,51 @@ function discoveradj(temp_x,temp_y,discoverindex)
             declareDestinationfound(rightVertexString);
             return;
         }
-        discoverqueue.push([(temp_x+1),temp_y,discoverindex]);
+        discoverqueue.push([temp_x,(temp_y+1),discoverindex]);
         
         document.getElementById(rightVertexString).className += "  discover";
+    }
+    //right bottom vertex
+    if((temp_y+1)<59 && (temp_x+1)<19 &&!document.getElementById(rightBottomVertexString).className.includes("discover")&& !document.getElementById(rightBottomVertexString).className.includes("source"))
+    {
+        discoverParentMap[rightBottomVertexString] = currentVertexString;
+        //to check if the node is destination
+        if(document.getElementById(rightBottomVertexString).className.includes("destination"))
+        {
+            declareDestinationfound(rightBottomVertexString);
+            return;
+        }
+        discoverqueue.push([(temp_x+1),(temp_y+1),discoverindex]);
+    
+        document.getElementById(rightBottomVertexString).className += "  discover";
+    }
+    //bottom vertex
+    if((temp_x+1)<19&&!document.getElementById(bottomVertexString).className.includes("discover")&& !document.getElementById(bottomVertexString).className.includes("source"))
+    {
+        discoverParentMap[bottomVertexString] = currentVertexString;
+        //to check if the node is destination
+        if(document.getElementById(bottomVertexString).className.includes("destination"))
+        {
+            declareDestinationfound(bottomVertexString);
+            return;
+        }
+        discoverqueue.push([(temp_x+1),temp_y,discoverindex]);
+    
+        document.getElementById(bottomVertexString).className += "  discover";
+    }    
+    //left bottom vertex
+    if((temp_x+1)<19 && (temp_y-1)>0 && !document.getElementById(leftBottomVertexString).className.includes("discover")&& !document.getElementById(leftBottomVertexString).className.includes("source"))
+    {
+        discoverParentMap[leftBottomVertexString] = currentVertexString;
+        //to check if the node is destination
+        if(document.getElementById(leftBottomVertexString).className.includes("destination"))
+        {
+            declareDestinationfound(leftBottomVertexString);
+            return;
+        }
+        discoverqueue.push([(temp_x+1),(temp_y-1),discoverindex]);
+        
+        document.getElementById(leftBottomVertexString).className += "  discover";
     }
 }
 async function discover()
@@ -328,7 +388,6 @@ async function discover()
     while(1)
     {
         console.log(discoverindex);
-        await sleep(40);
         let temp_pointx = discoverqueue[discoverindex][0];
         let temp_pointy = discoverqueue[discoverindex][1];
         console.log(temp_pointx + " - " + temp_pointy);
@@ -337,7 +396,10 @@ async function discover()
             foundEren = false;
             break;
         }
+        document.getElementById(temp_pointx+"-"+temp_pointy).className += " currentIteratorElement";
+        await sleep(500);
         discoveradj(temp_pointx,temp_pointy,discoverindex)
+        document.getElementById(temp_pointx+"-"+temp_pointy).className = document.getElementById(temp_pointx+"-"+temp_pointy).className.replace("currentIteratorElement","") ;
         discoverindex++;
      
     }
