@@ -8,6 +8,7 @@ var isVisualizationActive = false;
 var board = new Array(20);
 //variables for sijkstra
 var visitedNodesMap = {};
+var destinationStrings = [],destinationIterator=0;
 //function declarations
 function clearBoard()
 {
@@ -100,21 +101,35 @@ function mark(i,j)
         else if(destinationvar==1)
         {
             var prevdestination = document.getElementsByClassName("destination");
-            //if there are no elements with className source the variable becomes undefined
-            if(typeof(prevdestination[0])!="undefined")
+            if(document.getElementById("algoSelector").value === "Dijkstra")
             {
-                prevdestination[0].innerHTML = "";
-                prevdestination[0].className = destinationclassname;
+                if(i==0||i==19||j==0||j==59)
+                {
+                    alert("DO NOT SELECT BORDER");
+                    return;
+                }
+                var x = document.getElementById(i+"-"+j);
+                x.className += " destination";
+                destinationStrings.push(x.id);
             }
-            if(i==0||i==19||j==0||j==59)
+            else
             {
-                alert("DO NOT SELECT BORDER");
+                //if there are no elements with className source the variable becomes undefined
+                if(typeof(prevdestination[0])!="undefined")
+                {
+                    prevdestination[0].innerHTML = "";
+                    prevdestination[0].className = destinationclassname;
+                }
+                if(i==0||i==19||j==0||j==59)
+                {
+                    alert("DO NOT SELECT BORDER");
+                    return;
+                }
+                var x = document.getElementById(i+"-"+j);
+                destinationclassname = x.className;
+                x.className += " destination";
                 return;
             }
-            var x = document.getElementById(i+"-"+j);
-            destinationclassname = x.className;
-            x.className += " destination";
-            return;
         }
 
     }
@@ -407,7 +422,10 @@ function isDijkstraDestinationFound(currentNode)
     let currentNodeElement = document.getElementById(currentNodeString);
     if(currentNodeElement.className.includes("destination"))
     {
-        return true;
+        document.getElementById(currentNode.nodeString).className += " discovered";
+        destinationIterator++;
+        if(destinationIterator === destinationStrings.length)
+            return true;
     }
     return false;
 
@@ -449,9 +467,11 @@ async function findDjikstraPath()
         //get node with least weight
         let currentNode = djUtil.removeNode();
         document.getElementById(currentNode.nodeString).className += " discover";
-        await sleep(100);
+        await sleep(5);
         //check if destination is obtained
         destinationFound = isDijkstraDestinationFound(currentNode);
+        if(destinationFound)
+            break;
         let currentNodeCoordinatesList = currentNode.nodeString.split("-")
         let currentXPosition = parseInt(currentNodeCoordinatesList[0]);
         let currentYPosition = parseInt(currentNodeCoordinatesList[1]);
@@ -480,9 +500,17 @@ async function findDjikstraPath()
         console.log(...djUtil.minHeap);
       
     }
+    for(let i =0;i<destinationStrings.length;i++)
+    {   
+        djUtil.retracePath(destinationStrings[i]);
+    }
     djUtil.retracePath(destinationCoordinateString);
     for(let i=0;i<djUtil.solutionPathList.length;i++)
     {
+        if(document.getElementById(djUtil.solutionPathList[i]).className.includes("discovered"))
+        {
+            document.getElementById(djUtil.solutionPathList[i]).className = document.getElementById(djUtil.solutionPathList[i]).className.replace("discovered","discover");
+        }
         await sleep(200);
         document.getElementById(djUtil.solutionPathList[i]).className = document.getElementById(djUtil.solutionPathList[i]).className.replace("discover","") + " discovered";
     }
