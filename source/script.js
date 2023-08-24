@@ -78,6 +78,16 @@ function mark(i,j)
 {
     if(!isVisualizationActive)
     {
+        //to remove destination if cell is already marked as destination
+        let selectedElement = document.getElementById(i+"-"+j);
+        if(selectedElement.className.includes("destination"))
+        {
+            selectedElement.className = selectedElement.className.replace("destination","");
+            selectedElement.innerHTML = "";
+            let indexOfElementToBeRemoved = destinationStrings.indexOf(selectedElement.id);
+            destinationStrings.splice(indexOfElementToBeRemoved,1);
+            return;    
+        }
         //to see if we have to mark source
         if(sourcevar==1)
         {
