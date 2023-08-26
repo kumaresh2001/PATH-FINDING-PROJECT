@@ -6,9 +6,25 @@ var ij=0;
 var isVisualizationActive = false;
 //declaration and initialisation of board
 var board = new Array(20);
-//variables for sijkstra
+//variables for dijkstra
 var visitedNodesMap = {};
 var destinationStrings = [],destinationIterator=0;
+var dijkstraBoard = new Array(20);
+//initialise dijkstar's board
+function initialiseDijkstrasBoard()
+{
+    for(let i=0;i<20;i++)
+    {
+        board[i] = new Array(60);
+        for(let j=0;j<60;j++)
+        {
+            if(i==0||i==19||j==0||j==59)
+                board[i][j] = -1;
+            else    
+                board[i][j] = 0;
+        }
+    }
+}
 //function declarations
 function clearBoard()
 {
