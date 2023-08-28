@@ -21,7 +21,7 @@ function initialiseDijkstrasBoard()
             if(i==0||i==19||j==0||j==59)
                 board[i][j] = -1;
             else    
-                board[i][j] = 0;
+                board[i][j] = 1;
         }
     }
 }
@@ -41,7 +41,7 @@ function clearBoard()
                 board[i][j] = -1;
             }
             else{
-                board[i][j] = 0;
+                board[i][j] = 1;
             }
         }
     }
@@ -57,6 +57,7 @@ function clearMap()
             document.getElementById(i+"-"+j).className = "";
         }
     }
+    initialiseDijkstrasBoard();
 }
 
 function resetMap()
@@ -505,22 +506,26 @@ async function findDjikstraPath()
         let topNodeString = (currentXPosition-1)+"-"+currentYPosition;
         if(!(visitedList.includes(topNodeString) || isBorderCell(topNodeString)) )
         {
-            djUtil.processNode(topNodeString,currentNode.nodeWeight+10,currentNode.nodeString);
+            let nodeWeight = dijkstraBoard[currentXPosition-1][currentYPosition];
+            djUtil.processNode(topNodeString,currentNode.nodeWeight+nodeWeight,currentNode.nodeString);
         }
         let rightNodeString = currentXPosition + "-" + (currentYPosition+1);
         if(!(visitedList.includes(rightNodeString) || isBorderCell(rightNodeString)) )
         {
-            djUtil.processNode(rightNodeString,currentNode.nodeWeight+10,currentNode.nodeString);
+            let nodeWeight = dijkstraBoard[currentXPosition][currentYPosition+1];
+            djUtil.processNode(rightNodeString,currentNode.nodeWeight+nodeWeight,currentNode.nodeString);
         }
         let bottomNodeString = (currentXPosition+1) + "-" + currentYPosition;
         if(!(visitedList.includes(bottomNodeString) || isBorderCell(bottomNodeString)) )
         {
-            djUtil.processNode(bottomNodeString,currentNode.nodeWeight+10,currentNode.nodeString);
+            let nodeWeight = dijkstraBoard[currentXPosition+1][currentYPosition];
+            djUtil.processNode(bottomNodeString,currentNode.nodeWeight + nodeWeight,currentNode.nodeString);
         }
         let leftNodeString = currentXPosition + "-" + (currentYPosition-1);
         if(!(visitedList.includes(leftNodeString) || isBorderCell(leftNodeString)) )
         {
-            djUtil.processNode(leftNodeString,currentNode.nodeWeight+10,currentNode.nodeString);
+            let nodeWeight = dijkstraBoard[currentXPosition][currentYPosition-1];
+            djUtil.processNode(leftNodeString,currentNode.nodeWeight+nodeWeight,currentNode.nodeString);
         }
         visitedList.push(currentNode.nodeString);
         console.log(...djUtil.minHeap);
