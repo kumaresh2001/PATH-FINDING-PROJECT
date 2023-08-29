@@ -27,7 +27,7 @@
         </div>
 
             <div class="button-container">
-                <select id = "algoSelector" class="algoSelector">
+                <select onchange="toggleAddWeightButton(event)" id = "algoSelector" class="algoSelector">
                     <option value="DFS" selected>Depth First Search</option>
                     <option value="BFS">Breadth First Search</option>
                     <option value="Dijkstra">Dijkstra's Algorithm</option>
@@ -36,6 +36,7 @@
                 <button onclick="destination()">Select Destination</button>
                 <button onclick="visualise()">Visualise</button>    
                 <button onclick="resetMap()">Reset</button>    
+                <button onclick="enableWeightedNodes()" id="addWeightButton">Add Weights</button>
             </div>        
 
 

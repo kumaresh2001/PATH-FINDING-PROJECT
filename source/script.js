@@ -10,6 +10,20 @@ var board = new Array(20);
 var visitedNodesMap = {};
 var destinationStrings = [],destinationIterator=0;
 var dijkstraBoard = new Array(20);
+//show/hide weight button
+function toggleAddWeightButton(event)
+{
+    let selectedOption = event.target.value;
+    if(selectedOption === "Dijkstra")
+    {
+        document.getElementById("addWeightButton").style.display = "block";
+    }
+    else
+    {
+        document.getElementById("addWeightButton").style.display = "none";
+    }
+}
+
 //initialise dijkstar's board
 function initialiseDijkstrasBoard()
 {
