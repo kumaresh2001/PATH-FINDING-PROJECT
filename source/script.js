@@ -96,6 +96,7 @@ function source()
     {
         sourcevar=1;
         destinationvar=0;    
+        enableWeights = false;
     }
 }
 function destination()
@@ -104,12 +105,14 @@ function destination()
     {
         destinationvar=1;
         sourcevar=0;    
+        enableWeights = false;
     }
 }
 function enableWeightedNodes()
 {
     enableWeights = !enableWeights;
-    console.log(enableWeights); 
+    sourcevar=0;
+    destinationvar=0;   
 }
 
 function mark(i,j)

@@ -82,6 +82,7 @@ class DijkstraUtil
         while(currIndex > 0)
         {
             let parentIndex = Math.floor((currIndex-1)*2);
+            console.log("parent Index - " + parentIndex);
             if(this.minHeap[parentIndex].nodeWeight > this.minHeap[currIndex].nodeWeight)
             {
                 let tempNode = this.minHeap[parentIndex];
@@ -99,10 +100,10 @@ class DijkstraUtil
         //check if the node already exists
         if(this.nodePositions[nodeString]!= null)
         {
+
             let currentNodeIndex = this.nodePositions[nodeString];
             let currentNode = this.minHeap[currentNodeIndex];
-            console.log(...this.minHeap);
-            console.log(" --> nodeIndex - " + currentNodeIndex + " --> nodeString - " + nodeString);
+            console.log(currentNodeIndex + "- Node -> " + currentNode);
             if(currentNode.nodeWeight > nodeWeight)
             {
                 this.updateNode(nodeString,nodeWeight);
@@ -118,9 +119,6 @@ class DijkstraUtil
 
     removeNode = () =>
    {
-        console.log("Before Removing");
-        console.log(Object.keys(this.nodePositions) + " " + Object.values(this.nodePositions));
-        console.log(...this.minHeap);
         let nodeToBeRemoved = this.minHeap[0];
         let lastindexNode = this.minHeap[this.minHeap.length-1];
         this.minHeap[0] = lastindexNode;
@@ -133,7 +131,6 @@ class DijkstraUtil
         while((currIndex*2)+1 < this.minHeap.length)
         {
             let minChildNodeIndex = this.getMinNode((currIndex*2)+1,(currIndex*2)+2);
-            console.log("minChildnodeIndex - " + minChildNodeIndex );
             if(this.minHeap[currIndex].nodeWeight > this.minHeap[minChildNodeIndex].nodeWeight )
             {
                 let tempNode = this.minHeap[currIndex];
@@ -149,9 +146,6 @@ class DijkstraUtil
                 break;
             }
         }
-
-        console.log(Object.keys(this.nodePositions) + " " + Object.values(this.nodePositions));
-        console.log(...this.minHeap);
         return nodeToBeRemoved;
 
    }
