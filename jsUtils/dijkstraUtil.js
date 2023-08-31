@@ -77,12 +77,12 @@ class DijkstraUtil
     updateNode = (nodeString,nodeWeight) => 
     {
         let nodeIndex = this.nodePositions[nodeString];
-        this.minHeap[nodeIndex],nodeWeight = nodeWeight;
+        this.minHeap[nodeIndex].nodeWeight = nodeWeight;
         let currIndex = nodeIndex;
         while(currIndex > 0)
         {
-            let parentIndex = Math.floor((currIndex-1)*2);
-            console.log("parent Index - " + parentIndex);
+            let parentIndex = Math.floor((currIndex-1)/2);
+
             if(this.minHeap[parentIndex].nodeWeight > this.minHeap[currIndex].nodeWeight)
             {
                 let tempNode = this.minHeap[parentIndex];
@@ -92,6 +92,8 @@ class DijkstraUtil
                 this.nodePositions[this.minHeap[currIndex].nodeString] = parentIndex;
                 currIndex = parentIndex;
             }
+            else
+                break;
         }
     }
 
@@ -100,8 +102,9 @@ class DijkstraUtil
         //check if the node already exists
         if(this.nodePositions[nodeString]!= null)
         {
-
             let currentNodeIndex = this.nodePositions[nodeString];
+            console.log("nodeString - " + nodeString + " \n nodeIndex - " + currentNodeIndex );
+            console.log(...this.minHeap);
             let currentNode = this.minHeap[currentNodeIndex];
             console.log(currentNodeIndex + "- Node -> " + currentNode);
             if(currentNode.nodeWeight > nodeWeight)

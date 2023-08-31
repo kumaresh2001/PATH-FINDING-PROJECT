@@ -124,7 +124,7 @@ function mark(i,j)
         {
             console.log(dijkstraBoard); 
             dijkstraBoard[i][j] = (dijkstraBoard[i][j] == 1) ? 10:1;
-            document.getElementById(i+"-"+j).innerHTML = "W";
+            document.getElementById(i+"-"+j).innerHTML = dijkstraBoard[i][j] == 10?"W":"";
         }
         //to remove destination if cell is already marked as destination
         let selectedElement = document.getElementById(i+"-"+j);
