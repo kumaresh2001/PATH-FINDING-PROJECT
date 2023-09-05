@@ -85,11 +85,12 @@ class DijkstraUtil
 
             if(this.minHeap[parentIndex].nodeWeight > this.minHeap[currIndex].nodeWeight)
             {
-                let tempNode = this.minHeap[parentIndex];
-                this.minHeap[parentIndex] = this.minHeap[currIndex];
-                this.minHeap[currIndex] = tempNode;
-                this.nodePositions[this.minHeap[parentIndex].nodeString] = currIndex;
-                this.nodePositions[this.minHeap[currIndex].nodeString] = parentIndex;
+                let currentNode = this.minHeap[currIndex];
+                let parentNode = this.minHeap[parentIndex];
+                this.minHeap[parentIndex] = currentNode;
+                this.minHeap[currIndex] = parentNode;
+                this.nodePositions[parentNode.nodeString] = currIndex;
+                this.nodePositions[currentNode.nodeString] = parentIndex;
                 currIndex = parentIndex;
             }
             else
@@ -103,10 +104,9 @@ class DijkstraUtil
         if(this.nodePositions[nodeString]!= null)
         {
             let currentNodeIndex = this.nodePositions[nodeString];
-            console.log("nodeString - " + nodeString + " \n nodeIndex - " + currentNodeIndex );
-            console.log(...this.minHeap);
+            console.log(this.nodePositions)
+            console.log("currentNodeIndex" + currentNodeIndex);
             let currentNode = this.minHeap[currentNodeIndex];
-            console.log(currentNodeIndex + "- Node -> " + currentNode);
             if(currentNode.nodeWeight > nodeWeight)
             {
                 this.updateNode(nodeString,nodeWeight);
@@ -130,19 +130,24 @@ class DijkstraUtil
         //delete node from nodePositions
         let nodeString = nodeToBeRemoved.nodeString;
         delete this.nodePositions[nodeString];
-        let currIndex = 0;
-        while((currIndex*2)+1 < this.minHeap.length)
+        let currIndex = 0,minChildNodeIndex =0;
+        while(minChildNodeIndex < this.minHeap.length)
         {
-            let minChildNodeIndex = this.getMinNode((currIndex*2)+1,(currIndex*2)+2);
+            minChildNodeIndex = this.getMinNode((currIndex*2)+1,(currIndex*2)+2);
+            if(minChildNodeIndex >= this.minHeap.length)
+                break;
+            console.log("current Node Index - " + currIndex + "\n Min Node Index - " + minChildNodeIndex);
+            console.log([...this.minHeap]);
+            console.log({...this.nodePositions});
             if(this.minHeap[currIndex].nodeWeight > this.minHeap[minChildNodeIndex].nodeWeight )
             {
-                let tempNode = this.minHeap[currIndex];
+                let minNode = this.minHeap[minChildNodeIndex];
+                let currentNode = this.minHeap[currIndex];
                 this.minHeap[currIndex] = this.minHeap[minChildNodeIndex];
-                this.minHeap[minChildNodeIndex] = tempNode;
+                this.minHeap[minChildNodeIndex] = currentNode;
                 // set positions of parent and child
-                let minNodeString = this.minHeap[currIndex].nodeString;
-                this.nodePositions[minNodeString] = currIndex;
-                this.nodePositions[this.minHeap[minChildNodeIndex].nodeString] = minChildNodeIndex;
+                this.nodePositions[currentNode.nodeString] = currIndex;
+                this.nodePositions[minNode.nodeString] = minChildNodeIndex;
                 currIndex = minChildNodeIndex;
             }
             else{
