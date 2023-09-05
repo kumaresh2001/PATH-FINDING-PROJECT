@@ -65,7 +65,7 @@ class DijkstraUtil
                 //set positions of parent and child
                 let parentNodeString = this.minHeap[currIndex].nodeString;
                 this.nodePositions[parentNodeString] = currIndex;
-                this.nodePositions[this.minHeap[currIndex].nodeString] = parentIndex;
+                this.nodePositions[this.minHeap[parentIndex].nodeString] = parentIndex;
                 currIndex = parentIndex;
             }
             else{
