@@ -146,8 +146,8 @@ class DijkstraUtil
                 this.minHeap[currIndex] = this.minHeap[minChildNodeIndex];
                 this.minHeap[minChildNodeIndex] = currentNode;
                 // set positions of parent and child
-                this.nodePositions[currentNode.nodeString] = currIndex;
-                this.nodePositions[minNode.nodeString] = minChildNodeIndex;
+                this.nodePositions[currentNode.nodeString] = minChildNodeIndex;
+                this.nodePositions[minNode.nodeString] =  currIndex;
                 currIndex = minChildNodeIndex;
             }
             else{
