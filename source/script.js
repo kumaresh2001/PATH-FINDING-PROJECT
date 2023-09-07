@@ -11,6 +11,7 @@ var visitedNodesMap = {};
 var destinationStrings = [],destinationIterator=0;
 var dijkstraBoard = new Array(20);
 var enableWeights = false;
+var recentlyMarkedWeightedNode;
 //show/hide weight button
 function toggleAddWeightButton(event)
 {
@@ -125,6 +126,8 @@ function mark(i,j)
             console.log(dijkstraBoard); 
             dijkstraBoard[i][j] = (dijkstraBoard[i][j] == 1) ? 10:1;
             document.getElementById(i+"-"+j).innerHTML = dijkstraBoard[i][j] == 10?"W":"";
+            if(dijkstraBoard[i][j] === 10)
+                recentlyMarkedWeightedNode = i+"-"+j;
         }
         //to remove destination if cell is already marked as destination
         let selectedElement = document.getElementById(i+"-"+j);
@@ -193,6 +196,15 @@ function mark(i,j)
     }
 
 }
+
+function modifyWeight(i,j)
+{
+    console.log("hehe");
+    let existingValue = dijkstraBoard[i][j];
+    dijkstraBoard[i][j] = ++existingValue;
+    document.getElementById(i+"-"+j).innerHTML = existingValue;
+}
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -606,3 +618,13 @@ window.onload = () =>
     clearBoard();
     initialiseDijkstrasBoard();
 }
+
+// window.addEventListener('wheel',(event)=>{
+//     let markedWeightedNode = document.getElementById(recentlyMarkedWeightedNode);
+//     if(markedWeightedNode != null)
+//     {
+//         let coOrdinates = recentlyMarkedWeightedNode.split("-");
+//         markedWeightedNode.innerHTML = ++dijkstraBoard[parseInt(coOrdinates[0])][parseInt(coOrdinates[1])];
+//     }
+// })
+
