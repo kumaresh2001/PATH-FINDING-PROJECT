@@ -197,11 +197,11 @@ function mark(i,j)
 
 }
 
-function modifyWeight(i,j)
+function modifyWeight(event,i,j)
 {
-    console.log("hehe");
+    let directionOfScroll = event.deltaY < 0 ? "up" : "down";
+    dijkstraBoard[i][j] = (directionOfScroll === "down") ? --dijkstraBoard[i][j]:++dijkstraBoard[i][j];
     let existingValue = dijkstraBoard[i][j];
-    dijkstraBoard[i][j] = ++existingValue;
     document.getElementById(i+"-"+j).innerHTML = existingValue;
 }
 
