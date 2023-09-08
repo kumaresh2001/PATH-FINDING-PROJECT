@@ -619,12 +619,5 @@ window.onload = () =>
     initialiseDijkstrasBoard();
 }
 
-// window.addEventListener('wheel',(event)=>{
-//     let markedWeightedNode = document.getElementById(recentlyMarkedWeightedNode);
-//     if(markedWeightedNode != null)
-//     {
-//         let coOrdinates = recentlyMarkedWeightedNode.split("-");
-//         markedWeightedNode.innerHTML = ++dijkstraBoard[parseInt(coOrdinates[0])][parseInt(coOrdinates[1])];
-//     }
-// })
+
 
