@@ -109,12 +109,6 @@ function destination()
         enableWeights = false;
     }
 }
-function enableWeightedNodes()
-{
-    enableWeights = !enableWeights;
-    sourcevar=0;
-    destinationvar=0;   
-}
 
 function mark(i,j)
 {
@@ -199,10 +193,17 @@ function mark(i,j)
 
 function modifyWeight(event,i,j)
 {
-    let directionOfScroll = event.deltaY < 0 ? "up" : "down";
-    dijkstraBoard[i][j] = (directionOfScroll === "down") ? --dijkstraBoard[i][j]:++dijkstraBoard[i][j];
-    let existingValue = dijkstraBoard[i][j];
-    document.getElementById(i+"-"+j).innerHTML = existingValue;
+    if(document.getElementById("algoSelector").value === "Dijkstra")
+    {
+        let directionOfScroll = event.deltaY < 0 ? "up" : "down";
+        let displayValue;
+        if(directionOfScroll === "up")
+            displayValue = ++dijkstraBoard[i][j];
+        else
+            displayValue = (dijkstraBoard[i][j] === 1 ? "":--dijkstraBoard[i][j]);
+        let existingValue = dijkstraBoard[i][j];
+        document.getElementById(i+"-"+j).innerHTML = displayValue;    
+    }
 }
 
 function sleep(ms) {
