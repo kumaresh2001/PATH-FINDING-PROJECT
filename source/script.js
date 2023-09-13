@@ -210,7 +210,7 @@ function sleep(ms) {
 function DFSDiscover(x,y)
 {
         
-        if(x<=0||x>=19||y<=0||y>=59)
+        if(x<=0||x>=19||y<=0||y>=59 || document.getElementById(x+"-"+y).className.includes("wall") )
         {
             return 0;
         }
@@ -543,25 +543,25 @@ async function findDjikstraPath()
         let currentYPosition = parseInt(currentNodeCoordinatesList[1]);
         //process top,right,bottom,left nodes
         let topNodeString = (currentXPosition-1)+"-"+currentYPosition;
-        if(!(visitedList.includes(topNodeString) || isBorderCell(topNodeString)) )
+        if(!(visitedList.includes(topNodeString) || isBorderCell(topNodeString) || document.getElementById(topNodeString).className.includes("wall")) )
         {
             let nodeWeight = dijkstraBoard[currentXPosition-1][currentYPosition];
             djUtil.processNode(topNodeString,currentNode.nodeWeight+nodeWeight,currentNode.nodeString);
         }
         let rightNodeString = currentXPosition + "-" + (currentYPosition+1);
-        if(!(visitedList.includes(rightNodeString) || isBorderCell(rightNodeString)) )
+        if(!(visitedList.includes(rightNodeString) || isBorderCell(rightNodeString) || document.getElementById(rightNodeString).className.includes("wall")) )
         {
             let nodeWeight = dijkstraBoard[currentXPosition][currentYPosition+1];
             djUtil.processNode(rightNodeString,currentNode.nodeWeight+nodeWeight,currentNode.nodeString);
         }
         let bottomNodeString = (currentXPosition+1) + "-" + currentYPosition;
-        if(!(visitedList.includes(bottomNodeString) || isBorderCell(bottomNodeString)) )
+        if(!(visitedList.includes(bottomNodeString) || isBorderCell(bottomNodeString) || document.getElementById(bottomNodeString).className.includes("wall"))  )
         {
             let nodeWeight = dijkstraBoard[currentXPosition+1][currentYPosition];
             djUtil.processNode(bottomNodeString,currentNode.nodeWeight + nodeWeight,currentNode.nodeString);
         }
         let leftNodeString = currentXPosition + "-" + (currentYPosition-1);
-        if(!(visitedList.includes(leftNodeString) || isBorderCell(leftNodeString)) )
+        if(!(visitedList.includes(leftNodeString) || isBorderCell(leftNodeString) || document.getElementById(leftNodeString).className.includes("wall") ) )
         {
             let nodeWeight = dijkstraBoard[currentXPosition][currentYPosition-1];
             djUtil.processNode(leftNodeString,currentNode.nodeWeight+nodeWeight,currentNode.nodeString);
