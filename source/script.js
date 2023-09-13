@@ -1,4 +1,4 @@
-var sourcevar=0,destinationvar=0,sourceclassname="",destinationclassname="",tempdest,tempsource,discoverqueue=[],discoverParentMap = {},foundEren=false,tracedPath=[];
+var sourcevar=false,destinationvar=false,sourceclassname="",destinationclassname="",tempdest,tempsource,discoverqueue=[],discoverParentMap = {},foundEren=false,tracedPath=[];
 //source var and destinationvar used to activate selecting source and destination
 var directionArray = [[0,-1],[0,1],[-1,0],[1,0]],directionPointer=0;
 var discoveredCo_ordinates = new Array();
@@ -95,8 +95,8 @@ function source()
 {
     if(!isVisualizationActive)
     {
-        sourcevar=1;
-        destinationvar=0;    
+        sourcevar = !sourcevar;
+        destinationvar=false;    
         enableWeights = false;
     }
 }
@@ -104,8 +104,8 @@ function destination()
 {
     if(!isVisualizationActive)
     {
-        destinationvar=1;
-        sourcevar=0;    
+        destinationvar=!destinationvar;
+        sourcevar=false;    
         enableWeights = false;
     }
 }
@@ -114,15 +114,6 @@ function mark(i,j)
 {
     if(!isVisualizationActive)
     {
-        // to mark weight if dijkstra is selected
-        if(enableWeights)
-        {
-            console.log(dijkstraBoard); 
-            dijkstraBoard[i][j] = (dijkstraBoard[i][j] == 1) ? 10:1;
-            document.getElementById(i+"-"+j).innerHTML = dijkstraBoard[i][j] == 10?"W":"";
-            if(dijkstraBoard[i][j] === 10)
-                recentlyMarkedWeightedNode = i+"-"+j;
-        }
         //to remove destination if cell is already marked as destination
         let selectedElement = document.getElementById(i+"-"+j);
         if(selectedElement.className.includes("destination"))
@@ -134,7 +125,7 @@ function mark(i,j)
             return;    
         }
         //to see if we have to mark source
-        if(sourcevar==1)
+        if(sourcevar)
         {
             var prevSource = document.getElementsByClassName("source");
             //if there are no elements with className source the variable becomes undefined
@@ -153,7 +144,7 @@ function mark(i,j)
             x.className += " source";
             return;
         }
-        else if(destinationvar==1)
+        else if(destinationvar)
         {
             var prevdestination = document.getElementsByClassName("destination");
             if(document.getElementById("algoSelector").value === "Dijkstra")
@@ -186,6 +177,11 @@ function mark(i,j)
                 return;
             }
         }
+        else
+        {
+            let selectedElement = document.getElementById(i+"-"+j);
+            selectedElement.className = selectedElement.className.includes("wall") ? selectedElement.className.replace("wall","") : (selectedElement.className + " wall");
+        }
 
     }
 
@@ -201,7 +197,6 @@ function modifyWeight(event,i,j)
             displayValue = ++dijkstraBoard[i][j];
         else
             displayValue = (dijkstraBoard[i][j] === 1 ? "":--dijkstraBoard[i][j]);
-        let existingValue = dijkstraBoard[i][j];
         document.getElementById(i+"-"+j).innerHTML = displayValue;    
     }
 }
@@ -351,7 +346,7 @@ function discoveradj(temp_x,temp_y,discoverindex)
 
 
     //left vertex
-    if((temp_y-1)>0&&!document.getElementById(leftVertexString).className.includes("discover") && !document.getElementById(leftVertexString).className.includes("source") )
+    if((temp_y-1)>0&&!document.getElementById(leftVertexString).className.includes("discover") &&!document.getElementById(leftVertexString).className.includes("wall") && !document.getElementById(leftVertexString).className.includes("source") )
     {
         discoverParentMap[leftVertexString] = currentVertexString;
         //to check if the node is destination
@@ -365,7 +360,7 @@ function discoveradj(temp_x,temp_y,discoverindex)
 
     }
     //top vertex
-    if((temp_x-1)>0&&!document.getElementById(topVertexString).className.includes("discover")&& !document.getElementById(topVertexString).className.includes("source"))
+    if((temp_x-1)>0&&!document.getElementById(topVertexString).className.includes("discover") &&!document.getElementById(topVertexString).className.includes("wall") && !document.getElementById(topVertexString).className.includes("source"))
     {
         discoverParentMap[topVertexString] = currentVertexString;
         //to check if the node is destination
@@ -379,7 +374,7 @@ function discoveradj(temp_x,temp_y,discoverindex)
         document.getElementById(topVertexString).className += "  discover";
     }
     //right vertex
-    if((temp_y+1)<59&&!document.getElementById(rightVertexString).className.includes("discover")&& !document.getElementById(rightVertexString).className.includes("source"))
+    if((temp_y+1)<59&&!document.getElementById(rightVertexString).className.includes("discover")&&!document.getElementById(rightVertexString).className.includes("wall")&& !document.getElementById(rightVertexString).className.includes("source"))
     {
         discoverParentMap[rightVertexString] = currentVertexString;
         //to check if the node is destination
@@ -393,7 +388,7 @@ function discoveradj(temp_x,temp_y,discoverindex)
         document.getElementById(rightVertexString).className += "  discover";
     }
     //bottom vertex
-    if((temp_x+1)<19&&!document.getElementById(bottomVertexString).className.includes("discover")&& !document.getElementById(bottomVertexString).className.includes("source"))
+    if((temp_x+1)<19&&!document.getElementById(bottomVertexString).className.includes("discover")&&!document.getElementById(bottomVertexString).className.includes("wall") && !document.getElementById(bottomVertexString).className.includes("source"))
     {
         discoverParentMap[bottomVertexString] = currentVertexString;
         //to check if the node is destination

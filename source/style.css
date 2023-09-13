@@ -58,6 +58,12 @@ td{
     background-color:var(--primaryColor);
     border: none;
 }
+.wall{
+    background-color:var(--primaryColor);
+    border: 5px solid white;
+    outline: 1px solid var(--primaryColor);
+    box-sizing: border-box;
+}
 .button-container{
     width:100%;
     height:50px;
