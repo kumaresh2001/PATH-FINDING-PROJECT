@@ -189,7 +189,7 @@ function mark(i,j)
 
 function modifyWeight(event,i,j)
 {
-    if(document.getElementById("algoSelector").value === "Dijkstra")
+    if(document.getElementById("algoSelector").value === "Dijkstra" && !document.getElementById(i+"-"+j).className.includes("wall"))
     {
         let directionOfScroll = event.deltaY < 0 ? "up" : "down";
         let displayValue;
