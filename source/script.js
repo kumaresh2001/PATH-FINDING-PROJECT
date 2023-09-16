@@ -177,6 +177,7 @@ function mark(i,j)
                 return;
             }
         }
+        
         else
         {
             let selectedElement = document.getElementById(i+"-"+j);
