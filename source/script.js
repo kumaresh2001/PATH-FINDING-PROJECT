@@ -181,8 +181,7 @@ function mark(i,j)
         {
             let selectedElement = document.getElementById(i+"-"+j);
             selectedElement.className = selectedElement.className.includes("wall") ? selectedElement.className.replace("wall","") : (selectedElement.className + " wall");
-        }
-        
+        }  
 
     }
     
