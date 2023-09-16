@@ -185,7 +185,6 @@ function mark(i,j)
 
     }
     
-
 }
 
 function modifyWeight(event,i,j)
