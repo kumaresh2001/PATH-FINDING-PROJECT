@@ -587,6 +587,115 @@ async function findDjikstraPath()
    
 }
 
+function findHeuristic(currentNode,destinationNode)
+{
+    let currentNodeXValue = parseInt(currentNode.split("-")[0]);
+    let currentNodeYValue = parseInt(currentNode.split("-")[1]);
+    let destinationNodeXValue = parseInt(destinationNode.split("-")[0]);
+    let destinationNodeYValue = parseInt(destinationNode.split("-")[1]);
+    
+    return (Math.abs(currentNodeXValue - destinationNodeXValue) + Math.abs(currentNodeYValue - destinationNodeYValue));
+}
+
+async function findBestFirstSearchPath()
+{
+    /*
+        fetch source and destination nodes
+        push source node into minheap with heuristic calculated using findHeuristic function
+        generate successor nodes and insert them into the heap using heuristic value
+    */ 
+        let destinationFound = false;
+        let sourceElement = document.getElementsByClassName("source")[0];
+        if(typeof(sourceElement)==="undefined")
+        {
+            alert("Select a Source");
+            return;
+        }
+        var destinationElement = document.getElementsByClassName("destination")[0];
+        if(typeof(sourceElement)==="undefined")
+        {
+            alert("Select a Destination");
+            return;
+        }
+        let bestFirstSearchUtil = new BestFirstSearchUtil();
+        let visitedList = [];
+        /*
+            A node consists of 
+             - coOrdinates string
+             - x-coordinate
+             - y-coordinate
+             - estimatedWeight
+             - parent node coOrdinate string
+        */
+        sourceCoordinateString = sourceElement.id;
+        destinationCoordinateString = destinationElement.id;
+        
+        bestFirstSearchUtil.processNode(sourceCoordinateString,0,"0");
+        console.log(Object.keys(bestFirstSearchUtil.nodePositions) + " " + Object.values(bestFirstSearchUtil.nodePositions));
+        let flag= 0;
+        while(!destinationFound)
+        {
+            //get node with least weight
+            let currentNode = bestFirstSearchUtil.removeNode();
+            console.log("Removed node - " + currentNode.nodeString);
+            document.getElementById(currentNode.nodeString).className += " discover";
+            await sleep(5);
+            //check if destination is obtained
+            let currentNodeElement = document.getElementById(currentNode.nodeString);
+            if( currentNodeElement.className.includes("destination"))
+                break;
+            let currentNodeCoordinatesList = currentNode.nodeString.split("-")
+            let currentXPosition = parseInt(currentNodeCoordinatesList[0]);
+            let currentYPosition = parseInt(currentNodeCoordinatesList[1]);
+            //process top,right,bottom,left nodes
+            let topNodeString = (currentXPosition-1)+"-"+currentYPosition;
+            if(!(visitedList.includes(topNodeString) || isBorderCell(topNodeString) || document.getElementById(topNodeString).className.includes("wall")) )
+            {
+                let nodeWeight = dijkstraBoard[currentXPosition-1][currentYPosition];
+                let topNodeHeuristicValue = findHeuristic(topNodeString,destinationCoordinateString);
+                bestFirstSearchUtil.processNode(topNodeString,topNodeHeuristicValue+nodeWeight,currentNode.nodeString);
+            }
+            let rightNodeString = currentXPosition + "-" + (currentYPosition+1);
+            if(!(visitedList.includes(rightNodeString) || isBorderCell(rightNodeString) || document.getElementById(rightNodeString).className.includes("wall")) )
+            {
+                let nodeWeight = dijkstraBoard[currentXPosition][currentYPosition+1];
+                let rightNodeHeuristicValue = findHeuristic(rightNodeString,destinationCoordinateString);
+                bestFirstSearchUtil.processNode(rightNodeString,rightNodeHeuristicValue+nodeWeight,currentNode.nodeString);
+            }
+            let bottomNodeString = (currentXPosition+1) + "-" + currentYPosition;
+            if(!(visitedList.includes(bottomNodeString) || isBorderCell(bottomNodeString) || document.getElementById(bottomNodeString).className.includes("wall"))  )
+            {
+                let nodeWeight = dijkstraBoard[currentXPosition+1][currentYPosition];
+                let bottomNodeHeuristicValue = findHeuristic(bottomNodeString,destinationCoordinateString);
+                bestFirstSearchUtil.processNode(bottomNodeString,bottomNodeHeuristicValue + nodeWeight,currentNode.nodeString);
+            }
+            let leftNodeString = currentXPosition + "-" + (currentYPosition-1);
+            if(!(visitedList.includes(leftNodeString) || isBorderCell(leftNodeString) || document.getElementById(leftNodeString).className.includes("wall") ) )
+            {
+                let nodeWeight = dijkstraBoard[currentXPosition][currentYPosition-1];
+                let leftNodeHeuristicValue = findHeuristic(leftNodeString,destinationCoordinateString);
+                bestFirstSearchUtil.processNode(leftNodeString,leftNodeHeuristicValue+nodeWeight,currentNode.nodeString);
+            }
+            visitedList.push(currentNode.nodeString);
+            console.log(...bestFirstSearchUtil.minHeap);
+          
+        }
+        for(let i =0;i<destinationStrings.length;i++)
+        {   
+            bestFirstSearchUtil.retracePath(destinationStrings[i]);
+        }
+        bestFirstSearchUtil.retracePath(destinationCoordinateString);
+        for(let i=0;i<bestFirstSearchUtil.solutionPathList.length;i++)
+        {
+            if(document.getElementById(bestFirstSearchUtil.solutionPathList[i]).className.includes("discovered"))
+            {
+                document.getElementById(bestFirstSearchUtil.solutionPathList[i]).className = document.getElementById(bestFirstSearchUtil.solutionPathList[i]).className.replace("discovered","discover");
+            }
+            await sleep(200);
+            document.getElementById(bestFirstSearchUtil.solutionPathList[i]).className = document.getElementById(bestFirstSearchUtil.solutionPathList[i]).className.replace("discover","") + " discovered";
+        }
+}
+
 function visualise()
 {
     if(!isVisualizationActive)
@@ -605,6 +714,10 @@ function visualise()
         {
             findDjikstraPath();
             isVisualizationActive = false;
+        }
+        else if(getPathFindingAlgo === "BestFirstSearch")
+        {
+            findBestFirstSearchPath();
         }
     }
 }

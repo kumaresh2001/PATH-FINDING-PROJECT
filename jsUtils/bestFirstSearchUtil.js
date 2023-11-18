@@ -1,4 +1,4 @@
-class DijkstraUtil
+class BestFirstSearchUtil
 {
     //data members
     nodePositions = {};
@@ -100,14 +100,12 @@ class DijkstraUtil
 
     processNode(nodeString,nodeWeight,parentString)
     {
-        /*
-            check if the node already exists
-                yes -> update node
-                no  -> insert node
-        */
+        //check if the node already exists
         if(this.nodePositions[nodeString]!= null)
         {
             let currentNodeIndex = this.nodePositions[nodeString];
+            console.log(this.nodePositions)
+            console.log("currentNodeIndex" + currentNodeIndex);
             let currentNode = this.minHeap[currentNodeIndex];
             if(currentNode.nodeWeight > nodeWeight)
             {
@@ -129,7 +127,6 @@ class DijkstraUtil
         this.minHeap[0] = lastindexNode;
         this.nodePositions[lastindexNode.nodeString] = 0;
         this.minHeap.pop();
-
         //delete node from nodePositions
         let nodeString = nodeToBeRemoved.nodeString;
         delete this.nodePositions[nodeString];
@@ -139,13 +136,15 @@ class DijkstraUtil
             minChildNodeIndex = this.getMinNode((currIndex*2)+1,(currIndex*2)+2);
             if(minChildNodeIndex >= this.minHeap.length)
                 break;
+            console.log("current Node Index - " + currIndex + "\n Min Node Index - " + minChildNodeIndex);
+            console.log([...this.minHeap]);
+            console.log({...this.nodePositions});
             if(this.minHeap[currIndex].nodeWeight > this.minHeap[minChildNodeIndex].nodeWeight )
             {
                 let minNode = this.minHeap[minChildNodeIndex];
                 let currentNode = this.minHeap[currIndex];
                 this.minHeap[currIndex] = this.minHeap[minChildNodeIndex];
                 this.minHeap[minChildNodeIndex] = currentNode;
-
                 // set positions of parent and child
                 this.nodePositions[currentNode.nodeString] = minChildNodeIndex;
                 this.nodePositions[minNode.nodeString] =  currIndex;
