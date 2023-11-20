@@ -597,6 +597,106 @@ function findHeuristic(currentNode,destinationNode)
     return (Math.abs(currentNodeXValue - destinationNodeXValue) + Math.abs(currentNodeYValue - destinationNodeYValue));
 }
 
+
+async function aStarSearchPath()
+{
+    /*
+        fetch source and destination nodes
+        push source node into minheap with heuristic calculated using findHeuristic function
+        generate successor nodes and insert them into the heap using heuristic value
+    */ 
+        let destinationFound = false;
+        let sourceElement = document.getElementsByClassName("source")[0];
+        if(typeof(sourceElement)==="undefined")
+        {
+            alert("Select a Source");
+            return;
+        }
+        var destinationElement = document.getElementsByClassName("destination")[0];
+        if(typeof(sourceElement)==="undefined")
+        {
+            alert("Select a Destination");
+            return;
+        }
+        let aStarUtil = new AStarUtil();
+        let visitedList = [];
+        /*
+            A node consists of 
+             - coOrdinates string
+             - x-coordinate
+             - y-coordinate
+             - estimatedWeight
+             - parent node coOrdinate string
+        */
+        sourceCoordinateString = sourceElement.id;
+        destinationCoordinateString = destinationElement.id;
+        
+        aStarUtil.processNode(sourceCoordinateString,0,"0");
+        console.log(Object.keys(aStarUtil.nodePositions) + " " + Object.values(aStarUtil.nodePositions));
+        let flag= 0;
+        while(!destinationFound)
+        {
+            //get node with least weight
+            let currentNode = aStarUtil.removeNode();
+            console.log("Removed node - " + currentNode.nodeString);
+            document.getElementById(currentNode.nodeString).className += " discover";
+            await sleep(5);
+            //check if destination is obtained
+            let currentNodeElement = document.getElementById(currentNode.nodeString);
+            if( currentNodeElement.className.includes("destination"))
+                break;
+            let currentNodeCoordinatesList = currentNode.nodeString.split("-")
+            let currentXPosition = parseInt(currentNodeCoordinatesList[0]);
+            let currentYPosition = parseInt(currentNodeCoordinatesList[1]);
+            //process top,right,bottom,left nodes
+            let topNodeString = (currentXPosition-1)+"-"+currentYPosition;
+            if(!(visitedList.includes(topNodeString) || isBorderCell(topNodeString) || document.getElementById(topNodeString).className.includes("wall")) )
+            {
+                let nodeWeight = dijkstraBoard[currentXPosition-1][currentYPosition];
+                let topNodeHeuristicValue = findHeuristic(topNodeString,destinationCoordinateString);
+                aStarUtil.processNode(topNodeString,currentNode.nodeWeight + topNodeHeuristicValue+nodeWeight,currentNode.nodeString);
+            }
+            let rightNodeString = currentXPosition + "-" + (currentYPosition+1);
+            if(!(visitedList.includes(rightNodeString) || isBorderCell(rightNodeString) || document.getElementById(rightNodeString).className.includes("wall")) )
+            {
+                let nodeWeight = dijkstraBoard[currentXPosition][currentYPosition+1];
+                let rightNodeHeuristicValue = findHeuristic(rightNodeString,destinationCoordinateString);
+                aStarUtil.processNode(rightNodeString,currentNode.nodeWeight + rightNodeHeuristicValue+nodeWeight,currentNode.nodeString);
+            }
+            let bottomNodeString = (currentXPosition+1) + "-" + currentYPosition;
+            if(!(visitedList.includes(bottomNodeString) || isBorderCell(bottomNodeString) || document.getElementById(bottomNodeString).className.includes("wall"))  )
+            {
+                let nodeWeight = dijkstraBoard[currentXPosition+1][currentYPosition];
+                let bottomNodeHeuristicValue = findHeuristic(bottomNodeString,destinationCoordinateString);
+                aStarUtil.processNode(bottomNodeString,currentNode.nodeWeight + bottomNodeHeuristicValue + nodeWeight,currentNode.nodeString);
+            }
+            let leftNodeString = currentXPosition + "-" + (currentYPosition-1);
+            if(!(visitedList.includes(leftNodeString) || isBorderCell(leftNodeString) || document.getElementById(leftNodeString).className.includes("wall") ) )
+            {
+                let nodeWeight = dijkstraBoard[currentXPosition][currentYPosition-1];
+                let leftNodeHeuristicValue = findHeuristic(leftNodeString,destinationCoordinateString);
+                aStarUtil.processNode(leftNodeString,currentNode.nodeWeight + leftNodeHeuristicValue+nodeWeight,currentNode.nodeString);
+            }
+            visitedList.push(currentNode.nodeString);
+            console.log(...aStarUtil.minHeap);
+          
+        }
+        for(let i =0;i<destinationStrings.length;i++)
+        {   
+            aStarUtil.retracePath(destinationStrings[i]);
+        }
+        aStarUtil.retracePath(destinationCoordinateString);
+        for(let i=0;i<aStarUtil.solutionPathList.length;i++)
+        {
+            if(document.getElementById(aStarUtil.solutionPathList[i]).className.includes("discovered"))
+            {
+                document.getElementById(aStarUtil.solutionPathList[i]).className = document.getElementById(aStarUtil.solutionPathList[i]).className.replace("discovered","discover");
+            }
+            await sleep(200);
+            document.getElementById(aStarUtil.solutionPathList[i]).className = document.getElementById(aStarUtil.solutionPathList[i]).className.replace("discover","") + " discovered";
+        }
+}
+
 async function findBestFirstSearchPath()
 {
     /*
@@ -718,6 +818,10 @@ function visualise()
         else if(getPathFindingAlgo === "BestFirstSearch")
         {
             findBestFirstSearchPath();
+        }
+        else if( getPathFindingAlgo === "AStar")
+        {
+            aStarSearchPath();
         }
     }
 }
