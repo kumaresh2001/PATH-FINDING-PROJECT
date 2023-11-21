@@ -31,12 +31,12 @@
     </div>
 
     <div class="button-container">
-        <select onchange="toggleAddWeightButton(event)" id="algoSelector" class="algoSelector">
+        <select id="algoSelector" onchange="checkuserMapBoard()" class="algoSelector">
             <option value="DFS" selected>Depth First Search</option>
             <option value="BFS">Breadth First Search</option>
-            <option value="Dijkstra">Dijkstra's Algorithm</option>
-            <option value="BestFirstSearch">Best First Search</option>
-            <option value="AStar">A* Search</option>
+            <option value="DIJKSTRA">Dijkstra's Algorithm</option>
+            <option value="BESTFIRSTSEARCH">Best First Search</option>
+            <option value="ASTAR">A* Search</option>
 
         </select>
         <button onclick="source()">Select Source</button>

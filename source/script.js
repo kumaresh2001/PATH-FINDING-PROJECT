@@ -1,4 +1,10 @@
-var sourcevar=false,destinationvar=false,sourceclassname="",destinationclassname="",tempdest,tempsource,discoverqueue=[],discoverParentMap = {},foundEren=false,tracedPath=[];
+//----------------------------------------------------    GLOBAL VARIABLES DECLARATION STARTS   ----------------------------------------------------//
+var WEIGHTED_ALGORITHM_LIST = ["DIJKSTRA", "BESTFIRSTSEARCH", "ASTAR"];
+var sourcevar=false,destinationvar=false,foundEren=false;
+var sourceclassname="",destinationclassname="";
+var tempdest,tempsource;
+var discoverqueue=[],tracedPath=[];
+var discoverParentMap = {};
 //source var and destinationvar used to activate selecting source and destination
 var directionArray = [[0,-1],[0,1],[-1,0],[1,0]],directionPointer=0;
 var discoveredCo_ordinates = new Array();
@@ -9,38 +15,26 @@ var board = new Array(20);
 //variables for dijkstra
 var visitedNodesMap = {};
 var destinationStrings = [],destinationIterator=0;
-var dijkstraBoard = new Array(20);
+var userMapWeightBoard = new Array(20);
 var enableWeights = false;
 var recentlyMarkedWeightedNode;
-//show/hide weight button
-function toggleAddWeightButton(event)
-{
-    let selectedOption = event.target.value;
-    if(selectedOption === "Dijkstra")
-    {
-        document.getElementById("addWeightButton").style.display = "block";
-    }
-    else
-    {
-        document.getElementById("addWeightButton").style.display = "none";
-    }
-}
+//----------------------------------------------------    GLOBAL VARIABLES DECLARATION ENDS    ----------------------------------------------------//
 
 //initialise dijkstar's board
-function initialiseDijkstrasBoard()
+function initialiseUserMapWeightBoard()
 {
     for(let i=0;i<20;i++)
     {
-        dijkstraBoard[i] = new Array(60);
+        userMapWeightBoard[i] = new Array(60);
         for(let j=0;j<60;j++)
         {
             if(i==0||i==19||j==0||j==59)
-            dijkstraBoard[i][j] = -1;
+            userMapWeightBoard[i][j] = -1;
             else    
-            dijkstraBoard[i][j] = 1;
+            userMapWeightBoard[i][j] = 1;
         }
     }
-    console.log(dijkstraBoard);
+    console.log(userMapWeightBoard);
 }
 //function declarations
 function clearBoard()
@@ -74,7 +68,7 @@ function clearMap()
             document.getElementById(i+"-"+j).className = "";
         }
     }
-    initialiseDijkstrasBoard();
+    initialiseUserMapWeightBoard();
 }
 
 function resetMap()
@@ -83,12 +77,42 @@ function resetMap()
     {
         clearBoard();
         clearMap();    
+        checkuserMapBoard();
         foundEren = false;
         tracedPath = [];
         discoverqueue = [];
         discoverParentMap = {};
     }
 }
+
+function getSourceElement()
+{
+    return document.getElementsByClassName("source")[0];
+}
+
+function getDestinationElement()
+{
+    return document.getElementsByClassName("destination")[0];
+}
+
+//check if source and destination elements are specified before visualization
+function isSourceDestinationDefined()
+{
+    let sourceElement = getSourceElement();
+    if(typeof(sourceElement)==="undefined")
+    {
+        alert("Select a Source");
+        return false;
+    }
+    var destinationElement = getDestinationElement();
+    if(typeof(destinationElement)==="undefined")
+    {
+        alert("Select a Destination");
+        return false;
+    }
+    return true;
+}
+
 
 //to let mark function know we have to mark source
 function source()
@@ -116,17 +140,12 @@ function mark(i,j)
     {
         //to remove destination if cell is already marked as destination
         let selectedElement = document.getElementById(i+"-"+j);
-        if(selectedElement.className.includes("destination"))
-        {
-            selectedElement.className = selectedElement.className.replace("destination","");
-            selectedElement.innerHTML = "";
-            let indexOfElementToBeRemoved = destinationStrings.indexOf(selectedElement.id);
-            destinationStrings.splice(indexOfElementToBeRemoved,1);
-            return;    
-        }
+        
         //to see if we have to mark source
         if(sourcevar)
         {
+            if(selectedElement.className.includes("wall") || selectedElement.className.includes("destination"))
+                return;
             var prevSource = document.getElementsByClassName("source");
             //if there are no elements with className source the variable becomes undefined
             if(typeof(prevSource[0])!="undefined")
@@ -146,6 +165,8 @@ function mark(i,j)
         }
         else if(destinationvar)
         {
+            if(selectedElement.className.includes("wall") || selectedElement.className.includes("source"))
+                return;
             var prevdestination = document.getElementsByClassName("destination");
             if(document.getElementById("algoSelector").value === "Dijkstra")
             {
@@ -174,12 +195,13 @@ function mark(i,j)
                 var x = document.getElementById(i+"-"+j);
                 destinationclassname = x.className;
                 x.className += " destination";
-                return;
             }
         }
         else
         {
             let selectedElement = document.getElementById(i+"-"+j);
+            if(selectedElement.className.includes("source") || selectedElement.className.includes("destination"))
+                return;
             selectedElement.className = selectedElement.className.includes("wall") ? selectedElement.className.replace("wall","") : (selectedElement.className + " wall");
         }  
 
@@ -187,16 +209,29 @@ function mark(i,j)
     
 }
 
+function checkuserMapBoard()
+{
+    let currentSelectedAlgo = document.getElementById("algoSelector").value;
+    for(let i =1;i<19;i++)
+    {
+        for(let j=1;j<59;j++)
+        {
+            let cellInnerHTML = WEIGHTED_ALGORITHM_LIST.includes(currentSelectedAlgo) && userMapWeightBoard[i][j] > 1 ? userMapWeightBoard[i][j] : "";
+            document.getElementById(i+"-"+j).innerHTML = cellInnerHTML;
+        }
+    }
+}
+
 function modifyWeight(event,i,j)
 {
-    if(document.getElementById("algoSelector").value === "Dijkstra" && !document.getElementById(i+"-"+j).className.includes("wall"))
+    if(WEIGHTED_ALGORITHM_LIST.includes(document.getElementById("algoSelector").value) && !document.getElementById(i+"-"+j).className.includes("wall"))
     {
         let directionOfScroll = event.deltaY < 0 ? "up" : "down";
         let displayValue;
         if(directionOfScroll === "up")
-            displayValue = ++dijkstraBoard[i][j];
+            displayValue = ++userMapWeightBoard[i][j];
         else
-            displayValue = (dijkstraBoard[i][j] === 1 ? "":--dijkstraBoard[i][j]);
+            displayValue = (userMapWeightBoard[i][j] === 1 ? "":--userMapWeightBoard[i][j]);
         document.getElementById(i+"-"+j).innerHTML = displayValue;    
     }
 }
@@ -262,21 +297,7 @@ async function DFSDiscovered(discoveredCo_ordinates)
 }
  function findDFSPath()
 {
-    //check if source exists
-    var x = document.getElementsByClassName("source");
-    if(typeof(x[0])=="undefined")
-    {
-        alert("SELECT SOURCE");
-        return;
-    }
-    //check if destination exists
-    var y = document.getElementsByClassName("destination");
-    if(typeof(y[0])=="undefined")
-    {
-        alert("SELECT DESTINATION");
-        return;
-    }
-    let sourceIndex = x[0].id.split("-");    
+    let sourceIndex = document.getElementsByClassName("source")[0].id.split("-");    
     DFSDiscover(parseInt(sourceIndex[0])-1,parseInt(sourceIndex[1])) ? "" : 
     (
         DFSDiscover(parseInt(sourceIndex[0]),parseInt(sourceIndex[1])+1) ? "" : 
@@ -425,26 +446,15 @@ async function discover()
 }
 function findBFSPath()
 {
-    var x = document.getElementsByClassName("source");
-    if(typeof(x[0])==="undefined")
-    {
-        alert("Select a Source");
-        return;
-    }
-    var y = document.getElementsByClassName("destination");
-    if(typeof(y[0])==="undefined")
-    {
-        alert("Select a Destination");
-        return;
-    }
+   
     //to obtain co-ordinate of source from id 
-    tempsource = x[0].id.split("-");
+    tempsource = document.getElementsByClassName("source")[0].id.split("-");
     tempsource[0] = parseInt(tempsource[0]);
     tempsource[1] = parseInt(tempsource[1]);
     //to store source co-ordinates as string
     let sourceCoOrdinateString = tempsource[0]+"-"+ tempsource[1];
     //to obtain co-ordinate of destination from id
-    tempdest = y[0].id.split("-");
+    tempdest = document.getElementsByClassName("destination")[0].id.split("-");
     tempdest[0] = parseInt(tempdest[0]);
     tempdest[1] = parseInt(tempdest[1]);
     //to store source co-ordinates as string
@@ -500,18 +510,6 @@ function isDijkstraDestinationFound(currentNode)
 async function findDjikstraPath()
 {
     let destinationFound = false;
-    let sourceElement = document.getElementsByClassName("source")[0];
-    if(typeof(sourceElement)==="undefined")
-    {
-        alert("Select a Source");
-        return;
-    }
-    var destinationElement = document.getElementsByClassName("destination")[0];
-    if(typeof(sourceElement)==="undefined")
-    {
-        alert("Select a Destination");
-        return;
-    }
     let djUtil = new DijkstraUtil();
     let visitedList = [];
     /*
@@ -522,6 +520,8 @@ async function findDjikstraPath()
          - estimatedWeight
          - parent node coOrdinate string
     */
+    let sourceElement = getSourceElement();
+    let destinationElement = getDestinationElement();
     sourceCoordinateString = sourceElement.id;
     destinationCoordinateString = destinationElement.id;
     
@@ -545,25 +545,25 @@ async function findDjikstraPath()
         let topNodeString = (currentXPosition-1)+"-"+currentYPosition;
         if(!(visitedList.includes(topNodeString) || isBorderCell(topNodeString) || document.getElementById(topNodeString).className.includes("wall")) )
         {
-            let nodeWeight = dijkstraBoard[currentXPosition-1][currentYPosition];
+            let nodeWeight = userMapWeightBoard[currentXPosition-1][currentYPosition];
             djUtil.processNode(topNodeString,currentNode.nodeWeight+nodeWeight,currentNode.nodeString);
         }
         let rightNodeString = currentXPosition + "-" + (currentYPosition+1);
         if(!(visitedList.includes(rightNodeString) || isBorderCell(rightNodeString) || document.getElementById(rightNodeString).className.includes("wall")) )
         {
-            let nodeWeight = dijkstraBoard[currentXPosition][currentYPosition+1];
+            let nodeWeight = userMapWeightBoard[currentXPosition][currentYPosition+1];
             djUtil.processNode(rightNodeString,currentNode.nodeWeight+nodeWeight,currentNode.nodeString);
         }
         let bottomNodeString = (currentXPosition+1) + "-" + currentYPosition;
         if(!(visitedList.includes(bottomNodeString) || isBorderCell(bottomNodeString) || document.getElementById(bottomNodeString).className.includes("wall"))  )
         {
-            let nodeWeight = dijkstraBoard[currentXPosition+1][currentYPosition];
+            let nodeWeight = userMapWeightBoard[currentXPosition+1][currentYPosition];
             djUtil.processNode(bottomNodeString,currentNode.nodeWeight + nodeWeight,currentNode.nodeString);
         }
         let leftNodeString = currentXPosition + "-" + (currentYPosition-1);
         if(!(visitedList.includes(leftNodeString) || isBorderCell(leftNodeString) || document.getElementById(leftNodeString).className.includes("wall") ) )
         {
-            let nodeWeight = dijkstraBoard[currentXPosition][currentYPosition-1];
+            let nodeWeight = userMapWeightBoard[currentXPosition][currentYPosition-1];
             djUtil.processNode(leftNodeString,currentNode.nodeWeight+nodeWeight,currentNode.nodeString);
         }
         visitedList.push(currentNode.nodeString);
@@ -584,7 +584,7 @@ async function findDjikstraPath()
         await sleep(200);
         document.getElementById(djUtil.solutionPathList[i]).className = document.getElementById(djUtil.solutionPathList[i]).className.replace("discover","") + " discovered";
     }
-   
+    isVisualizationActive = false;   
 }
 
 function findHeuristic(currentNode,destinationNode)
@@ -606,18 +606,6 @@ async function aStarSearchPath()
         generate successor nodes and insert them into the heap using heuristic value
     */ 
         let destinationFound = false;
-        let sourceElement = document.getElementsByClassName("source")[0];
-        if(typeof(sourceElement)==="undefined")
-        {
-            alert("Select a Source");
-            return;
-        }
-        var destinationElement = document.getElementsByClassName("destination")[0];
-        if(typeof(sourceElement)==="undefined")
-        {
-            alert("Select a Destination");
-            return;
-        }
         let aStarUtil = new AStarUtil();
         let visitedList = [];
         /*
@@ -628,6 +616,8 @@ async function aStarSearchPath()
              - estimatedWeight
              - parent node coOrdinate string
         */
+       let sourceElement = getSourceElement();
+       let destinationElement = getDestinationElement();
         sourceCoordinateString = sourceElement.id;
         destinationCoordinateString = destinationElement.id;
         
@@ -652,28 +642,28 @@ async function aStarSearchPath()
             let topNodeString = (currentXPosition-1)+"-"+currentYPosition;
             if(!(visitedList.includes(topNodeString) || isBorderCell(topNodeString) || document.getElementById(topNodeString).className.includes("wall")) )
             {
-                let nodeWeight = dijkstraBoard[currentXPosition-1][currentYPosition];
+                let nodeWeight = userMapWeightBoard[currentXPosition-1][currentYPosition];
                 let topNodeHeuristicValue = findHeuristic(topNodeString,destinationCoordinateString);
                 aStarUtil.processNode(topNodeString,currentNode.nodeWeight + topNodeHeuristicValue+nodeWeight,currentNode.nodeString);
             }
             let rightNodeString = currentXPosition + "-" + (currentYPosition+1);
             if(!(visitedList.includes(rightNodeString) || isBorderCell(rightNodeString) || document.getElementById(rightNodeString).className.includes("wall")) )
             {
-                let nodeWeight = dijkstraBoard[currentXPosition][currentYPosition+1];
+                let nodeWeight = userMapWeightBoard[currentXPosition][currentYPosition+1];
                 let rightNodeHeuristicValue = findHeuristic(rightNodeString,destinationCoordinateString);
                 aStarUtil.processNode(rightNodeString,currentNode.nodeWeight + rightNodeHeuristicValue+nodeWeight,currentNode.nodeString);
             }
             let bottomNodeString = (currentXPosition+1) + "-" + currentYPosition;
             if(!(visitedList.includes(bottomNodeString) || isBorderCell(bottomNodeString) || document.getElementById(bottomNodeString).className.includes("wall"))  )
             {
-                let nodeWeight = dijkstraBoard[currentXPosition+1][currentYPosition];
+                let nodeWeight = userMapWeightBoard[currentXPosition+1][currentYPosition];
                 let bottomNodeHeuristicValue = findHeuristic(bottomNodeString,destinationCoordinateString);
                 aStarUtil.processNode(bottomNodeString,currentNode.nodeWeight + bottomNodeHeuristicValue + nodeWeight,currentNode.nodeString);
             }
             let leftNodeString = currentXPosition + "-" + (currentYPosition-1);
             if(!(visitedList.includes(leftNodeString) || isBorderCell(leftNodeString) || document.getElementById(leftNodeString).className.includes("wall") ) )
             {
-                let nodeWeight = dijkstraBoard[currentXPosition][currentYPosition-1];
+                let nodeWeight = userMapWeightBoard[currentXPosition][currentYPosition-1];
                 let leftNodeHeuristicValue = findHeuristic(leftNodeString,destinationCoordinateString);
                 aStarUtil.processNode(leftNodeString,currentNode.nodeWeight + leftNodeHeuristicValue+nodeWeight,currentNode.nodeString);
             }
@@ -695,6 +685,7 @@ async function aStarSearchPath()
             await sleep(200);
             document.getElementById(aStarUtil.solutionPathList[i]).className = document.getElementById(aStarUtil.solutionPathList[i]).className.replace("discover","") + " discovered";
         }
+        isVisualizationActive = false;
 }
 
 async function findBestFirstSearchPath()
@@ -705,18 +696,6 @@ async function findBestFirstSearchPath()
         generate successor nodes and insert them into the heap using heuristic value
     */ 
         let destinationFound = false;
-        let sourceElement = document.getElementsByClassName("source")[0];
-        if(typeof(sourceElement)==="undefined")
-        {
-            alert("Select a Source");
-            return;
-        }
-        var destinationElement = document.getElementsByClassName("destination")[0];
-        if(typeof(sourceElement)==="undefined")
-        {
-            alert("Select a Destination");
-            return;
-        }
         let bestFirstSearchUtil = new BestFirstSearchUtil();
         let visitedList = [];
         /*
@@ -727,6 +706,8 @@ async function findBestFirstSearchPath()
              - estimatedWeight
              - parent node coOrdinate string
         */
+        let sourceElement = getSourceElement();
+        let destinationElement = getDestinationElement();
         sourceCoordinateString = sourceElement.id;
         destinationCoordinateString = destinationElement.id;
         
@@ -751,28 +732,28 @@ async function findBestFirstSearchPath()
             let topNodeString = (currentXPosition-1)+"-"+currentYPosition;
             if(!(visitedList.includes(topNodeString) || isBorderCell(topNodeString) || document.getElementById(topNodeString).className.includes("wall")) )
             {
-                let nodeWeight = dijkstraBoard[currentXPosition-1][currentYPosition];
+                let nodeWeight = userMapWeightBoard[currentXPosition-1][currentYPosition];
                 let topNodeHeuristicValue = findHeuristic(topNodeString,destinationCoordinateString);
                 bestFirstSearchUtil.processNode(topNodeString,topNodeHeuristicValue+nodeWeight,currentNode.nodeString);
             }
             let rightNodeString = currentXPosition + "-" + (currentYPosition+1);
             if(!(visitedList.includes(rightNodeString) || isBorderCell(rightNodeString) || document.getElementById(rightNodeString).className.includes("wall")) )
             {
-                let nodeWeight = dijkstraBoard[currentXPosition][currentYPosition+1];
+                let nodeWeight = userMapWeightBoard[currentXPosition][currentYPosition+1];
                 let rightNodeHeuristicValue = findHeuristic(rightNodeString,destinationCoordinateString);
                 bestFirstSearchUtil.processNode(rightNodeString,rightNodeHeuristicValue+nodeWeight,currentNode.nodeString);
             }
             let bottomNodeString = (currentXPosition+1) + "-" + currentYPosition;
             if(!(visitedList.includes(bottomNodeString) || isBorderCell(bottomNodeString) || document.getElementById(bottomNodeString).className.includes("wall"))  )
             {
-                let nodeWeight = dijkstraBoard[currentXPosition+1][currentYPosition];
+                let nodeWeight = userMapWeightBoard[currentXPosition+1][currentYPosition];
                 let bottomNodeHeuristicValue = findHeuristic(bottomNodeString,destinationCoordinateString);
                 bestFirstSearchUtil.processNode(bottomNodeString,bottomNodeHeuristicValue + nodeWeight,currentNode.nodeString);
             }
             let leftNodeString = currentXPosition + "-" + (currentYPosition-1);
             if(!(visitedList.includes(leftNodeString) || isBorderCell(leftNodeString) || document.getElementById(leftNodeString).className.includes("wall") ) )
             {
-                let nodeWeight = dijkstraBoard[currentXPosition][currentYPosition-1];
+                let nodeWeight = userMapWeightBoard[currentXPosition][currentYPosition-1];
                 let leftNodeHeuristicValue = findHeuristic(leftNodeString,destinationCoordinateString);
                 bestFirstSearchUtil.processNode(leftNodeString,leftNodeHeuristicValue+nodeWeight,currentNode.nodeString);
             }
@@ -794,11 +775,12 @@ async function findBestFirstSearchPath()
             await sleep(200);
             document.getElementById(bestFirstSearchUtil.solutionPathList[i]).className = document.getElementById(bestFirstSearchUtil.solutionPathList[i]).className.replace("discover","") + " discovered";
         }
+        isVisualizationActive = false;
 }
 
 function visualise()
 {
-    if(!isVisualizationActive)
+    if(!isVisualizationActive && isSourceDestinationDefined() )
     {
         isVisualizationActive = true;
         getPathFindingAlgo = document.getElementById("algoSelector").value;
@@ -810,18 +792,20 @@ function visualise()
         {
             findBFSPath();
         } 
-        else if(getPathFindingAlgo === "Dijkstra")
+        else if(getPathFindingAlgo === "DIJKSTRA")
         {
             findDjikstraPath();
-            isVisualizationActive = false;
         }
-        else if(getPathFindingAlgo === "BestFirstSearch")
+        else if(getPathFindingAlgo === "BESTFIRSTSEARCH")
         {
             findBestFirstSearchPath();
         }
-        else if( getPathFindingAlgo === "AStar")
+        else if( getPathFindingAlgo === "ASTAR")
         {
             aStarSearchPath();
+        }
+        else{
+            alert("Please Select an Algorithm");
         }
     }
 }
@@ -829,7 +813,7 @@ function visualise()
 window.onload = () =>
 {
     clearBoard();
-    initialiseDijkstrasBoard();
+    initialiseUserMapWeightBoard();
 }
 
 
