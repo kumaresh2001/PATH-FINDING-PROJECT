@@ -34,7 +34,6 @@ function initialiseUserMapWeightBoard()
             userMapWeightBoard[i][j] = 1;
         }
     }
-    console.log(userMapWeightBoard);
 }
 //function declarations
 function clearBoard()
@@ -249,7 +248,6 @@ function DFSDiscover(x,y)
         {
             return 0;
         }
-        console.log(x+"-"+y);
         let discoverClassName  =  document.getElementById(x+"-"+y).className;
     
         if(discoverClassName.includes("discover")||discoverClassName.includes("source"))
@@ -428,10 +426,8 @@ async function discover()
     let discoverindex=0;
     while(1)
     {
-        console.log(discoverindex);
         let temp_pointx = discoverqueue[discoverindex][0];
         let temp_pointy = discoverqueue[discoverindex][1];
-        console.log(temp_pointx + " - " + temp_pointy);
         if(foundEren)
         {
             foundEren = false;
@@ -510,7 +506,7 @@ function isDijkstraDestinationFound(currentNode)
 async function findDjikstraPath()
 {
     let destinationFound = false;
-    let djUtil = new DijkstraUtil();
+    let djUtil = new MinHeapUtil();
     let visitedList = [];
     /*
         A node consists of 
@@ -526,7 +522,6 @@ async function findDjikstraPath()
     destinationCoordinateString = destinationElement.id;
     
     djUtil.processNode(sourceCoordinateString,0,"0");
-    console.log(Object.keys(djUtil.nodePositions) + " " + Object.values(djUtil.nodePositions));
     let flag= 0;
     while(!destinationFound)
     {
@@ -566,9 +561,7 @@ async function findDjikstraPath()
             let nodeWeight = userMapWeightBoard[currentXPosition][currentYPosition-1];
             djUtil.processNode(leftNodeString,currentNode.nodeWeight+nodeWeight,currentNode.nodeString);
         }
-        visitedList.push(currentNode.nodeString);
-        console.log(...djUtil.minHeap);
-      
+        visitedList.push(currentNode.nodeString);      
     }
     for(let i =0;i<destinationStrings.length;i++)
     {   
@@ -606,7 +599,7 @@ async function aStarSearchPath()
         generate successor nodes and insert them into the heap using heuristic value
     */ 
         let destinationFound = false;
-        let aStarUtil = new AStarUtil();
+        let aStarUtil = new MinHeapUtil();
         let visitedList = [];
         /*
             A node consists of 
@@ -622,13 +615,11 @@ async function aStarSearchPath()
         destinationCoordinateString = destinationElement.id;
         
         aStarUtil.processNode(sourceCoordinateString,0,"0");
-        console.log(Object.keys(aStarUtil.nodePositions) + " " + Object.values(aStarUtil.nodePositions));
         let flag= 0;
         while(!destinationFound)
         {
             //get node with least weight
             let currentNode = aStarUtil.removeNode();
-            console.log("Removed node - " + currentNode.nodeString);
             document.getElementById(currentNode.nodeString).className += " discover";
             await sleep(5);
             //check if destination is obtained
@@ -668,12 +659,7 @@ async function aStarSearchPath()
                 aStarUtil.processNode(leftNodeString,currentNode.nodeWeight + leftNodeHeuristicValue+nodeWeight,currentNode.nodeString);
             }
             visitedList.push(currentNode.nodeString);
-            console.log(...aStarUtil.minHeap);
           
-        }
-        for(let i =0;i<destinationStrings.length;i++)
-        {   
-            aStarUtil.retracePath(destinationStrings[i]);
         }
         aStarUtil.retracePath(destinationCoordinateString);
         for(let i=0;i<aStarUtil.solutionPathList.length;i++)
@@ -696,7 +682,7 @@ async function findBestFirstSearchPath()
         generate successor nodes and insert them into the heap using heuristic value
     */ 
         let destinationFound = false;
-        let bestFirstSearchUtil = new BestFirstSearchUtil();
+        let bestFirstSearchUtil = new MinHeapUtil();
         let visitedList = [];
         /*
             A node consists of 
@@ -712,13 +698,11 @@ async function findBestFirstSearchPath()
         destinationCoordinateString = destinationElement.id;
         
         bestFirstSearchUtil.processNode(sourceCoordinateString,0,"0");
-        console.log(Object.keys(bestFirstSearchUtil.nodePositions) + " " + Object.values(bestFirstSearchUtil.nodePositions));
         let flag= 0;
         while(!destinationFound)
         {
             //get node with least weight
             let currentNode = bestFirstSearchUtil.removeNode();
-            console.log("Removed node - " + currentNode.nodeString);
             document.getElementById(currentNode.nodeString).className += " discover";
             await sleep(5);
             //check if destination is obtained
@@ -758,12 +742,7 @@ async function findBestFirstSearchPath()
                 bestFirstSearchUtil.processNode(leftNodeString,leftNodeHeuristicValue+nodeWeight,currentNode.nodeString);
             }
             visitedList.push(currentNode.nodeString);
-            console.log(...bestFirstSearchUtil.minHeap);
           
-        }
-        for(let i =0;i<destinationStrings.length;i++)
-        {   
-            bestFirstSearchUtil.retracePath(destinationStrings[i]);
         }
         bestFirstSearchUtil.retracePath(destinationCoordinateString);
         for(let i=0;i<bestFirstSearchUtil.solutionPathList.length;i++)
