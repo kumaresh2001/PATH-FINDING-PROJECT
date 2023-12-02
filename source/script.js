@@ -167,7 +167,7 @@ function mark(i,j)
             if(selectedElement.className.includes("wall") || selectedElement.className.includes("source"))
                 return;
             var prevdestination = document.getElementsByClassName("destination");
-            if(document.getElementById("algoSelector").value === "Dijkstra")
+            if(document.getElementById("algoSelector").value === "DIJKSTRA")
             {
                 if(i==0||i==19||j==0||j==59)
                 {
@@ -175,8 +175,17 @@ function mark(i,j)
                     return;
                 }
                 var x = document.getElementById(i+"-"+j);
-                x.className += " destination";
-                destinationStrings.push(x.id);
+                if(x.className.includes("destination"))
+                {
+                    x.className = x.className.replace("destination","");
+                    destinationStrings.splice(destinationStrings.indexOf(x.id),1);
+                }
+                else
+                {
+                    x.className += " destination";
+                    if(!destinationStrings.includes(x.id))
+                        destinationStrings.push(x.id);    
+                }
             }
             else
             {
